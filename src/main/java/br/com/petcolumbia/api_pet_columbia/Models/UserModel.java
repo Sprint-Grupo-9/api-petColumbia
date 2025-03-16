@@ -12,13 +12,20 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
+    private String name;
     private String cpf;
-    private String senha;
     private String cep;
-    private String numero;
-    private String complemento;
-    private LocalDate criacaoCadastro;
+    private String neighborhood;
+    private String street;
+    private String number;
+    private String complement;
+    private LocalDate createdAt;
+    private LocalDate lastUpdate;
+    private String email;
+    private String password;
+
+    public UserModel() {
+    }
 
     public Integer getId() {
         return id;
@@ -28,12 +35,12 @@ public class UserModel {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCpf() {
@@ -44,14 +51,6 @@ public class UserModel {
         this.cpf = cpf;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public String getCep() {
         return cep;
     }
@@ -60,27 +59,67 @@ public class UserModel {
         this.cep = cep;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public String getStreet() {
+        return street;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public LocalDate getCriacaoCadastro() {
-        return criacaoCadastro;
+    public String getNumber() {
+        return number;
     }
 
-    public void setCriacaoCadastro(LocalDate criacaoCadastro) {
-        this.criacaoCadastro = criacaoCadastro;
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

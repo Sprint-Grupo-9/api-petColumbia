@@ -11,13 +11,12 @@ public class PetModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private String raca;
-    private String porte;
-    private String pelagem;
-
-    public PetModel() {
-    }
+    private String name;
+    private String size;
+    private String species;
+    private String type;
+    private String age;
+    private String sex;
 
     public Integer getId() {
         return id;
@@ -27,35 +26,51 @@ public class PetModel {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRaca() {
-        return raca;
+    public String getSize() {
+        return size;
     }
 
-    public void setRaca(String raca) {
-        this.raca = raca;
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    public String getPorte() {
-        return porte;
+    public String getSpecies() {
+        return species;
     }
 
-    public void setPorte(String porte) {
-        this.porte = porte;
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
-    public String getPelagem() {
-        return pelagem;
+    public String getType() {
+        return type;
     }
 
-    public void setPelagem(String pelagem) {
-        this.pelagem = pelagem;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }
