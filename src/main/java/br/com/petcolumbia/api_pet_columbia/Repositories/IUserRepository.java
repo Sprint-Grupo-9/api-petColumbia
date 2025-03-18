@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.Repositories.Interfaces;
+package br.com.petcolumbia.api_pet_columbia.Repositories;
 
 import br.com.petcolumbia.api_pet_columbia.Models.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;

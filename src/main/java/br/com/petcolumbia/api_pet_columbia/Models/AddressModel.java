@@ -8,15 +8,15 @@ import jakarta.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
-public class UserModel {
+public class AddressModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private String cpf;
-    private String phoneNumber;
-    private String email;
-    private String password;
+    private String cep;
+    private String neighborhood;
+    private String street;
+    private String number;
+    private String complement;
     private LocalDate createdAt;
     private LocalDate lastUpdate;
 
@@ -28,44 +28,44 @@ public class UserModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCep() {
+        return cep;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getStreet() {
+        return street;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNumber() {
+        return number;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getPassword() {
-        return password;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
     public LocalDate getCreatedAt() {

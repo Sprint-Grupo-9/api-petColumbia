@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDate;
+
 @Entity
 public class PetModel {
 
@@ -15,8 +17,10 @@ public class PetModel {
     private String size;
     private String species;
     private String type;
-    private String age;
+    private Integer age;
     private String sex;
+    private LocalDate createdAt;
+    private LocalDate lastUpdate;
 
     public Integer getId() {
         return id;
@@ -58,11 +62,11 @@ public class PetModel {
         this.type = type;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -72,5 +76,21 @@ public class PetModel {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }
