@@ -13,7 +13,7 @@ public class PetModel {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private Owner owner;
+    private OwnerModel ownerModel;
 
     private String name;
     private String size;
@@ -28,4 +28,102 @@ public class PetModel {
     @OneToMany(mappedBy = "pet")
     private List<AppointmentsModel> appointments;
 
+    public PetModel() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public OwnerModel getOwner() {
+        return ownerModel;
+    }
+
+    public void setOwner(OwnerModel ownerModel) {
+        this.ownerModel = ownerModel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCoat() {
+        return coat;
+    }
+
+    public void setCoat(String coat) {
+        this.coat = coat;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public List<AppointmentsModel> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<AppointmentsModel> appointments) {
+        this.appointments = appointments;
+    }
 }

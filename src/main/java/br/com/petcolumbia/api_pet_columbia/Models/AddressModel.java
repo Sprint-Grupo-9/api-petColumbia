@@ -2,7 +2,6 @@ package br.com.petcolumbia.api_pet_columbia.Models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,7 +12,7 @@ public class AddressModel {
 
     @OneToOne
     @JoinColumn(name = "owner_id")
-    private Owner owner;
+    private OwnerModel ownerModel;
 
     private String cep;
     private String neighborhood;
@@ -31,12 +30,12 @@ public class AddressModel {
         this.id = id;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public OwnerModel getOwner() {
+        return ownerModel;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setOwner(OwnerModel ownerModel) {
+        this.ownerModel = ownerModel;
     }
 
     public String getCep() {
