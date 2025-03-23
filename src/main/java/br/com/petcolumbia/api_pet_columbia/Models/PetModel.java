@@ -1,26 +1,35 @@
 package br.com.petcolumbia.api_pet_columbia.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class PetModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private OwnerModel ownerModel;
+
     private String name;
     private String size;
     private String species;
     private String type;
+    private String coat;
     private Integer age;
     private String sex;
     private LocalDate createdAt;
     private LocalDate lastUpdate;
+
+    @OneToMany(mappedBy = "pet")
+    private List<AppointmentsModel> appointments;
+
+    public PetModel() {
+    }
 
     public Integer getId() {
         return id;
@@ -28,6 +37,14 @@ public class PetModel {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public OwnerModel getOwner() {
+        return ownerModel;
+    }
+
+    public void setOwner(OwnerModel ownerModel) {
+        this.ownerModel = ownerModel;
     }
 
     public String getName() {
@@ -62,6 +79,14 @@ public class PetModel {
         this.type = type;
     }
 
+    public String getCoat() {
+        return coat;
+    }
+
+    public void setCoat(String coat) {
+        this.coat = coat;
+    }
+
     public Integer getAge() {
         return age;
     }
@@ -92,5 +117,13 @@ public class PetModel {
 
     public void setLastUpdate(LocalDate lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<AppointmentsModel> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<AppointmentsModel> appointments) {
+        this.appointments = appointments;
     }
 }

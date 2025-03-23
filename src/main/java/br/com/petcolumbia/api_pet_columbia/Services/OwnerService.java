@@ -1,6 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.Services;
 
-import br.com.petcolumbia.api_pet_columbia.Models.UserModel;
+import br.com.petcolumbia.api_pet_columbia.Models.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.Repositories.IUserRepository;
 import br.com.petcolumbia.api_pet_columbia.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class OwnerService {
 
     @Autowired
     private IUserRepository repository;
 
-    public UserModel createUser(UserModel newUser){
+    public OwnerModel createUser(OwnerModel newUser){
         return repository.save(newUser);
     }
 
-    public UserModel findyUserById(@PathVariable Integer id) {
-        Optional<UserModel> byId = repository.findById(id);
+    public OwnerModel findyUserById(@PathVariable Integer id) {
+        Optional<OwnerModel> byId = repository.findById(id);
 
         if(byId.isEmpty())
             throw new EntityNotFoundException();
@@ -35,7 +35,7 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public UserModel updateUserById(Integer id, UserModel user) {
+    public OwnerModel updateUserById(Integer id, OwnerModel user) {
         if(!repository.existsById(id))
             throw new EntityNotFoundException();
 

@@ -1,14 +1,12 @@
 package br.com.petcolumbia.api_pet_columbia.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-public class UserModel {
+public class OwnerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,6 +17,12 @@ public class UserModel {
     private String password;
     private LocalDate createdAt;
     private LocalDate lastUpdate;
+
+    @OneToMany(mappedBy = "owner")
+    private List<PetModel> pets;
+
+    @OneToOne(mappedBy = "owner")
+    private AddressModel address;
 
     public Integer getId() {
         return id;
@@ -82,5 +86,21 @@ public class UserModel {
 
     public void setLastUpdate(LocalDate lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<PetModel> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<PetModel> pets) {
+        this.pets = pets;
+    }
+
+    public AddressModel getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressModel address) {
+        this.address = address;
     }
 }
