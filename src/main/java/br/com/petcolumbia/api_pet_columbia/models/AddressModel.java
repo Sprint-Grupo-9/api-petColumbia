@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.Models;
+package br.com.petcolumbia.api_pet_columbia.models;
 
 import jakarta.persistence.*;
 

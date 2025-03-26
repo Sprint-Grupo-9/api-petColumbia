@@ -1,7 +1,7 @@
-package br.com.petcolumbia.api_pet_columbia.Controllers;
+package br.com.petcolumbia.api_pet_columbia.controllers;
 
-import br.com.petcolumbia.api_pet_columbia.Models.AddressModel;
-import br.com.petcolumbia.api_pet_columbia.Services.AddressService;
+import br.com.petcolumbia.api_pet_columbia.models.AddressModel;
+import br.com.petcolumbia.api_pet_columbia.services.AddressService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/addresses")
-public class AddressController {
+public class AddressesController {
 
     @Autowired
     private AddressService addressService;

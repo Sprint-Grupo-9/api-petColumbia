@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.exception;
+package br.com.petcolumbia.api_pet_columbia.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,8 +1,8 @@
-package br.com.petcolumbia.api_pet_columbia.Services;
+package br.com.petcolumbia.api_pet_columbia.services;
 
-import br.com.petcolumbia.api_pet_columbia.Models.OwnerModel;
-import br.com.petcolumbia.api_pet_columbia.Repositories.IUserRepository;
-import br.com.petcolumbia.api_pet_columbia.exception.EntityNotFoundException;
+import br.com.petcolumbia.api_pet_columbia.models.OwnerModel;
+import br.com.petcolumbia.api_pet_columbia.repositories.IUserRepository;
+import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;

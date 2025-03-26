@@ -1,7 +1,7 @@
-package br.com.petcolumbia.api_pet_columbia.Controllers;
+package br.com.petcolumbia.api_pet_columbia.controllers;
 
-import br.com.petcolumbia.api_pet_columbia.Models.OwnerModel;
-import br.com.petcolumbia.api_pet_columbia.Services.OwnerService;
+import br.com.petcolumbia.api_pet_columbia.models.OwnerModel;
+import br.com.petcolumbia.api_pet_columbia.services.OwnerService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

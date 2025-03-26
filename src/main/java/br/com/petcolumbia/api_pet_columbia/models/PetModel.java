@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.Models;
+package br.com.petcolumbia.api_pet_columbia.models;
 
 import jakarta.persistence.*;
 
@@ -26,7 +26,7 @@ public class PetModel {
     private LocalDate lastUpdate;
 
     @OneToMany(mappedBy = "pet")
-    private List<AppointmentsModel> appointments;
+    private List<AppointmentModel> appointments;
 
     public PetModel() {
     }
@@ -119,11 +119,11 @@ public class PetModel {
         this.lastUpdate = lastUpdate;
     }
 
-    public List<AppointmentsModel> getAppointments() {
+    public List<AppointmentModel> getAppointments() {
         return appointments;
     }
 
-    public void setAppointments(List<AppointmentsModel> appointments) {
+    public void setAppointments(List<AppointmentModel> appointments) {
         this.appointments = appointments;
     }
 }
