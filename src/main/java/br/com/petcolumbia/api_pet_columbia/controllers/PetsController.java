@@ -1,15 +1,11 @@
-package br.com.petcolumbia.api_pet_columbia.Controllers;
+package br.com.petcolumbia.api_pet_columbia.controllers;
 
-import br.com.petcolumbia.api_pet_columbia.Models.PetModel;
-import br.com.petcolumbia.api_pet_columbia.Models.PetModel;
-import br.com.petcolumbia.api_pet_columbia.Repositories.IPetRepository;
-import br.com.petcolumbia.api_pet_columbia.Services.PetService;
+import br.com.petcolumbia.api_pet_columbia.models.PetModel;
+import br.com.petcolumbia.api_pet_columbia.services.PetService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pets")

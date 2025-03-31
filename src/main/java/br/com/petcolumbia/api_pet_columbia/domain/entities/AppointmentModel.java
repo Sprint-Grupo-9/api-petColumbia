@@ -1,12 +1,12 @@
-package br.com.petcolumbia.api_pet_columbia.Models;
+package br.com.petcolumbia.api_pet_columbia.domain.entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class AppointmentsModel {
+@Table(name = "appointment")
+public class AppointmentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -15,11 +15,13 @@ public class AppointmentsModel {
     @JoinColumn(name = "pet_id")
     private PetModel pet;
 
-    //Employee id
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private EmployeeModel employee;
 
     @ManyToOne
-    @JoinColumn(name = "service_forecast_id")
-    private ServiceForecastModel serviceForecast;
+    @JoinColumn(name = "price_and_time_id")
+    private PriceAndTimeModel priceAndTime;
 
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
@@ -43,12 +45,20 @@ public class AppointmentsModel {
         this.pet = pet;
     }
 
-    public ServiceForecastModel getServiceForecast() {
-        return serviceForecast;
+    public EmployeeModel getEmployee() {
+        return employee;
     }
 
-    public void setServiceForecast(ServiceForecastModel serviceForecast) {
-        this.serviceForecast = serviceForecast;
+    public void setEmployee(EmployeeModel employee) {
+        this.employee = employee;
+    }
+
+    public PriceAndTimeModel getPriceAndTime() {
+        return priceAndTime;
+    }
+
+    public void setPriceAndTime(PriceAndTimeModel priceAndTime) {
+        this.priceAndTime = priceAndTime;
     }
 
     public LocalDateTime getStartDateTime() {
