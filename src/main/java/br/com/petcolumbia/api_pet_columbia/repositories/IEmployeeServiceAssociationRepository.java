@@ -1,7 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.repositories;
 
-import br.com.petcolumbia.api_pet_columbia.models.EmployeeModel;
-import br.com.petcolumbia.api_pet_columbia.models.EmployeeServiceAssociationModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeServiceAssociationModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

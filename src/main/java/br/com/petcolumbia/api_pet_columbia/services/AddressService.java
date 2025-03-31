@@ -1,6 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
-import br.com.petcolumbia.api_pet_columbia.models.AddressModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.AddressModel;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAddressRepository;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,14 @@ import java.util.Optional;
 public class AddressService {
 
     @Autowired
-    private IAddressRepository repository;
+    private IAddressRepository addressRepository;
 
     public AddressModel createAddress(AddressModel newaddress){
-        return repository.save(newaddress);
+        return addressRepository.save(newaddress);
     }
 
     public AddressModel findyAddressById(@PathVariable Integer id) {
-        Optional<AddressModel> byId = repository.findById(id);
+        Optional<AddressModel> byId = addressRepository.findById(id);
 
         if(byId.isEmpty())
             throw new EntityNotFoundException();
@@ -29,17 +29,17 @@ public class AddressService {
     }
 
     public void deleteAddressById(Integer id) {
-        if(!repository.existsById(id))
+        if(!addressRepository.existsById(id))
             throw new EntityNotFoundException();
 
-        repository.deleteById(id);
+        addressRepository.deleteById(id);
     }
 
     public AddressModel updateAddressById(Integer id, AddressModel address) {
-        if(!repository.existsById(id))
+        if(!addressRepository.existsById(id))
             throw new EntityNotFoundException();
 
         address.setId(id);
-        return repository.save(address);
+        return addressRepository.save(address);
     }
 }

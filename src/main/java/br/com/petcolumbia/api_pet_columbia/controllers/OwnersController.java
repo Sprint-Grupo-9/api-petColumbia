@@ -1,9 +1,8 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
-import br.com.petcolumbia.api_pet_columbia.models.OwnerModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.services.OwnerService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class OwnersController {
 
-    @Autowired
-    private OwnerService ownerService;
+    private final OwnerService ownerService;
+
+   public OwnersController(OwnerService ownerService) {
+      this.ownerService = ownerService;
+   }
 
    @PostMapping
    public ResponseEntity<OwnerModel>registerUser(@RequestBody OwnerModel newUser){

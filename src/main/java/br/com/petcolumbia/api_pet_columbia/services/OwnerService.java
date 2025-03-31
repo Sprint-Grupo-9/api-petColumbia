@@ -1,7 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
-import br.com.petcolumbia.api_pet_columbia.models.OwnerModel;
-import br.com.petcolumbia.api_pet_columbia.repositories.IUserRepository;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
+import br.com.petcolumbia.api_pet_columbia.repositories.IOwnerRepository;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +13,14 @@ import java.util.Optional;
 public class OwnerService {
 
     @Autowired
-    private IUserRepository repository;
+    private IOwnerRepository ownerRepository;
 
     public OwnerModel createUser(OwnerModel newUser){
-        return repository.save(newUser);
+        return ownerRepository.save(newUser);
     }
 
     public OwnerModel findyUserById(@PathVariable Integer id) {
-        Optional<OwnerModel> byId = repository.findById(id);
+        Optional<OwnerModel> byId = ownerRepository.findById(id);
 
         if(byId.isEmpty())
             throw new EntityNotFoundException();
@@ -29,17 +29,17 @@ public class OwnerService {
     }
 
     public void deleteUserById(Integer id) {
-        if(!repository.existsById(id))
+        if(!ownerRepository.existsById(id))
             throw new EntityNotFoundException();
 
-        repository.deleteById(id);
+        ownerRepository.deleteById(id);
     }
 
     public OwnerModel updateUserById(Integer id, OwnerModel user) {
-        if(!repository.existsById(id))
+        if(!ownerRepository.existsById(id))
             throw new EntityNotFoundException();
 
         user.setId(id);
-        return repository.save(user);
+        return ownerRepository.save(user);
     }
 }

@@ -1,9 +1,8 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
-import br.com.petcolumbia.api_pet_columbia.models.PetModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
 import br.com.petcolumbia.api_pet_columbia.services.PetService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/pets")
 public class PetsController {
 
-    @Autowired
-    private PetService petService;
+    private final PetService petService;
+
+    public PetsController(PetService petService) {
+        this.petService = petService;
+    }
 
     @PostMapping
     public ResponseEntity<PetModel>registerPet(@RequestBody PetModel newPet){
