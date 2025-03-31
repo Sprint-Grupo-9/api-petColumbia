@@ -1,6 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
-import br.com.petcolumbia.api_pet_columbia.models.PetModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
 import br.com.petcolumbia.api_pet_columbia.repositories.IPetRepository;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,14 @@ import java.util.Optional;
 public class PetService {
 
     @Autowired
-    private IPetRepository repository;
+    private IPetRepository petRepository;
 
     public PetModel createPet(PetModel newPet){
-        return repository.save(newPet);
+        return petRepository.save(newPet);
     }
 
     public PetModel findyPetById(@PathVariable Integer id) {
-        Optional<PetModel> byId = repository.findById(id);
+        Optional<PetModel> byId = petRepository.findById(id);
 
         if(byId.isEmpty())
             throw new EntityNotFoundException();
@@ -29,17 +29,17 @@ public class PetService {
     }
 
     public void deletePetById(Integer id) {
-        if(!repository.existsById(id))
+        if(!petRepository.existsById(id))
             throw new EntityNotFoundException();
 
-        repository.deleteById(id);
+        petRepository.deleteById(id);
     }
 
     public PetModel updatePetById(Integer id, PetModel pet) {
-        if(!repository.existsById(id))
+        if(!petRepository.existsById(id))
             throw new EntityNotFoundException();
 
         pet.setId(id);
-        return repository.save(pet);
+        return petRepository.save(pet);
     }
 }

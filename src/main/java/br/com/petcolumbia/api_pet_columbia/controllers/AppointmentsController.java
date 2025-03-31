@@ -1,12 +1,12 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
-import br.com.petcolumbia.api_pet_columbia.models.AvailableTimes;
-import br.com.petcolumbia.api_pet_columbia.models.PetModel;
-import br.com.petcolumbia.api_pet_columbia.models.ServiceModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.PriceAndTimeModel;
+import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
+import br.com.petcolumbia.api_pet_columbia.services.EmployeeServiceAssociationService;
+import br.com.petcolumbia.api_pet_columbia.services.PriceAndTimeService;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,26 +16,37 @@ import java.util.List;
 @RequestMapping("/appointments")
 public class AppointmentsController {
 
+    private final EmployeeServiceAssociationService employeeServiceAssociation;
+    private final PriceAndTimeService priceAndTimeService;
+
+    public AppointmentsController(
+            EmployeeServiceAssociationService employeeServiceAssociation,
+            PriceAndTimeService priceAndTimeService) {
+        this.employeeServiceAssociation = employeeServiceAssociation;
+        this.priceAndTimeService = priceAndTimeService;
+    }
 
     @GetMapping()
-    public void pegarHorarios(@RequestParam LocalDate date, PetModel pet, ServiceModel service){
+    public List<AvailableTimesModel> pegarHorarios(
+            @RequestParam LocalDate date, @RequestBody PetModel pet, Integer serviceId){
 
-        List<AvailableTimes> availableTimes = new ArrayList<>();
+        List<AvailableTimesModel> availableTimeModels = new ArrayList<>();
 
-        //verificar se o dia é valido na tabela de businessTime
-        //
+        List<EmployeeModel> employees = employeeServiceAssociation
+                .listEmployeesServices(serviceId);
 
-        /*
-        exemplo pegar funcionarios que fazem serviço x
-        select e.* from employee e
-        join employees_has_services es on e.id = es.employee_id
-        join service s on s.id = es.services_id
-        where s.id = {serviço x};
-         */
-        //pegar o serviço, (query personalizada) e ver com base no pet quais funcionarios fazem
+        PriceAndTimeModel service = priceAndTimeService.
+                pegarServicoPrecoTempo(serviceId, pet.getSize(), pet.getCoat());
+
+        for(EmployeeModel employee : employees){
+            List<String> times = new ArrayList<>();
+
+        }
+
         //pegar os agendamentos desses funcionarios
         //pegar os horários disponiveis de cada funcionario
-
+        //retornar os funcionarios e seus horários disponiveis
+        return null;
     }
 
 }
