@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.models;
+package br.com.petcolumbia.api_pet_columbia.domain.entities;
 
 import jakarta.persistence.*;
 
@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "pet")
 public class PetModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +14,7 @@ public class PetModel {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private OwnerModel ownerModel;
+    private OwnerModel owner;
 
     private String name;
     private String size;
@@ -28,9 +29,6 @@ public class PetModel {
     @OneToMany(mappedBy = "pet")
     private List<AppointmentModel> appointments;
 
-    public PetModel() {
-    }
-
     public Integer getId() {
         return id;
     }
@@ -39,12 +37,12 @@ public class PetModel {
         this.id = id;
     }
 
-    public OwnerModel getOwner() {
-        return ownerModel;
+    public OwnerModel getOwnerModel() {
+        return owner;
     }
 
-    public void setOwner(OwnerModel ownerModel) {
-        this.ownerModel = ownerModel;
+    public void setOwnerModel(OwnerModel ownerModel) {
+        this.owner = ownerModel;
     }
 
     public String getName() {

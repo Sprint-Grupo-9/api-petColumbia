@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.models;
+package br.com.petcolumbia.api_pet_columbia.domain.entities;
 
 import jakarta.persistence.*;
 
@@ -16,15 +16,5 @@ public class EmployeeServiceAssociationModel {
     @JoinColumn(name = "service_id")
     private ServiceModel service;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public EmployeeModel getEmployee() {
-        return employee;
-    }
-
-    public ServiceModel getService() {
-        return service;
-    }
 }
