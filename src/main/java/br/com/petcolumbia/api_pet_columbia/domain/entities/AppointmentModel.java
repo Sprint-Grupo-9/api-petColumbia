@@ -19,10 +19,8 @@ public class AppointmentModel {
     @JoinColumn(name = "employee_id")
     private EmployeeModel employee;
 
-    @ManyToOne
-    @JoinColumn(name = "price_and_time_id")
-    private PriceAndTimeModel priceAndTime;
-
+    private String services;
+    private Double totalPrice;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private Boolean isFinished;
@@ -53,12 +51,20 @@ public class AppointmentModel {
         this.employee = employee;
     }
 
-    public PriceAndTimeModel getPriceAndTime() {
-        return priceAndTime;
+    public String getServices() {
+        return services;
     }
 
-    public void setPriceAndTime(PriceAndTimeModel priceAndTime) {
-        this.priceAndTime = priceAndTime;
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public LocalDateTime getStartDateTime() {

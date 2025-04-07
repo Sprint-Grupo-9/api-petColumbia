@@ -14,13 +14,10 @@ public class PriceAndTimeModel {
     @JoinColumn(name = "service_id")
     private ServiceModel service;
 
-    @OneToMany(mappedBy = "priceAndTime")
-    private List<AppointmentModel> appointments;
-
     private String petSize;
     private String petCoat;
     private Double price;
-    private Double time;
+    private Integer time;
 
     public Integer getId() {
         return id;
@@ -36,14 +33,6 @@ public class PriceAndTimeModel {
 
     public void setService(ServiceModel service) {
         this.service = service;
-    }
-
-    public List<AppointmentModel> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<AppointmentModel> appointments) {
-        this.appointments = appointments;
     }
 
     public String getPetSize() {
@@ -70,11 +59,11 @@ public class PriceAndTimeModel {
         this.price = price;
     }
 
-    public Double getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(Double time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 }

@@ -10,7 +10,6 @@ public class EmployeeModel {
     @Id
     private Integer id;
     private String name;
-    private Boolean isPresent;
 
     @OneToMany(mappedBy = "employee")
     private List<AppointmentModel> appointments;
@@ -32,14 +31,6 @@ public class EmployeeModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Boolean getPresent() {
-        return isPresent;
-    }
-
-    public void setPresent(Boolean present) {
-        isPresent = present;
     }
 
     public List<AppointmentModel> getAppointments() {
