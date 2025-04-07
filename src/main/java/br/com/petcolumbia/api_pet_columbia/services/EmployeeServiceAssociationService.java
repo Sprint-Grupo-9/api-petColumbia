@@ -15,7 +15,7 @@ public class EmployeeServiceAssociationService {
         this.employeeServiceAssociationRepository = repository;
     }
 
-    public List<EmployeeModel> listEmployeesServices(Integer serviceId){
-        return employeeServiceAssociationRepository.findEmployeesByServiceId(serviceId);
+    public List<EmployeeModel> listEmployeesServices(List<Integer> servicesIds){
+        return employeeServiceAssociationRepository.findEmployeesByServiceIds(servicesIds);
     }
 }

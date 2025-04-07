@@ -19,7 +19,7 @@ public class ServicesController {
     }
 
     @GetMapping()
-    public List<ServiceModel> getServicos(){
-        return serviceService.pegarServicos();
+    public List<ServiceModel> getServices(){
+        return serviceService.listServices();
     }
 }
