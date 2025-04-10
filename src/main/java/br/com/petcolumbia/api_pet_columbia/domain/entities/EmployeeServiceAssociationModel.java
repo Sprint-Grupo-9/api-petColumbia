@@ -15,6 +15,4 @@ public class EmployeeServiceAssociationModel {
     @ManyToOne
     @JoinColumn(name = "service_id")
     private ServiceModel service;
-
-
 }
