@@ -16,14 +16,16 @@ public class OwnerModel {
     private String phoneNumber;
     private String email;
     private String password;
+    private String cep;
+    private String neighborhood;
+    private String street;
+    private String number;
+    private String complement;
     private LocalDate createdAt;
     private LocalDate lastUpdate;
 
     @OneToMany(mappedBy = "owner")
     private List<PetModel> pets;
-
-    @OneToOne
-    private AddressModel address;
 
     public Integer getId() {
         return id;
@@ -73,6 +75,46 @@ public class OwnerModel {
         this.password = password;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
     public LocalDate getCreatedAt() {
         return createdAt;
     }
@@ -95,13 +137,5 @@ public class OwnerModel {
 
     public void setPets(List<PetModel> pets) {
         this.pets = pets;
-    }
-
-    public AddressModel getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressModel address) {
-        this.address = address;
     }
 }

@@ -1,7 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.domain.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
