@@ -3,6 +3,7 @@ package br.com.petcolumbia.api_pet_columbia.domain.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,8 +22,8 @@ public class OwnerModel {
     private String street;
     private String number;
     private String complement;
-    private LocalDate createdAt;
-    private LocalDate lastUpdate;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastUpdate;
 
     @OneToMany(mappedBy = "owner")
     private List<PetModel> pets;
@@ -115,19 +116,19 @@ public class OwnerModel {
         this.complement = complement;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(LocalDate lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

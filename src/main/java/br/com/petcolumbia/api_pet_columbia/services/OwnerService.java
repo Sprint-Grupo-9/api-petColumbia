@@ -13,6 +13,8 @@ import br.com.petcolumbia.api_pet_columbia.repositories.IOwnerRepository;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class OwnerService {
 
@@ -27,6 +29,8 @@ public class OwnerService {
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
         OwnerModel owner = createDtoToEntity(newOwner);
+        owner.setCreatedAt(LocalDateTime.now());
+        owner.setLastUpdate(LocalDateTime.now());
         ownerRepository.save(owner);
 
         return entityToResponseDto(owner);
@@ -63,6 +67,7 @@ public class OwnerService {
         owner.setStreet(dto.getStreet());
         owner.setNumber(dto.getNumber());
         owner.setComplement(dto.getComplement());
+        owner.setLastUpdate(LocalDateTime.now());
 
         OwnerModel saved = ownerRepository.save(owner);
 
@@ -78,6 +83,7 @@ public class OwnerService {
 
         owner.setId(id);
         owner.setPassword(dto.getNewPassword());
+        owner.setLastUpdate(LocalDateTime.now());
 
         return entityToResponseDto(owner);
     }
