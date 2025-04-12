@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
 import br.com.petcolumbia.api_pet_columbia.services.ServiceService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class ServicesController {
         this.serviceService = serviceService;
     }
 
+    @Operation(summary = "Busca todos os serviços")
     @GetMapping()
     public ResponseEntity<List<ServiceModel>> getServices(){
         List<ServiceModel> servicesList = serviceService.listServices();
