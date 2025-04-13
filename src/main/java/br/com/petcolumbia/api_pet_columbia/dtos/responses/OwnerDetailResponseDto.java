@@ -1,32 +1,16 @@
-package br.com.petcolumbia.api_pet_columbia.domain.entities;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses;
 
-import jakarta.persistence.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Entity
-@Table(name = "owner")
-public class OwnerModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OwnerDetailResponseDto {
     private Integer id;
     private String name;
     private String cpf;
     private String phoneNumber;
     private String email;
-    private String password;
     private String cep;
     private String neighborhood;
     private String street;
     private String number;
     private String complement;
-    private LocalDateTime createdAt;
-    private LocalDateTime lastUpdate;
-
-    @OneToMany(mappedBy = "owner")
-    private List<PetModel> pets;
 
     public Integer getId() {
         return id;
@@ -68,14 +52,6 @@ public class OwnerModel {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getCep() {
         return cep;
     }
@@ -114,29 +90,5 @@ public class OwnerModel {
 
     public void setComplement(String complement) {
         this.complement = complement;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public List<PetModel> getPets() {
-        return pets;
-    }
-
-    public void setPets(List<PetModel> pets) {
-        this.pets = pets;
     }
 }
