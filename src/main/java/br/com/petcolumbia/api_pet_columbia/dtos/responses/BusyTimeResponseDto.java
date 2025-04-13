@@ -2,7 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.dtos.responses;
 
 import java.time.LocalTime;
 
-public class AppointmentBusyTimeResponse {
+public class BusyTimeResponseDto {
     private LocalTime startDateTime;
     private LocalTime endDateTime;
 
