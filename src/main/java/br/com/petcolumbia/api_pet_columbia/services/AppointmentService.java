@@ -5,7 +5,9 @@ import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.AppointmentBusyTimeResponse;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.BusyTimeResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
+import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,15 +26,20 @@ public class AppointmentService {
     private final ServiceService serviceService;
     private final PriceAndTimeService priceAndTimeService;
     private final EmployeeService employeeServiceAssociation;
+    private final PetService petService;
 
-    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndTimeService priceAndTimeService, EmployeeService employeeService) {
+    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndTimeService priceAndTimeService, EmployeeService employeeService, PetService petService) {
         this.appointmentRepository = appointmentRepository;
         this.serviceService = serviceService;
         this.priceAndTimeService = priceAndTimeService;
         this.employeeServiceAssociation = employeeService;
+        this.petService = petService;
     }
 
-    public List<AvailableTimesModel> getAvailableTimes(@RequestBody LocalDate date, @RequestBody PetModel pet, @RequestBody List<ServiceModel> services){
+    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services){
+
+        PetResponseDto pet  = petService.findPetById(petId);
+
         List<Integer> servicesIds = serviceService.getServiceIds(services);
 
         String servicesNames = serviceService.getServicesNames(services);
@@ -55,7 +62,7 @@ public class AppointmentService {
         return allAvailableTimes;
     }
 
-    private void removeOccupiedTimes(List<LocalTime> availableTimes, AppointmentBusyTimeResponse busyTime, Integer serviceDurationMinutes) {
+    private void removeOccupiedTimes(List<LocalTime> availableTimes, BusyTimeResponseDto busyTime, Integer serviceDurationMinutes) {
 
         //remove da lista de times os horários entre busyTime
         availableTimes.removeIf(h -> !h.isBefore(busyTime.getStartDateTime()) && h.isBefore(busyTime.getEndDateTime()));
@@ -78,24 +85,24 @@ public class AppointmentService {
                 LocalTime.of(16, 0), LocalTime.of(16, 30), LocalTime.of(17, 0)
         ));
 
-        List<AppointmentBusyTimeResponse> busyTimes = appointmentByDateAndEmployee(employee, date);
+        List<BusyTimeResponseDto> busyTimes = appointmentByDateAndEmployee(employee, date);
 
         if (busyTimes.isEmpty())
             return new AvailableTimesModel(employee, availableTimes, servicesNames, price);
 
-        for (AppointmentBusyTimeResponse busyTime : busyTimes) {
+        for (BusyTimeResponseDto busyTime : busyTimes) {
             removeOccupiedTimes(availableTimes, busyTime, serviceDurationMinutes);
         }
 
         return new AvailableTimesModel(employee, availableTimes, servicesNames, price);
     }
 
-    public List<AppointmentBusyTimeResponse> toBusyTimesDto(List<AppointmentModel> busyAppointments){
-        List<AppointmentBusyTimeResponse> busyTimes = new ArrayList<>();
+    public List<BusyTimeResponseDto> toBusyTimesDto(List<AppointmentModel> busyAppointments){
+        List<BusyTimeResponseDto> busyTimes = new ArrayList<>();
 
         for(AppointmentModel appointment: busyAppointments){
 
-            AppointmentBusyTimeResponse busyTime = new AppointmentBusyTimeResponse();
+            BusyTimeResponseDto busyTime = new BusyTimeResponseDto();
             busyTime.setStartDateTime(appointment.getStartDateTime().toLocalTime());
             busyTime.setEndDateTime(appointment.getEndDateTime().toLocalTime());
 
@@ -105,7 +112,7 @@ public class AppointmentService {
         return busyTimes;
     }
 
-    public List<AppointmentBusyTimeResponse> appointmentByDateAndEmployee(
+    public List<BusyTimeResponseDto> appointmentByDateAndEmployee(
             EmployeeModel employee, LocalDate date){
 
         LocalDateTime startOfDay = date.atStartOfDay();
