@@ -28,9 +28,8 @@ public class OwnerService {
         if(isDuplicateFields(newOwner.getEmail(), newOwner.getCpf(), newOwner.getPhoneNumber(), null))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
+
         OwnerModel owner = createDtoToEntity(newOwner);
-        owner.setCreatedAt(LocalDateTime.now());
-        owner.setLastUpdate(LocalDateTime.now());
         ownerRepository.save(owner);
 
         return entityToResponseDto(owner);
@@ -41,6 +40,11 @@ public class OwnerService {
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado pelo id: " + id));
 
         return entityToDetailResponseDto(owner);
+    }
+
+    public OwnerModel getOwnerById(Integer id) {
+        return ownerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado pelo id: " + id));
     }
 
     public void deleteOwnerById(Integer id) {
@@ -57,7 +61,6 @@ public class OwnerService {
         if (isDuplicateFields(dto.getEmail(), dto.getCpf(), dto.getPhoneNumber(), id))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
-        owner.setId(id);
         owner.setName(dto.getName());
         owner.setEmail(dto.getEmail());
         owner.setCpf(dto.getCpf());
@@ -81,7 +84,6 @@ public class OwnerService {
         if(!dto.getCurrentPassword().equals(owner.getPassword()))
             throw new EntityUnauthorizedException("Senha atual incorreta");
 
-        owner.setId(id);
         owner.setPassword(dto.getNewPassword());
         owner.setLastUpdate(LocalDateTime.now());
 
@@ -100,6 +102,7 @@ public class OwnerService {
 
     public OwnerModel createDtoToEntity(OwnerCreateDto ownerCreateDto){
         OwnerModel owner = new OwnerModel();
+
         owner.setName(ownerCreateDto.getName());
         owner.setCpf(ownerCreateDto.getCpf());
         owner.setPhoneNumber(ownerCreateDto.getPhoneNumber());
@@ -110,6 +113,8 @@ public class OwnerService {
         owner.setStreet(ownerCreateDto.getStreet());
         owner.setNumber(ownerCreateDto.getNumber());
         owner.setComplement(ownerCreateDto.getComplement());
+        owner.setCreatedAt(LocalDateTime.now());
+        owner.setLastUpdate(LocalDateTime.now());
 
         return owner;
     }
