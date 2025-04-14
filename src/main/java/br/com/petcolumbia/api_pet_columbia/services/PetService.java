@@ -29,8 +29,7 @@ public class PetService {
     public PetResponseDto createPet(Integer ownerId, PetCreateUpdateDto dto){
         PetModel pet = createDtoToEntity(dto);
 
-        OwnerModel owner = ownerRepository.findById(ownerId)
-                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        OwnerModel owner = ownerService.getOwnerById(ownerId);
 
         pet.setOwnerModel(owner);
         petRepository.save(pet);
