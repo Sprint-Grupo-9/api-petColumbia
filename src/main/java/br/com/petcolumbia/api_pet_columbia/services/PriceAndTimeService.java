@@ -1,6 +1,5 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
-import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PriceAndTimeModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IPriceAndTimeRepository;
