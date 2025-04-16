@@ -1,6 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.mappers.OwnerMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdateDto;
@@ -28,18 +29,17 @@ public class OwnerService {
         if(isDuplicateFields(newOwner.getEmail(), newOwner.getCpf(), newOwner.getPhoneNumber(), null))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
-
-        OwnerModel owner = createDtoToEntity(newOwner);
+        OwnerModel owner = OwnerMapper.createDtoToEntity(newOwner);
         ownerRepository.save(owner);
 
-        return entityToResponseDto(owner);
+        return OwnerMapper.entityToResponseDto(owner);
     }
 
     public OwnerDetailResponseDto getOwnerDetailById(Integer id) {
         OwnerModel owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado pelo id: " + id));
 
-        return entityToDetailResponseDto(owner);
+        return OwnerMapper.entityToDetailResponseDto(owner);
     }
 
     public OwnerModel getOwnerById(Integer id) {
@@ -74,7 +74,7 @@ public class OwnerService {
 
         OwnerModel saved = ownerRepository.save(owner);
 
-        return entityToResponseDto(saved);
+        return OwnerMapper.entityToResponseDto(saved);
     }
 
     public OwnerResponseDto updatePasswordById(Integer id, OwnerUpdatePasswordDto dto){
@@ -87,7 +87,7 @@ public class OwnerService {
         owner.setPassword(dto.getNewPassword());
         owner.setLastUpdate(LocalDateTime.now());
 
-        return entityToResponseDto(owner);
+        return OwnerMapper.entityToResponseDto(owner);
     }
 
     public OwnerResponseDto login(OwnerLoginDto ownerLogin){
@@ -95,51 +95,9 @@ public class OwnerService {
                 .orElseThrow(() -> new EntityUnauthorizedException("Email ou senha inválidos"));
 
         if(owner.getPassword().equals(ownerLogin.getPassword()))
-            return entityToResponseDto(owner);
+            return OwnerMapper.entityToResponseDto(owner);
 
         throw new EntityUnauthorizedException("Email ou senha inválidos");
-    }
-
-    public OwnerModel createDtoToEntity(OwnerCreateDto ownerCreateDto){
-        OwnerModel owner = new OwnerModel();
-
-        owner.setName(ownerCreateDto.getName());
-        owner.setCpf(ownerCreateDto.getCpf());
-        owner.setPhoneNumber(ownerCreateDto.getPhoneNumber());
-        owner.setEmail(ownerCreateDto.getEmail());
-        owner.setPassword(ownerCreateDto.getPassword());
-        owner.setCep(ownerCreateDto.getCep());
-        owner.setNeighborhood(ownerCreateDto.getNeighborhood());
-        owner.setStreet(ownerCreateDto.getStreet());
-        owner.setNumber(ownerCreateDto.getNumber());
-        owner.setComplement(ownerCreateDto.getComplement());
-        owner.setCreatedAt(LocalDateTime.now());
-        owner.setLastUpdate(LocalDateTime.now());
-
-        return owner;
-    }
-
-    public OwnerResponseDto entityToResponseDto(OwnerModel owner){
-        OwnerResponseDto responseDto = new OwnerResponseDto();
-        responseDto.setId(owner.getId());
-        responseDto.setName(owner.getName());
-
-        return responseDto;
-    }
-
-    private OwnerDetailResponseDto entityToDetailResponseDto(OwnerModel owner) {
-        OwnerDetailResponseDto dto = new OwnerDetailResponseDto();
-        dto.setId(owner.getId());
-        dto.setName(owner.getName());
-        dto.setCpf(owner.getCpf());
-        dto.setPhoneNumber(owner.getPhoneNumber());
-        dto.setEmail(owner.getEmail());
-        dto.setCep(owner.getCep());
-        dto.setNeighborhood(owner.getNeighborhood());
-        dto.setStreet(owner.getStreet());
-        dto.setNumber(owner.getNumber());
-        dto.setComplement(owner.getComplement());
-        return dto;
     }
 
     public boolean isDuplicateFields(String email, String cpf, String phoneNumber, Integer id) {

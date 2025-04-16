@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.mappers.PetMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateUpdateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IOwnerRepository;
@@ -27,21 +28,21 @@ public class PetService {
     }
 
     public PetResponseDto createPet(Integer ownerId, PetCreateUpdateDto dto){
-        PetModel pet = createDtoToEntity(dto);
+        PetModel pet = PetMapper.createDtoToEntity(dto);
 
         OwnerModel owner = ownerService.getOwnerById(ownerId);
 
         pet.setOwnerModel(owner);
         petRepository.save(pet);
 
-        return entityToResponse(pet);
+        return PetMapper.entityToResponse(pet);
     }
 
     public PetResponseDto findPetById(@PathVariable Integer id) {
         PetModel pet  = petRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado"));
 
-        return entityToResponse(pet);
+        return PetMapper.entityToResponse(pet);
     }
 
     public List<PetResponseDto> listAllPetsByOwner(Integer ownerId) {
@@ -54,7 +55,7 @@ public class PetService {
             return new ArrayList<>();
 
         return pets.stream()
-                .map(this::entityToResponse)
+                .map(PetMapper::entityToResponse)
                 .toList();
     }
 
@@ -80,38 +81,6 @@ public class PetService {
 
         petRepository.save(pet);
 
-        return entityToResponse(pet);
-    }
-
-    public PetResponseDto entityToResponse(PetModel pet) {
-        PetResponseDto responseDto = new PetResponseDto();
-
-        responseDto.setId(pet.getId());
-        responseDto.setOwnerId(pet.getOwnerModel().getId());
-        responseDto.setName(pet.getName());
-        responseDto.setSize(pet.getSize());
-        responseDto.setSpecies(pet.getSpecies());
-        responseDto.setType(pet.getType());
-        responseDto.setCoat(pet.getCoat());
-        responseDto.setAge(pet.getAge());
-        responseDto.setSex(pet.getSex());
-
-        return responseDto;
-    }
-
-    public PetModel createDtoToEntity(PetCreateUpdateDto dto) {
-        PetModel pet = new PetModel();
-
-        pet.setName(dto.getName());
-        pet.setSize(dto.getSize());
-        pet.setSpecies(dto.getSpecies());
-        pet.setType(dto.getType());
-        pet.setCoat(dto.getCoat());
-        pet.setAge(dto.getAge());
-        pet.setSex(dto.getSex());
-        pet.setCreatedAt(LocalDateTime.now());
-        pet.setLastUpdate(LocalDateTime.now());
-
-        return pet;
+        return PetMapper.entityToResponse(pet);
     }
 }

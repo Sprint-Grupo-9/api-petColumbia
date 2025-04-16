@@ -102,27 +102,11 @@ public class PetModel {
         this.sex = sex;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
-    }
-
-    public List<AppointmentModel> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<AppointmentModel> appointments) {
-        this.appointments = appointments;
     }
 }

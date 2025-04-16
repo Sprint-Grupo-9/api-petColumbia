@@ -2,15 +2,14 @@ package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
+
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.mappers.EmployeeMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.BusyTimeResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
-import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponse;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,7 +35,7 @@ public class AppointmentService {
         this.petService = petService;
     }
 
-    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services){
+    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceResponse> services){
 
         PetResponseDto pet  = petService.findPetById(petId);
 
@@ -88,13 +87,13 @@ public class AppointmentService {
         List<BusyTimeResponseDto> busyTimes = appointmentByDateAndEmployee(employee, date);
 
         if (busyTimes.isEmpty())
-            return new AvailableTimesModel(employee, availableTimes, servicesNames, price);
+            return new AvailableTimesModel(EmployeeMapper.entityToResponse(employee), availableTimes, serviceDurationMinutes, servicesNames, price);
 
         for (BusyTimeResponseDto busyTime : busyTimes) {
             removeOccupiedTimes(availableTimes, busyTime, serviceDurationMinutes);
         }
 
-        return new AvailableTimesModel(employee, availableTimes, servicesNames, price);
+        return new AvailableTimesModel(EmployeeMapper.entityToResponse(employee), availableTimes, serviceDurationMinutes, servicesNames, price);
     }
 
     public List<BusyTimeResponseDto> toBusyTimesDto(List<AppointmentModel> busyAppointments){

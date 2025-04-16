@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.*;
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponse;
 import br.com.petcolumbia.api_pet_columbia.services.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,10 @@ public class AppointmentsController {
             description = "Receba o dia, pet e serviços solicitados")
     @GetMapping()
     public ResponseEntity<List<AvailableTimesModel>> getAvailableTimes(
-            @RequestBody LocalDate date, @PathVariable Integer petId, @RequestBody List<ServiceModel> services){
+            @RequestBody LocalDate date, @PathVariable Integer petId, @RequestBody List<ServiceResponse> services){
         List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(date, petId, services);
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
+
+
 }

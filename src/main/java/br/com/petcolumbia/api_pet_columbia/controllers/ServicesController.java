@@ -1,6 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponse;
 import br.com.petcolumbia.api_pet_columbia.services.ServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,8 @@ public class ServicesController {
 
     @Operation(summary = "Busca todos os serviços")
     @GetMapping()
-    public ResponseEntity<List<ServiceModel>> getServices(){
-        List<ServiceModel> servicesList = serviceService.listServices();
+    public ResponseEntity<List<ServiceResponse>> getServices(){
+        List<ServiceResponse> servicesList = serviceService.listServices();
         return ResponseEntity.status(200).body(servicesList);
     }
 }
