@@ -3,9 +3,9 @@ package br.com.petcolumbia.api_pet_columbia.services;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.PetMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetUpdateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
-import br.com.petcolumbia.api_pet_columbia.repositories.IOwnerRepository;
 import br.com.petcolumbia.api_pet_columbia.repositories.IPetRepository;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PetService {
@@ -27,7 +26,7 @@ public class PetService {
         this.ownerService = ownerService;
     }
 
-    public PetResponseDto createPet(Integer ownerId, PetCreateUpdateDto dto){
+    public PetResponseDto createPet(Integer ownerId, PetCreateDto dto){
         PetModel pet = PetMapper.createDtoToEntity(dto);
 
         OwnerModel owner = ownerService.getOwnerById(ownerId);
@@ -66,7 +65,7 @@ public class PetService {
         petRepository.deleteById(id);
     }
 
-    public PetResponseDto updatePetById(Integer id, PetCreateUpdateDto dto) {
+    public PetResponseDto updatePetById(Integer id, PetUpdateDto dto) {
         PetModel pet  = petRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado"));
 

@@ -3,7 +3,7 @@ package br.com.petcolumbia.api_pet_columbia.dtos.requests;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class PetCreateUpdateDto {
+public class PetCreateDto {
     @NotBlank(message = "O nome é obrigatório")
     @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     private String name;
