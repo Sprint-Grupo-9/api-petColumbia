@@ -1,16 +1,22 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
-import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
+import br.com.petcolumbia.api_pet_columbia.domain.entities.*;
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentCreateDto;
+import br.com.petcolumbia.api_pet_columbia.repositories.IPetRepository;
+import br.com.petcolumbia.api_pet_columbia.repositories.EmployeeRepository;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.AppointmentResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.BusyTimeResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
+import br.com.petcolumbia.api_pet_columbia.exceptions.EntityConflictException;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,13 +33,22 @@ public class AppointmentService {
     private final PriceAndTimeService priceAndTimeService;
     private final EmployeeService employeeServiceAssociation;
     private final PetService petService;
+    private final IPetRepository petRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndTimeService priceAndTimeService, EmployeeService employeeService, PetService petService) {
+
+
+
+
+    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndTimeService priceAndTimeService, EmployeeService employeeService, PetService petService,  IPetRepository petRepository, EmployeeRepository employeeRepository) {
         this.appointmentRepository = appointmentRepository;
         this.serviceService = serviceService;
         this.priceAndTimeService = priceAndTimeService;
         this.employeeServiceAssociation = employeeService;
         this.petService = petService;
+        this.petRepository = petRepository;
+        this.employeeRepository = employeeRepository;
+
     }
 
     public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services){
@@ -122,5 +137,64 @@ public class AppointmentService {
                 .findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(employee, startOfDay, endOfDay);
 
         return toBusyTimesDto(busyAppointments);
+    }
+
+    public AppointmentModel createAppointment(AppointmentCreateDto dto) {
+        AppointmentModel appointment = createDtoToEntity(dto);
+        return appointmentRepository.save(appointment);
+    }
+
+    private AppointmentModel createDtoToEntity(AppointmentCreateDto dto) {
+        PetModel pet = petRepository.findById(dto.getPet())
+                .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado"));
+
+        EmployeeModel employee = employeeRepository.findById(dto.getEmployee_id())
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado"));
+
+        AppointmentModel appointment = new AppointmentModel();
+        appointment.setPet(pet);
+        appointment.setEmployee(employee);
+        appointment.setServices(dto.getServices().toString()); // Pode melhorar usando JSON se quiser
+        appointment.setTotalPrice(dto.getTotalPrice());
+        appointment.setStartDateTime(dto.getStartDateTime());
+        appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
+        appointment.setFinished(false);
+        appointment.setCreatedAt(LocalDateTime.now());
+        appointment.setLastUpdate(LocalDateTime.now());
+
+        return appointment;
+    }
+
+
+    public AppointmentResponseDto updateAppointmentById(Integer id, AppointmentCreateDto dto) {
+
+        AppointmentModel appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado"));
+
+        PetModel pet = petRepository.findById(dto.getPet())
+                .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado"));
+
+        EmployeeModel employee = employeeRepository.findById(dto.getEmployee_id())
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado"));
+
+        appointment.setPet(pet);
+        appointment.setEmployee(employee);
+        appointment.setServices(dto.getServices().toString());
+        appointment.setTotalPrice(dto.getTotalPrice());
+        appointment.setStartDateTime(dto.getStartDateTime());
+        appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
+        appointment.setLastUpdate(LocalDateTime.now());
+
+
+        appointmentRepository.save(appointment);
+
+        return new AppointmentResponseDto(appointment);
+    }
+
+    public void deleteAppointmentById(Integer id) {
+        if(!appointmentRepository.existsById(id))
+            throw new EntityNotFoundException("Não encontrado usuário com id:" + id);
+
+        appointmentRepository.deleteById(id);
     }
 }
