@@ -2,8 +2,10 @@ package br.com.petcolumbia.api_pet_columbia.dtos.mappers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerDetailResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerInfoResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerTokenResponseDto;
 
 import java.time.LocalDateTime;
 
@@ -28,16 +30,37 @@ public class OwnerMapper {
         return owner;
     }
 
+    public static OwnerModel of(OwnerLoginDto ownerLoginDto){
+        OwnerModel owner = new OwnerModel();
+
+        owner.setEmail(ownerLoginDto.getEmail());
+        owner.setPassword(ownerLoginDto.getPassword());
+
+        return owner;
+    }
+
+    public static OwnerTokenResponseDto of(OwnerModel owner, String token){
+        OwnerTokenResponseDto ownerToken = new OwnerTokenResponseDto();
+
+        ownerToken.setId(owner.getId());
+        ownerToken.setEmail(owner.getEmail());
+        ownerToken.setName(owner.getName());
+        ownerToken.setToken(token);
+
+        return ownerToken;
+    }
+
     public static OwnerResponseDto entityToResponseDto(OwnerModel owner){
         OwnerResponseDto responseDto = new OwnerResponseDto();
         responseDto.setId(owner.getId());
         responseDto.setName(owner.getName());
+        responseDto.setEmail(owner.getEmail());
 
         return responseDto;
     }
 
-    public static OwnerDetailResponseDto entityToDetailResponseDto(OwnerModel owner) {
-        OwnerDetailResponseDto dto = new OwnerDetailResponseDto();
+    public static OwnerInfoResponseDto entityToDetailResponseDto(OwnerModel owner) {
+        OwnerInfoResponseDto dto = new OwnerInfoResponseDto();
         dto.setId(owner.getId());
         dto.setName(owner.getName());
         dto.setCpf(owner.getCpf());

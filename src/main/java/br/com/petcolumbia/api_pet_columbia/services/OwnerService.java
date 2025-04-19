@@ -1,17 +1,24 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
+import br.com.petcolumbia.api_pet_columbia.config.security.JwtTokenManager;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.OwnerMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdatePasswordDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerDetailResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerInfoResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerTokenResponseDto;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityConflictException;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityUnauthorizedException;
 import br.com.petcolumbia.api_pet_columbia.repositories.IOwnerRepository;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,9 +26,15 @@ import java.time.LocalDateTime;
 @Service
 public class OwnerService {
 
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenManager tokenManager;
+    private final AuthenticationManager authenticationManager;
     private final IOwnerRepository ownerRepository;
 
-    public OwnerService(IOwnerRepository ownerRepository) {
+    public OwnerService(PasswordEncoder passwordEncoder, JwtTokenManager tokenManager, AuthenticationManager authenticationManager, IOwnerRepository ownerRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.tokenManager = tokenManager;
+        this.authenticationManager = authenticationManager;
         this.ownerRepository = ownerRepository;
     }
 
@@ -30,12 +43,14 @@ public class OwnerService {
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
         OwnerModel owner = OwnerMapper.createDtoToEntity(newOwner);
+        owner.setPassword(passwordEncoder.encode(owner.getPassword()));
+
         ownerRepository.save(owner);
 
         return OwnerMapper.entityToResponseDto(owner);
     }
 
-    public OwnerDetailResponseDto getOwnerDetailById(Integer id) {
+    public OwnerInfoResponseDto getOwnerDetailById(Integer id) {
         OwnerModel owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado pelo id: " + id));
 
@@ -90,14 +105,21 @@ public class OwnerService {
         return OwnerMapper.entityToResponseDto(owner);
     }
 
-    public OwnerResponseDto login(OwnerLoginDto ownerLogin){
-        OwnerModel owner = ownerRepository.findByEmail(ownerLogin.getEmail())
+    public OwnerTokenResponseDto authenticateOwner(OwnerLoginDto ownerLogin){
+        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
+                ownerLogin.getEmail(), ownerLogin.getPassword()
+        );
+
+        final Authentication authentication = authenticationManager.authenticate(credentials);
+
+        OwnerModel authenticateOwner = ownerRepository.findByEmail(ownerLogin.getEmail())
                 .orElseThrow(() -> new EntityUnauthorizedException("Email ou senha inválidos"));
 
-        if(owner.getPassword().equals(ownerLogin.getPassword()))
-            return OwnerMapper.entityToResponseDto(owner);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        throw new EntityUnauthorizedException("Email ou senha inválidos");
+        final String token = tokenManager.generateToken(authentication);
+
+        return OwnerMapper.of(authenticateOwner, token);
     }
 
     public boolean isDuplicateFields(String email, String cpf, String phoneNumber, Integer id) {
