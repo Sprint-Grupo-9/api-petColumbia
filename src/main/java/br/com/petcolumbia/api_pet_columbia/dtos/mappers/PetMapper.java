@@ -1,7 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.mappers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class PetMapper {
         return responseDto;
     }
 
-    public static PetModel createDtoToEntity(PetCreateUpdateDto dto) {
+    public static PetModel createDtoToEntity(PetCreateDto dto) {
         PetModel pet = new PetModel();
 
         pet.setName(dto.getName());

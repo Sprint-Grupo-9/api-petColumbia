@@ -1,6 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.responses;
 
-public class OwnerDetailResponseDto {
+public class OwnerInfoResponseDto {
     private Integer id;
     private String name;
     private String cpf;

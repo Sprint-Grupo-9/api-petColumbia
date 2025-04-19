@@ -7,7 +7,7 @@ import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.EmployeeMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.BusyTimeResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponse;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponseDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class AppointmentService {
         this.petService = petService;
     }
 
-    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceResponse> services){
+    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceResponseDto> services){
 
         PetResponseDto pet  = petService.findPetById(petId);
 
