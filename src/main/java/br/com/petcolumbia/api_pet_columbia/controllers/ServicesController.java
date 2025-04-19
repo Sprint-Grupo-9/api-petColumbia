@@ -1,9 +1,9 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
-import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponse;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.ServiceService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +21,11 @@ public class ServicesController {
         this.serviceService = serviceService;
     }
 
-    @Operation(summary = "Busca todos os serviços")
     @GetMapping()
-    public ResponseEntity<List<ServiceResponse>> getServices(){
-        List<ServiceResponse> servicesList = serviceService.listServices();
+    @Operation(summary = "Busca todos os serviços")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<List<ServiceResponseDto>> getServices(){
+        List<ServiceResponseDto> servicesList = serviceService.listServices();
         return ResponseEntity.status(200).body(servicesList);
     }
 }
