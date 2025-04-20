@@ -96,10 +96,10 @@ public class OwnerService {
         OwnerModel owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
-        if(!dto.getCurrentPassword().equals(owner.getPassword()))
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), owner.getPassword()))
             throw new EntityUnauthorizedException("Senha atual incorreta");
 
-        owner.setPassword(dto.getNewPassword());
+        owner.setPassword(passwordEncoder.encode(dto.getNewPassword()));
         owner.setLastUpdate(LocalDateTime.now());
 
         return OwnerMapper.entityToResponseDto(owner);
