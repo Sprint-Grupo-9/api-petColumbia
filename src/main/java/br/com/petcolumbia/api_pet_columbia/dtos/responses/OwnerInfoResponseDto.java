@@ -28,16 +28,8 @@ public class OwnerInfoResponseDto {
         this.name = name;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -52,40 +44,20 @@ public class OwnerInfoResponseDto {
         this.email = email;
     }
 
-    public String getCep() {
-        return cep;
-    }
-
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public String getNeighborhood() {
-        return neighborhood;
     }
 
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
     public void setStreet(String street) {
         this.street = street;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
     public void setNumber(String number) {
         this.number = number;
-    }
-
-    public String getComplement() {
-        return complement;
     }
 
     public void setComplement(String complement) {

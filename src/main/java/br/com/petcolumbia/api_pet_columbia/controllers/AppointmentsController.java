@@ -5,6 +5,7 @@ import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.AppointmentMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.AvailableTimesRequest;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.AppointmentResponseDto;
@@ -31,14 +32,13 @@ public class AppointmentsController {
     @Operation(summary = "Lista horários disponíveis de agendamento",
             description = "Receba o dia, pet e serviços solicitados")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<AvailableTimesModel>> getAvailableTimes(
-            @RequestBody LocalDate date, @PathVariable Integer petId, @RequestBody List<ServiceModel> services){
-        List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(date, petId, services);
+    public ResponseEntity<List<AvailableTimesModel>> getAvailableTimes(@RequestBody AvailableTimesRequest availableTimesRequest, @PathVariable Integer petId){
+        List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, availableTimesRequest.getServices());
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
 
     @PostMapping()
-    @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de usuário")
+    @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de agendamento")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<AppointmentResponseDto>registerAppointment(@RequestBody AppointmentCreateDto newAppointment){
         AppointmentModel savedAppointment = appointmentService.createAppointment(newAppointment);

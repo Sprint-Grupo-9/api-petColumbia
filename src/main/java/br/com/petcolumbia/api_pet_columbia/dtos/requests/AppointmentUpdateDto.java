@@ -8,19 +8,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AppointmentUpdateDto {
-    @NotNull(message = "O Pet é obrigatório")
+    @NotNull(message = "O Id do Pet é obrigatório")
     private Integer petId;
 
-    @NotNull(message = "O Funcionario é obrigatório")
+    @NotNull(message = "O Id do Funcionário é obrigatório")
     private Integer employee_id;
 
-    @NotEmpty(message = "O serviço é obrigatório")
+    @NotEmpty(message = "Os serviços são obrigatórios")
     private List<ServiceModel> services;
 
     @NotNull(message = "O preço é obrigatório")
     private Double totalPrice;
 
-    @NotNull(message = "O data de inicio é obrigatória")
+    @NotNull(message = "A data de início é obrigatória")
     private LocalDateTime startDateTime;
 
     @NotNull(message = "A duração é obrigatória")
@@ -30,16 +30,8 @@ public class AppointmentUpdateDto {
         return petId;
     }
 
-    public void setPetId (Integer petId) {
-        this.petId = petId;
-    }
-
     public Integer getEmployee_id() {
         return employee_id;
-    }
-
-    public void setEmployee_id(Integer employee_id) {
-        this.employee_id = employee_id;
     }
 
     public List<ServiceModel> getServices() {
@@ -54,23 +46,11 @@ public class AppointmentUpdateDto {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
-        this.startDateTime = startDateTime;
-    }
-
     public Integer getDurationMinutes() {
         return durationMinutes;
-    }
-
-    public void setDurationMinutes(Integer durationMinutes) {
-        this.durationMinutes = durationMinutes;
     }
 }

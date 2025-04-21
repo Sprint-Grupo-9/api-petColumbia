@@ -34,17 +34,14 @@ public class AppointmentService {
     private final PriceAndTimeService priceAndTimeService;
     private final EmployeeService employeeServiceAssociation;
     private final PetService petService;
-    private final EmployeeRepository employeeRepository;
     private final EmployeeService employeeService;
 
-
-    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndTimeService priceAndTimeService, EmployeeService employeeServiceAssociation, PetService petService, EmployeeRepository employeeRepository, EmployeeService employeeService) {
+    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndTimeService priceAndTimeService, EmployeeService employeeServiceAssociation, PetService petService, EmployeeService employeeService) {
         this.appointmentRepository = appointmentRepository;
         this.serviceService = serviceService;
         this.priceAndTimeService = priceAndTimeService;
         this.employeeServiceAssociation = employeeServiceAssociation;
         this.petService = petService;
-        this.employeeRepository = employeeRepository;
         this.employeeService = employeeService;
     }
 
