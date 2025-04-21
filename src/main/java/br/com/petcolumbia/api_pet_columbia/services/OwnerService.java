@@ -38,7 +38,7 @@ public class OwnerService {
         this.ownerRepository = ownerRepository;
     }
 
-    public OwnerResponseDto createOwner(OwnerCreateDto newOwner){
+    public OwnerModel createOwner(OwnerCreateDto newOwner){
         if(isDuplicateFields(newOwner.getEmail(), newOwner.getCpf(), newOwner.getPhoneNumber(), null))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
@@ -47,14 +47,12 @@ public class OwnerService {
 
         ownerRepository.save(owner);
 
-        return OwnerMapper.entityToResponseDto(owner);
+        return owner;
     }
 
-    public OwnerInfoResponseDto getOwnerDetailById(Integer id) {
-        OwnerModel owner = ownerRepository.findById(id)
+    public OwnerModel getOwnerDetailById(Integer id) {
+        return ownerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado pelo id: " + id));
-
-        return OwnerMapper.entityToDetailResponseDto(owner);
     }
 
     public OwnerModel getOwnerById(Integer id) {
@@ -69,40 +67,43 @@ public class OwnerService {
         ownerRepository.deleteById(id);
     }
 
-    public OwnerResponseDto updateOwnerById(Integer id, OwnerUpdateDto dto) {
+    public OwnerModel updateOwnerById(Integer id, OwnerModel updatedOwner) {
         OwnerModel owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
-        if (isDuplicateFields(dto.getEmail(), dto.getCpf(), dto.getPhoneNumber(), id))
+        if (isDuplicateFields(updatedOwner.getEmail(), updatedOwner.getCpf(), updatedOwner.getPhoneNumber(), id))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
-        owner.setName(dto.getName());
-        owner.setEmail(dto.getEmail());
-        owner.setCpf(dto.getCpf());
-        owner.setPhoneNumber(dto.getPhoneNumber());
-        owner.setCep(dto.getCep());
-        owner.setNeighborhood(dto.getNeighborhood());
-        owner.setStreet(dto.getStreet());
-        owner.setNumber(dto.getNumber());
-        owner.setComplement(dto.getComplement());
-        owner.setLastUpdate(LocalDateTime.now());
+        owner.setName(updatedOwner.getName());
+        owner.setEmail(updatedOwner.getEmail());
+        owner.setCpf(updatedOwner.getCpf());
+        owner.setPhoneNumber(updatedOwner.getPhoneNumber());
+        owner.setCep(updatedOwner.getCep());
+        owner.setNeighborhood(updatedOwner.getNeighborhood());
+        owner.setStreet(updatedOwner.getStreet());
+        owner.setNumber(updatedOwner.getNumber());
+        owner.setComplement(updatedOwner.getComplement());
 
-        OwnerModel saved = ownerRepository.save(owner);
+        ownerRepository.save(owner);
 
-        return OwnerMapper.entityToResponseDto(saved);
+        return owner;
     }
 
-    public OwnerResponseDto updatePasswordById(Integer id, OwnerUpdatePasswordDto dto){
+    public static void updateEntityFromDto(OwnerModel owner, OwnerUpdateDto dto){
+
+    }
+
+    public OwnerModel updatePasswordById(Integer id, OwnerUpdatePasswordDto dto){
         OwnerModel owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
-        if(!dto.getCurrentPassword().equals(owner.getPassword()))
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), owner.getPassword()))
             throw new EntityUnauthorizedException("Senha atual incorreta");
 
-        owner.setPassword(dto.getNewPassword());
+        owner.setPassword(passwordEncoder.encode(dto.getNewPassword()));
         owner.setLastUpdate(LocalDateTime.now());
 
-        return OwnerMapper.entityToResponseDto(owner);
+        return owner;
     }
 
     public OwnerTokenResponseDto authenticateOwner(OwnerLoginDto ownerLogin){

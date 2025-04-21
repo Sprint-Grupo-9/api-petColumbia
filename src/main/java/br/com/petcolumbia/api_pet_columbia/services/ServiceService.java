@@ -1,5 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
+import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.ServiceMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponseDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IServiceRepository;
@@ -17,19 +18,19 @@ public class ServiceService {
         this.serviceRepository = serviceRepository;
     }
 
-    public List<ServiceResponseDto> listServices() {
-        return ServiceMapper.entityToResponse(serviceRepository.findAll());
+    public List<ServiceModel> listServices() {
+        return serviceRepository.findAll();
     }
 
-    public String getServicesNames(List<ServiceResponseDto> services){
+    public String getServicesNames(List<ServiceModel> services){
         return services.stream()
-                .map(ServiceResponseDto::getName)
+                .map(ServiceModel::getName)
                 .collect(Collectors.joining(", "));
     }
 
-    public List<Integer> getServiceIds(List<ServiceResponseDto> services) {
+    public List<Integer> getServiceIds(List<ServiceModel> services) {
         return services.stream()
-                .map(ServiceResponseDto::getId)
+                .map(ServiceModel::getId)
                 .collect(Collectors.toList());
     }
 
