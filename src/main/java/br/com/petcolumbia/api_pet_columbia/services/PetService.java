@@ -26,26 +26,21 @@ public class PetService {
         this.ownerService = ownerService;
     }
 
-    public PetResponseDto createPet(Integer ownerId, PetCreateDto dto){
-        PetModel pet = PetMapper.createDtoToEntity(dto);
-
+    public PetModel createPet(Integer ownerId, PetModel pet){
         OwnerModel owner = ownerService.getOwnerById(ownerId);
 
         pet.setOwnerModel(owner);
         petRepository.save(pet);
 
-        return PetMapper.entityToResponse(pet);
+        return pet;
     }
 
-    public PetResponseDto findPetById(@PathVariable Integer id) {
-        PetModel pet  = petRepository.findById(id)
+    public PetModel findPetById(@PathVariable Integer id) {
+        return petRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado"));
-
-        return PetMapper.entityToResponse(pet);
     }
 
-    public List<PetResponseDto> listAllPetsByOwner(Integer ownerId) {
-
+    public List<PetModel> listAllPetsByOwner(Integer ownerId) {
         OwnerModel owner = ownerService.getOwnerById(ownerId);
 
         List<PetModel> pets = petRepository.findAllByOwner(owner);
@@ -53,9 +48,7 @@ public class PetService {
         if(pets.isEmpty())
             return new ArrayList<>();
 
-        return pets.stream()
-                .map(PetMapper::entityToResponse)
-                .toList();
+        return pets;
     }
 
     public void deletePetById(Integer id) {
@@ -65,21 +58,21 @@ public class PetService {
         petRepository.deleteById(id);
     }
 
-    public PetResponseDto updatePetById(Integer id, PetUpdateDto dto) {
+    public PetModel updatePetById(Integer id, PetModel updatedPet) {
         PetModel pet  = petRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado"));
 
-        pet.setName(dto.getName());
-        pet.setSize(dto.getSize());
-        pet.setSpecies(dto.getSpecies());
-        pet.setType(dto.getType());
-        pet.setCoat(dto.getCoat());
-        pet.setAge(dto.getAge());
-        pet.setSex(dto.getSex());
+        pet.setName(updatedPet.getName());
+        pet.setSize(updatedPet.getSize());
+        pet.setSpecies(updatedPet.getSpecies());
+        pet.setType(updatedPet.getType());
+        pet.setCoat(updatedPet.getCoat());
+        pet.setAge(updatedPet.getAge());
+        pet.setSex(updatedPet.getSex());
         pet.setLastUpdate(LocalDateTime.now());
 
         petRepository.save(pet);
 
-        return PetMapper.entityToResponse(pet);
+        return pet;
     }
 }

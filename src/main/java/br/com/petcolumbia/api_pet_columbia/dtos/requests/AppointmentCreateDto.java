@@ -1,11 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.requests;
 
-import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,20 +25,12 @@ public class AppointmentCreateDto {
     @NotNull(message = "A duração é obrigatória")
     private Integer durationMinutes;
 
-    public Integer getPet() {
+    public Integer getPetId() {
         return petId;
     }
 
-    public void setPet(Integer petId) {
+    public void setPetId (Integer petId) {
         this.petId = petId;
-    }
-
-    public List<ServiceModel> getServices() {
-        return services;
-    }
-
-    public void setServices(List<ServiceModel> services) {
-        this.services = services;
     }
 
     public Integer getEmployee_id() {
@@ -53,12 +41,12 @@ public class AppointmentCreateDto {
         this.employee_id = employee_id;
     }
 
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
+    public List<ServiceModel> getServices() {
+        return services;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
-        this.startDateTime = startDateTime;
+    public void setServices (List<ServiceModel> services) {
+        this.services = services;
     }
 
     public Double getTotalPrice() {
@@ -67,6 +55,14 @@ public class AppointmentCreateDto {
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
     public Integer getDurationMinutes() {

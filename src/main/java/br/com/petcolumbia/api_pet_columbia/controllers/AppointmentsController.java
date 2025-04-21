@@ -37,22 +37,25 @@ public class AppointmentsController {
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
 
+    @PostMapping()
     @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de usuário")
-    @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<AppointmentResponseDto>registerAppointment(@RequestBody AppointmentCreateDto newAppointment){
         AppointmentModel savedAppointment = appointmentService.createAppointment(newAppointment);
         return ResponseEntity.status(201).body(AppointmentMapper.entityToResponse(savedAppointment));
     }
 
-    @Operation(summary = "Atualiza um agendamento pelo id e objeto", description = "recebe o id e objeto para atualizar")
     @PutMapping("/{id}")
+    @Operation(summary = "Atualiza um agendamento pelo id e objeto", description = "recebe o id e objeto para atualizar")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<AppointmentResponseDto> updateAppointment(@PathVariable Integer id, @RequestBody AppointmentUpdateDto dto) {
         AppointmentModel updatedAppointment = appointmentService.updateAppointmentById(id, dto);
         return ResponseEntity.status(200).body(AppointmentMapper.entityToResponse(updatedAppointment));
     }
 
-    @Operation(summary = "Deleta um agendamento pelo id")
     @DeleteMapping("/{id}")
+    @Operation(summary = "Deleta um agendamento pelo id")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> deleteAppointment(@PathVariable Integer id) {
         appointmentService.deleteAppointmentById(id);
         return ResponseEntity.status(204).build();

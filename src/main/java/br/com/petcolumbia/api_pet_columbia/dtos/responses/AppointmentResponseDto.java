@@ -1,28 +1,69 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.responses;
 
-import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
-
 import java.time.LocalDateTime;
 
 public class AppointmentResponseDto {
     private Integer id;
-    private PetModel pet;
-    private EmployeeModel employee;
+    private PetResponseDto pet;
+    private EmployeeResponseDto employee;
+    private String services;
     private Double totalPrice;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
-    public AppointmentResponseDto(AppointmentModel appointment) {
+    public Integer getId() {
+        return id;
     }
 
-    public AppointmentResponseDto(Integer id, EmployeeModel employee, PetModel pet, LocalDateTime endDateTime, LocalDateTime startDateTime, Double totalPrice) {
+    public void setId(Integer id) {
         this.id = id;
-        this.employee = employee;
+    }
+
+    public PetResponseDto getPet() {
+        return pet;
+    }
+
+    public void setPet(PetResponseDto pet) {
         this.pet = pet;
-        this.endDateTime = endDateTime;
-        this.startDateTime = startDateTime;
+    }
+
+    public EmployeeResponseDto getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeResponseDto employee) {
+        this.employee = employee;
+    }
+
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
     }
 }

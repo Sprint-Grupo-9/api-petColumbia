@@ -3,6 +3,7 @@ package br.com.petcolumbia.api_pet_columbia.dtos.mappers;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerInfoResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerTokenResponseDto;
@@ -72,5 +73,22 @@ public class OwnerMapper {
         dto.setNumber(owner.getNumber());
         dto.setComplement(owner.getComplement());
         return dto;
+    }
+
+    public static OwnerModel updateDtoToEntity(OwnerUpdateDto updatedOwner){
+        OwnerModel owner = new OwnerModel();
+
+        owner.setName(updatedOwner.getName());
+        owner.setEmail(updatedOwner.getEmail());
+        owner.setCpf(updatedOwner.getCpf());
+        owner.setPhoneNumber(updatedOwner.getPhoneNumber());
+        owner.setCep(updatedOwner.getCep());
+        owner.setNeighborhood(updatedOwner.getNeighborhood());
+        owner.setStreet(updatedOwner.getStreet());
+        owner.setNumber(updatedOwner.getNumber());
+        owner.setComplement(updatedOwner.getComplement());
+        owner.setLastUpdate(LocalDateTime.now());
+
+        return owner;
     }
 }
