@@ -1,5 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
+import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.mappers.OwnerMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdateDto;
@@ -27,16 +29,16 @@ public class OwnersController {
    @PostMapping
    @Operation(summary = "Regista um novo usuário, Recebe um dto de criação de usuário")
    public ResponseEntity<OwnerResponseDto> registerOwner(@Valid @RequestBody OwnerCreateDto newOwner){
-      OwnerResponseDto savedOwner = ownerService.createOwner(newOwner);
-      return ResponseEntity.status(201).body(savedOwner);
+      OwnerModel savedOwner = ownerService.createOwner(newOwner);
+      return ResponseEntity.status(201).body(OwnerMapper.entityToResponseDto(savedOwner));
    }
 
    @GetMapping("/{id}")
    @Operation(summary = "Procura um usuário pelo id", description = "retorna dados do usuário, com exceção da senha, para tela de atualização de usuário")
    @SecurityRequirement(name = "Bearer")
    public ResponseEntity<OwnerInfoResponseDto> searchOwner(@PathVariable Integer id) {
-      OwnerInfoResponseDto owner = ownerService.getOwnerDetailById(id);
-      return ResponseEntity.status(200).body(owner);
+      OwnerModel owner = ownerService.getOwnerDetailById(id);
+      return ResponseEntity.status(200).body(OwnerMapper.entityToDetailResponseDto(owner));
    }
 
    @DeleteMapping("/{id}")
@@ -51,16 +53,16 @@ public class OwnersController {
    @Operation(summary = "Atualiza um usuário pelo id e objeto", description = "recebe o id e objeto para atualizar, com exceção da senha")
    @SecurityRequirement(name = "Bearer")
    public ResponseEntity<OwnerResponseDto> updateOwner(@PathVariable Integer id, @Valid @RequestBody OwnerUpdateDto owner) {
-      OwnerResponseDto updatedOwner = ownerService.updateOwnerById(id, owner);
-      return ResponseEntity.status(200).body(updatedOwner);
+      OwnerModel updatedOwner = ownerService.updateOwnerById(id, OwnerMapper.updateDtoToEntity(owner));
+      return ResponseEntity.status(200).body(OwnerMapper.entityToResponseDto(updatedOwner));
    }
 
    @Operation(summary = "Atualiza a senha de um usuário pelo id e objeto", description = "recebe o id, senha atual e senha nova")
    @PatchMapping("/{id}")
    @SecurityRequirement(name = "Bearer")
    public ResponseEntity<OwnerResponseDto> updateOwnerPassword(@PathVariable Integer id, @Valid @RequestBody OwnerUpdatePasswordDto owner) {
-      OwnerResponseDto updatedOwner = ownerService.updatePasswordById(id, owner);
-      return ResponseEntity.status(200).body(updatedOwner);
+      OwnerModel updatedOwner = ownerService.updatePasswordById(id, owner);
+      return ResponseEntity.status(200).body(OwnerMapper.entityToResponseDto(updatedOwner));
    }
 
    @Operation(summary = "Realiza o autenticação do usuário, recebe o email e senha")

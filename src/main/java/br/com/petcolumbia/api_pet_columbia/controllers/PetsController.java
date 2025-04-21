@@ -1,5 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
+import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.mappers.PetMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetUpdateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
@@ -29,27 +31,33 @@ public class PetsController {
     @Operation(summary = "Cria um novo pet, recebe o id do usuário e uma dto de criação de pet")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PetResponseDto>registerPet(@PathVariable Integer ownerId, @Valid @RequestBody PetCreateDto pet){
-        PetResponseDto savedPet = petService.createPet(ownerId, pet);
-        return ResponseEntity.status(201).body(savedPet);
+        PetModel createdPet = petService.createPet(ownerId, PetMapper.createDtoToEntity(pet));
+
+        return ResponseEntity.status(201).body(PetMapper.entityToResponse(createdPet));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca um pet pelo id")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PetResponseDto> searchPet(@PathVariable Integer id) {
-        PetResponseDto pet = petService.findPetById(id);
-        return ResponseEntity.status(200).body(pet);
+        PetModel pet = petService.findPetById(id);
+        return ResponseEntity.status(200).body(PetMapper.entityToResponse(pet));
     }
 
     @GetMapping("/all/{id}")
     @Operation(summary = "Buscar todos os pets de um usuário", description = "recebe o id do usuário")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PetResponseDto>> getAllPetsByOwnerId(@PathVariable Integer ownerId) {
-        List<PetResponseDto> allPets = petService.listAllPetsByOwner(ownerId);
+        List<PetModel> allPets = petService.listAllPetsByOwner(ownerId);
+
         if(allPets.isEmpty())
             return ResponseEntity.status(204).build();
 
-        return ResponseEntity.status(200).body(allPets);
+        List<PetResponseDto> responsePets = allPets.stream()
+                .map(PetMapper::entityToResponse)
+                .toList();
+
+        return ResponseEntity.status(200).body(responsePets);
     }
 
     @DeleteMapping("/{id}")
@@ -64,8 +72,8 @@ public class PetsController {
     @Operation(summary = "Atualiza um pet pelo id e objeto", description = "recebe o id e o objeto para atualizar")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PetResponseDto> updatePet(@PathVariable Integer id, @RequestBody PetUpdateDto pet) {
-        PetResponseDto updatedPet = petService.updatePetById(id, pet);
-        return ResponseEntity.status(200).body(updatedPet);
+        PetModel updatedPet = petService.updatePetById(id, PetMapper.updateDtoToEntity(pet));
+        return ResponseEntity.status(200).body(PetMapper.entityToResponse(updatedPet));
     }
 
 }
