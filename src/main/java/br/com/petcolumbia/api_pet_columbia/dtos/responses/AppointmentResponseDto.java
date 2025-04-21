@@ -27,10 +27,6 @@ public class AppointmentResponseDto {
         this.pet = pet;
     }
 
-    public EmployeeResponseDto getEmployee() {
-        return employee;
-    }
-
     public void setEmployee(EmployeeResponseDto employee) {
         this.employee = employee;
     }
@@ -43,24 +39,12 @@ public class AppointmentResponseDto {
         this.services = services;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
-    }
-
     public void setStartDateTime(LocalDateTime startDateTime) {
         this.startDateTime = startDateTime;
-    }
-
-    public LocalDateTime getEndDateTime() {
-        return endDateTime;
     }
 
     public void setEndDateTime(LocalDateTime endDateTime) {
