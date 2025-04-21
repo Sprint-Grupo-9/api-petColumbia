@@ -15,7 +15,7 @@ public class OwnerCreateDto {
     private String cpf;
 
     @NotBlank(message = "O número de telefone é obrigatório")
-    @Size(min = 15, max = 15, message = "O número de telefone deve conter exatamente 15 caracteres (com DDD e máscara)")
+    @Size(min = 11, max = 11, message = "O número de telefone deve conter 11 caracteres, sem formatação")
     private String phoneNumber;
 
     @NotBlank(message = "O e-mail é obrigatório")
@@ -28,7 +28,7 @@ public class OwnerCreateDto {
     private String password;
 
     @NotBlank(message = "O CEP é obrigatório")
-    @Size(min = 9, max = 9, message = "O CEP deve ter exatamente 9 caracteres (formato 00000-000)")
+    @Size(min = 8, max = 8, message = "O CEP deve ter exatamente 9 caracteres (formato 00000-000)")
     private String cep;
 
     @NotBlank(message = "O bairro é obrigatório")

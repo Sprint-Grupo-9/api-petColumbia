@@ -50,4 +50,20 @@ public class AppointmentResponseDto {
     public void setEndDateTime(LocalDateTime endDateTime) {
         this.endDateTime = endDateTime;
     }
+
+    public EmployeeResponseDto getEmployee() {
+        return employee;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }
 }

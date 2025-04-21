@@ -54,7 +54,9 @@ public class CustomSecurityConfig {
             new AntPathRequestMatcher("/owners/login/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/h2-console/**/**"),
-            new AntPathRequestMatcher("/error/**")
+            new AntPathRequestMatcher("/error/**"),
+            new AntPathRequestMatcher("/owners", HttpMethod.POST.name()),
+            new AntPathRequestMatcher("/owners/login")
     };
 
     @Bean

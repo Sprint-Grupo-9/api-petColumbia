@@ -63,4 +63,32 @@ public class OwnerInfoResponseDto {
     public void setComplement(String complement) {
         this.complement = complement;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
 }
