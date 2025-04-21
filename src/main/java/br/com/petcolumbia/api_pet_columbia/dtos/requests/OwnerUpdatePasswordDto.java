@@ -18,4 +18,6 @@ public class OwnerUpdatePasswordDto {
     public String getCurrentPassword() {
         return currentPassword;
     }
+
+
 }

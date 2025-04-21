@@ -54,4 +54,32 @@ public class PetResponseDto {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getCoat() {
+        return coat;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
 }
