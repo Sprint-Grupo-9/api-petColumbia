@@ -37,11 +37,11 @@ public class PetModel {
         this.id = id;
     }
 
-    public OwnerModel getOwnerModel() {
+    public OwnerModel getOwner() {
         return owner;
     }
 
-    public void setOwnerModel(OwnerModel ownerModel) {
+    public void setOwner(OwnerModel ownerModel) {
         this.owner = ownerModel;
     }
 

@@ -13,7 +13,7 @@ public class PetMapper {
         PetResponseDto responseDto = new PetResponseDto();
 
         responseDto.setId(pet.getId());
-        responseDto.setOwnerId(pet.getOwnerModel().getId());
+        responseDto.setOwner(OwnerMapper.entityToResponseDto(pet.getOwner()));
         responseDto.setName(pet.getName());
         responseDto.setSize(pet.getSize());
         responseDto.setSpecies(pet.getSpecies());

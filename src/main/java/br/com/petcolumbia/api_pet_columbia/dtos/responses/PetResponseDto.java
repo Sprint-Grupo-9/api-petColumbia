@@ -2,7 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.dtos.responses;
 
 public class PetResponseDto {
     private Integer id;
-    private Integer ownerId;
+    private OwnerResponseDto owner;
     private String name;
     private String size;
     private String species;
@@ -19,8 +19,8 @@ public class PetResponseDto {
         this.id = id;
     }
 
-    public void setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
+    public void setOwner(OwnerResponseDto owner) {
+        this.owner = owner;
     }
 
     public String getName() {
@@ -55,8 +55,8 @@ public class PetResponseDto {
         this.sex = sex;
     }
 
-    public Integer getOwnerId() {
-        return ownerId;
+    public OwnerResponseDto getOwner() {
+        return owner;
     }
 
     public String getSize() {

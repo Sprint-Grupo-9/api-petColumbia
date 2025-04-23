@@ -25,7 +25,7 @@ public class PetService {
     public PetModel createPet(Integer ownerId, PetModel pet){
         OwnerModel owner = ownerService.getOwnerById(ownerId);
 
-        pet.setOwnerModel(owner);
+        pet.setOwner(owner);
         petRepository.save(pet);
 
         return pet;
