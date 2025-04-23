@@ -5,10 +5,7 @@ import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.OwnerMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdatePasswordDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerInfoResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerTokenResponseDto;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityConflictException;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityUnauthorizedException;
@@ -38,17 +35,23 @@ public class OwnerService {
         this.ownerRepository = ownerRepository;
     }
 
-    public OwnerModel createOwner(OwnerCreateDto newOwner){
-        if(isDuplicateFields(newOwner.getEmail(), newOwner.getCpf(), newOwner.getPhoneNumber(), null))
+    public OwnerTokenResponseDto createOwner(OwnerCreateDto newOwner) {
+        if (isDuplicateFields(newOwner.getEmail(), newOwner.getCpf(), newOwner.getPhoneNumber(), null))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
         OwnerModel owner = OwnerMapper.createDtoToEntity(newOwner);
         owner.setPassword(passwordEncoder.encode(owner.getPassword()));
-
         ownerRepository.save(owner);
 
-        return owner;
+        final Authentication authentication = new UsernamePasswordAuthenticationToken(owner.getEmail(), newOwner.getPassword());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        final String token = tokenManager.generateToken(authentication);
+
+        return OwnerMapper.of(owner, token);
     }
+
 
     public OwnerModel getOwnerDetailById(Integer id) {
         return ownerRepository.findById(id)
@@ -87,10 +90,6 @@ public class OwnerService {
         ownerRepository.save(owner);
 
         return owner;
-    }
-
-    public static void updateEntityFromDto(OwnerModel owner, OwnerUpdateDto dto){
-
     }
 
     public OwnerModel updatePasswordById(Integer id, OwnerUpdatePasswordDto dto){

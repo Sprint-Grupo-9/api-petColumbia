@@ -52,4 +52,5 @@ public class AppointmentCreateDto {
     public Integer getDurationMinutes() {
         return durationMinutes;
     }
+
 }

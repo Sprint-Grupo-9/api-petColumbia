@@ -2,10 +2,6 @@ package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.mappers.PetMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IPetRepository;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -29,7 +25,7 @@ public class PetService {
     public PetModel createPet(Integer ownerId, PetModel pet){
         OwnerModel owner = ownerService.getOwnerById(ownerId);
 
-        pet.setOwnerModel(owner);
+        pet.setOwner(owner);
         petRepository.save(pet);
 
         return pet;
@@ -65,7 +61,7 @@ public class PetService {
         pet.setName(updatedPet.getName());
         pet.setSize(updatedPet.getSize());
         pet.setSpecies(updatedPet.getSpecies());
-        pet.setType(updatedPet.getType());
+        pet.setBreed(updatedPet.getBreed());
         pet.setCoat(updatedPet.getCoat());
         pet.setAge(updatedPet.getAge());
         pet.setSex(updatedPet.getSex());
