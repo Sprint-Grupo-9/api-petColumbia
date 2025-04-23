@@ -2,7 +2,6 @@ package br.com.petcolumbia.api_pet_columbia.domain.entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class PetModel {
     private String name;
     private String size;
     private String species;
-    private String type;
+    private String breed;
     private String coat;
     private Integer age;
     private String sex;
@@ -70,12 +69,12 @@ public class PetModel {
         this.species = species;
     }
 
-    public String getType() {
-        return type;
+    public String getBreed() {
+        return breed;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setBreed(String type) {
+        this.breed = type;
     }
 
     public String getCoat() {

@@ -6,7 +6,7 @@ public class PetResponseDto {
     private String name;
     private String size;
     private String species;
-    private String type;
+    private String breed;
     private String coat;
     private Integer age;
     private String sex;
@@ -39,8 +39,8 @@ public class PetResponseDto {
         this.species = species;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
     public void setCoat(String coat) {
@@ -67,8 +67,8 @@ public class PetResponseDto {
         return species;
     }
 
-    public String getType() {
-        return type;
+    public String getBreed() {
+        return breed;
     }
 
     public String getCoat() {

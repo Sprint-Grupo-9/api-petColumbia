@@ -28,9 +28,8 @@ public class OwnersController {
 
    @PostMapping
    @Operation(summary = "Regista um novo usuário, Recebe um dto de criação de usuário")
-   public ResponseEntity<OwnerResponseDto> registerOwner(@Valid @RequestBody OwnerCreateDto newOwner){
-      OwnerModel savedOwner = ownerService.createOwner(newOwner);
-      return ResponseEntity.status(201).body(OwnerMapper.entityToResponseDto(savedOwner));
+   public ResponseEntity<OwnerTokenResponseDto> registerOwner(@Valid @RequestBody OwnerCreateDto newOwner){
+      return ResponseEntity.status(201).body(ownerService.createOwner(newOwner));
    }
 
    @GetMapping("/{id}")

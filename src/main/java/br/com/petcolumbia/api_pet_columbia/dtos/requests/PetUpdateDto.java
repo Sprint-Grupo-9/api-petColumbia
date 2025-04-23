@@ -15,7 +15,7 @@ public class PetUpdateDto {
     private String species;
     @NotBlank(message = "O tipo é obrigatório")
     @Size(max = 40, message = "O tipo deve ter no máximo 40 caracteres")
-    private String type;
+    private String breed;
     @NotBlank(message = "A pelagem é obrigatório")
     @Size(max = 30, message = "A pelagem deve ter no máximo 30 caracteres")
     private String coat;
@@ -41,8 +41,8 @@ public class PetUpdateDto {
         return species;
     }
 
-    public String getType() {
-        return type;
+    public String getBreed() {
+        return breed;
     }
 
     public String getCoat() {
