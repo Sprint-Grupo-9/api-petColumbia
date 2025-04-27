@@ -2,11 +2,9 @@ package br.com.petcolumbia.api_pet_columbia.domain.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
-@Table(name = "price_and_time")
-public class PriceAndTimeModel {
+@Table(name = "service_price_and_time")
+public class ServicePriceAndDurationModel {
     @Id
     private Integer id;
 
