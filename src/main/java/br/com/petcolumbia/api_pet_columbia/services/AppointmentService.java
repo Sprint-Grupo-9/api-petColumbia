@@ -133,6 +133,13 @@ public class AppointmentService {
         return toBusyTimesDto(busyAppointments);
     }
 
+    public List<AppointmentModel> appointmentsByDate(LocalDate date){
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(23, 59);
+
+        return appointmentRepository.findByStartDateTimeBetween(startOfDay, endOfDay);
+    }
+
     public AppointmentModel createAppointment(AppointmentCreateDto dto) {
         PetModel pet = petService.findPetById(dto.getPetId());
 

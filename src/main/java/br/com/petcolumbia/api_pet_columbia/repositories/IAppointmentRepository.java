@@ -12,4 +12,6 @@ import java.util.List;
 public interface IAppointmentRepository extends JpaRepository<AppointmentModel, Integer> {
     List<AppointmentModel> findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(
             EmployeeModel employee, LocalDateTime startOfDay, LocalDateTime endOfDay);
+
+    List<AppointmentModel> findByStartDateTimeBetween(LocalDateTime start, LocalDateTime end);
 }
