@@ -16,7 +16,7 @@ public class ServiceModel {
     private List<EmployeeServiceAssociationModel> employeeServices;
 
     @OneToMany(mappedBy = "service")
-    private List<PriceAndTimeModel> pricesAndTimes;
+    private List<ServicePriceAndDurationModel> pricesAndDurations;
 
     public Integer getId() {
         return id;
