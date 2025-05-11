@@ -37,6 +37,19 @@ public class AppointmentsController {
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
 
+    @GetMapping("/date")
+    @Operation(summary = "Lista todos os agendamentos marcados de uma data, recebe uma data")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<List<AppointmentResponseDto>> listAppointmentsByDate(@RequestParam LocalDate date){
+        List<AppointmentModel> appointments = appointmentService.appointmentsByDate(date);
+
+        if (appointments.isEmpty())
+            return ResponseEntity.status(204).build();
+
+        return ResponseEntity.status(200).body(AppointmentMapper.entitiesToResponses(appointments));
+    }
+
+
     @PostMapping()
     @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de agendamento")
     @SecurityRequirement(name = "Bearer")

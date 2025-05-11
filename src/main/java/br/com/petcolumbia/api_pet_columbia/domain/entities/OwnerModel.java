@@ -2,7 +2,6 @@ package br.com.petcolumbia.api_pet_columbia.domain.entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class OwnerModel {
     private String street;
     private String number;
     private String complement;
+    private Boolean isAdm;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdate;
 
@@ -138,5 +138,13 @@ public class OwnerModel {
 
     public void setPets(List<PetModel> pets) {
         this.pets = pets;
+    }
+
+    public Boolean getAdm() {
+        return isAdm;
+    }
+
+    public void setAdm(Boolean adm) {
+        isAdm = adm;
     }
 }

@@ -40,6 +40,7 @@ public class OwnerService {
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
         OwnerModel owner = OwnerMapper.createDtoToEntity(newOwner);
+        owner.setAdm(false);
         owner.setPassword(passwordEncoder.encode(owner.getPassword()));
         ownerRepository.save(owner);
 
@@ -86,6 +87,7 @@ public class OwnerService {
         owner.setStreet(updatedOwner.getStreet());
         owner.setNumber(updatedOwner.getNumber());
         owner.setComplement(updatedOwner.getComplement());
+        owner.setAdm(owner.getAdm());
 
         ownerRepository.save(owner);
 

@@ -11,6 +11,8 @@ import br.com.petcolumbia.api_pet_columbia.services.EmployeeService;
 import br.com.petcolumbia.api_pet_columbia.services.PetService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppointmentMapper {
 
@@ -63,5 +65,15 @@ public class AppointmentMapper {
         responseDto.setEndDateTime(entity.getEndDateTime());
 
         return responseDto;
+    }
+
+    public static List<AppointmentResponseDto> entitiesToResponses (List<AppointmentModel> entities) {
+        List<AppointmentResponseDto> responseDtos = new ArrayList<>();
+
+        for (AppointmentModel entity : entities){
+            responseDtos.add(entityToResponse(entity));
+        }
+
+        return responseDtos;
     }
 }
