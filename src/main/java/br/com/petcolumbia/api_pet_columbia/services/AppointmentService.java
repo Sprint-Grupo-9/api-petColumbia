@@ -5,9 +5,9 @@ import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.EmployeeMapper;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.*;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.BusyTime;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.others.BusyTime;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
 import org.springframework.stereotype.Service;
@@ -40,12 +40,11 @@ public class AppointmentService {
     }
 
     public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services){
-
         PetModel pet = petService.findPetById(petId);
 
         List<Integer> servicesIds = serviceService.getServiceIds(services);
 
-        String servicesNames = serviceService.getServicesNames(services);
+        String servicesNames = serviceService.getServicesNamesByIds(servicesIds);
 
         List<EmployeeModel> employees = employeeServiceAssociation
                 .listEmployeesServices(servicesIds);
@@ -125,13 +124,6 @@ public class AppointmentService {
                 .findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(employee, startOfDay, endOfDay);
 
         return toBusyTimesDto(busyAppointments);
-    }
-
-    public List<AppointmentModel> appointmentsByDate(LocalDate date){
-        LocalDateTime startOfDay = date.atStartOfDay();
-        LocalDateTime endOfDay = date.atTime(23, 59);
-
-        return appointmentRepository.findByStartDateTimeBetween(startOfDay, endOfDay);
     }
 
     public AppointmentModel createAppointment(AppointmentCreateDto dto) {

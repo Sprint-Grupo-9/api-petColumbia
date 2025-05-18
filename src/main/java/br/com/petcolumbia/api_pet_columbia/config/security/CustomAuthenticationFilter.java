@@ -49,7 +49,6 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
-
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -60,7 +59,6 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void addUsernameInContext(HttpServletRequest request, String username, String jwtToken) {
-
         UserDetails userDetails = authenticationService.loadUserByUsername(username);
 
         if (jwtTokenManager.validateToken(jwtToken, userDetails)) {

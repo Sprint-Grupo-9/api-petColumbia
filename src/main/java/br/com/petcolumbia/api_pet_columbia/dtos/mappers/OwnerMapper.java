@@ -1,12 +1,12 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.mappers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerInfoResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerTokenResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.ownerDtos.OwnerCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.ownerDtos.OwnerLoginDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.ownerDtos.OwnerUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos.OwnerInfoResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos.OwnerResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos.OwnerTokenResponseDto;
 
 import java.time.LocalDateTime;
 

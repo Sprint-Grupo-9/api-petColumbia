@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.requests;
+package br.com.petcolumbia.api_pet_columbia.dtos.requests.ownerDtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

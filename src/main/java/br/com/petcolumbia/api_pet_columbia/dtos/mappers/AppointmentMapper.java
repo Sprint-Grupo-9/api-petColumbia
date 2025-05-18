@@ -1,12 +1,11 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.mappers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.AppointmentResponseDto;
-import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentCardInfoResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentInfoResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.EmployeeService;
 import br.com.petcolumbia.api_pet_columbia.services.PetService;
 
@@ -67,11 +66,49 @@ public class AppointmentMapper {
         return responseDto;
     }
 
-    public static List<AppointmentResponseDto> entitiesToResponses (List<AppointmentModel> entities) {
-        List<AppointmentResponseDto> responseDtos = new ArrayList<>();
+    public static AppointmentInfoResponseDto entityToInfoResponse (AppointmentModel entity) {
+        AppointmentInfoResponseDto responseDto = new AppointmentInfoResponseDto();
+
+        responseDto.setId(entity.getId());
+        responseDto.setPet(PetMapper.entityToInfoResponse(entity.getPet()));
+        responseDto.setEmployee(EmployeeMapper.entityToResponse(entity.getEmployee()));
+        responseDto.setServices(entity.getServices());
+        responseDto.setTotalPrice(entity.getTotalPrice());
+        responseDto.setStartDateTime(entity.getStartDateTime());
+        responseDto.setEndDateTime(entity.getEndDateTime());
+
+        return responseDto;
+    }
+
+    public static List<AppointmentInfoResponseDto> entitiesToInfoResponses (List<AppointmentModel> entities) {
+        List<AppointmentInfoResponseDto> responseDtos = new ArrayList<>();
 
         for (AppointmentModel entity : entities){
-            responseDtos.add(entityToResponse(entity));
+            responseDtos.add(entityToInfoResponse(entity));
+        }
+
+        return responseDtos;
+    }
+
+    public static AppointmentCardInfoResponseDto entityToCardnfoResponse (AppointmentModel entity) {
+        AppointmentCardInfoResponseDto responseDto = new AppointmentCardInfoResponseDto();
+
+        responseDto.setStartTime(entity.getStartDateTime().toLocalTime());
+        responseDto.setEndTime(entity.getEndDateTime().toLocalTime());
+        responseDto.setOwnerName(entity.getPet().getOwner().getName());
+        responseDto.setPetName(entity.getPet().getName());
+        responseDto.setPetBreed(entity.getPet().getBreed());
+        responseDto.setServicesNames(entity.getServices());
+        responseDto.setPrice(entity.getTotalPrice());
+
+        return  responseDto;
+    }
+
+    public static List<AppointmentCardInfoResponseDto> entitiesToCardInfoResponses(List<AppointmentModel> entities) {
+        List<AppointmentCardInfoResponseDto> responseDtos = new ArrayList<>();
+
+        for (AppointmentModel entity : entities){
+            responseDtos.add(entityToCardnfoResponse(entity));
         }
 
         return responseDtos;

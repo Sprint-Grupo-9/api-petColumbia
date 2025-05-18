@@ -1,5 +1,5 @@
 package br.com.petcolumbia.api_pet_columbia.domain.models;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.EmployeeResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.employeeDtos.EmployeeResponseDto;
 
 import java.time.LocalTime;
 import java.util.List;

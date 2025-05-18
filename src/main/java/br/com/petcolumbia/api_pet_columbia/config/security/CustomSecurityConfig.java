@@ -1,6 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.config.security;
 
 import br.com.petcolumbia.api_pet_columbia.services.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -31,13 +32,12 @@ import java.util.List;
 @EnableMethodSecurity
 public class CustomSecurityConfig {
 
-    private final AuthenticationService authenticationService;
-    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private AuthenticationService authenticationService;
 
-    public CustomSecurityConfig(AuthenticationService authenticationService, CustomAuthenticationEntryPoint authenticationEntryPoint) {
-        this.authenticationService = authenticationService;
-        this.authenticationEntryPoint = authenticationEntryPoint;
-    }
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
 
     private static final AntPathRequestMatcher[] ALLOWED_URLS = {
             new AntPathRequestMatcher("/swagger-ui/**"),

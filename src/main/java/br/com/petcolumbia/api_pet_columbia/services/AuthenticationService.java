@@ -1,7 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerDetailsDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos.OwnerDetailsDto;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import br.com.petcolumbia.api_pet_columbia.repositories.IOwnerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
