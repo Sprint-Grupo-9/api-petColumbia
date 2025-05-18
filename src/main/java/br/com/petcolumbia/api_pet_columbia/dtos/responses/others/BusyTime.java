@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses.others;
 
 import java.time.LocalTime;
 

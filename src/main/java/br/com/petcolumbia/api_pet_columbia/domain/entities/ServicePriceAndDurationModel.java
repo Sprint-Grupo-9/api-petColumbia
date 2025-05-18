@@ -3,7 +3,7 @@ package br.com.petcolumbia.api_pet_columbia.domain.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "service_price_and_time")
+@Table(name = "service_price_and_duration")
 public class ServicePriceAndDurationModel {
     @Id
     private Integer id;
@@ -15,7 +15,7 @@ public class ServicePriceAndDurationModel {
     private String petSize;
     private String petCoat;
     private Double price;
-    private Integer time;
+    private Integer duration;
 
     public Integer getId() {
         return id;
@@ -57,11 +57,12 @@ public class ServicePriceAndDurationModel {
         this.price = price;
     }
 
-    public Integer getTime() {
-        return time;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
+    public void setDuration(Integer time) {
+        this.duration = time;
+
     }
 }

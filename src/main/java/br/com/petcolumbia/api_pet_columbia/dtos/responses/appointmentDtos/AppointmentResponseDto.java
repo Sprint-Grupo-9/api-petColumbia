@@ -1,4 +1,7 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos;
+
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.employeeDtos.EmployeeResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.petDtos.PetResponseDto;
 
 import java.time.LocalDateTime;
 

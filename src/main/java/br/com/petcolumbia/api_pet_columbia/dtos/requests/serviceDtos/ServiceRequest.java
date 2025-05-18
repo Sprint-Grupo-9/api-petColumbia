@@ -1,9 +1,9 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses;
+package br.com.petcolumbia.api_pet_columbia.dtos.requests.serviceDtos;
 
-public class OwnerResponseDto {
+public class ServiceRequest {
     private Integer id;
     private String name;
-    private String email;
+    private String description;
 
     public Integer getId() {
         return id;
@@ -21,11 +21,11 @@ public class OwnerResponseDto {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getDescription() {
+        return description;
     }
 
-    public String getEmail() {
-        return email;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

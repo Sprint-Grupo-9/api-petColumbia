@@ -1,8 +1,10 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses.petDtos;
 
-public class PetResponseDto {
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos.OwnerInfoResponseDto;
+
+public class PetOwnerInfoResponseDto {
     private Integer id;
-    private OwnerResponseDto owner;
+    private OwnerInfoResponseDto owner;
     private String name;
     private String size;
     private String species;
@@ -19,7 +21,11 @@ public class PetResponseDto {
         this.id = id;
     }
 
-    public void setOwner(OwnerResponseDto owner) {
+    public OwnerInfoResponseDto getOwner() {
+        return owner;
+    }
+
+    public void setOwner(OwnerInfoResponseDto owner) {
         this.owner = owner;
     }
 
@@ -31,55 +37,51 @@ public class PetResponseDto {
         this.name = name;
     }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
-    public void setCoat(String coat) {
-        this.coat = coat;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public OwnerResponseDto getOwner() {
-        return owner;
-    }
-
     public String getSize() {
         return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getSpecies() {
         return species;
     }
 
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
     public String getBreed() {
         return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
     public String getCoat() {
         return coat;
     }
 
+    public void setCoat(String coat) {
+        this.coat = coat;
+    }
+
     public Integer getAge() {
         return age;
     }
 
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public String getSex() {
         return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

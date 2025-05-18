@@ -1,8 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.mappers.ServiceMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponseDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IServiceRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +20,9 @@ public class ServiceService {
         return serviceRepository.findAll();
     }
 
-    public String getServicesNames(List<ServiceModel> services){
-        return services.stream()
+    public String getServicesNamesByIds(List<Integer> servicesIds){
+        return serviceRepository.findAllById(servicesIds)
+                .stream()
                 .map(ServiceModel::getName)
                 .collect(Collectors.joining(", "));
     }

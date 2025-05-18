@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,7 +39,7 @@ public class OwnerDetailsDto implements UserDetails {
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 
     @Override

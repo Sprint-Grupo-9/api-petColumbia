@@ -1,14 +1,15 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.mappers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.serviceDtos.ServiceRequest;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.serviceDtos.ServiceResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceMapper {
 
-    public static List<ServiceResponseDto> entityToResponse(List<ServiceModel> services) {
+    public static List<ServiceResponseDto> entitiesToResponses(List<ServiceModel> services) {
         List<ServiceResponseDto> responses = new ArrayList<>();
 
         for (ServiceModel service : services) {
@@ -22,5 +23,24 @@ public class ServiceMapper {
         }
 
         return responses;
+    }
+
+    public static ServiceModel requestToEntity(ServiceRequest request) {
+        ServiceModel serviceModel = new ServiceModel();
+        serviceModel.setId(request.getId());
+        serviceModel.setName(request.getName());
+        serviceModel.setDescription(request.getDescription());
+        return serviceModel;
+    }
+
+    public static List<ServiceModel> requestsToEntities(List<ServiceRequest> requests) {
+        List<ServiceModel> services = new ArrayList<>();
+
+        for (ServiceRequest request : requests) {
+            ServiceModel serviceModel = requestToEntity(request);
+            services.add(serviceModel);
+        }
+
+        return services;
     }
 }

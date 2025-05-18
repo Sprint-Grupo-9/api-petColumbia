@@ -3,10 +3,10 @@ package br.com.petcolumbia.api_pet_columbia.services;
 import br.com.petcolumbia.api_pet_columbia.config.security.JwtTokenManager;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.OwnerModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.OwnerMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerLoginDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.OwnerUpdatePasswordDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.OwnerTokenResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.ownerDtos.OwnerCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.ownerDtos.OwnerLoginDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.ownerDtos.OwnerUpdatePasswordDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos.OwnerTokenResponseDto;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityConflictException;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityUnauthorizedException;
 import br.com.petcolumbia.api_pet_columbia.repositories.IOwnerRepository;
@@ -40,6 +40,7 @@ public class OwnerService {
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
         OwnerModel owner = OwnerMapper.createDtoToEntity(newOwner);
+        owner.setAdm(false);
         owner.setPassword(passwordEncoder.encode(owner.getPassword()));
         ownerRepository.save(owner);
 
@@ -86,6 +87,7 @@ public class OwnerService {
         owner.setStreet(updatedOwner.getStreet());
         owner.setNumber(updatedOwner.getNumber());
         owner.setComplement(updatedOwner.getComplement());
+        owner.setAdm(owner.getAdm());
 
         ownerRepository.save(owner);
 

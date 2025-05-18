@@ -5,9 +5,9 @@ import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.EmployeeMapper;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.*;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.BusyTime;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.others.BusyTime;
 import br.com.petcolumbia.api_pet_columbia.exceptions.EntityNotFoundException;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
 import org.springframework.stereotype.Service;
@@ -25,33 +25,32 @@ public class AppointmentService {
 
     private final IAppointmentRepository appointmentRepository;
     private final ServiceService serviceService;
-    private final ServicePriceAndDurationService servicePriceAndDurationService;
+    private final PriceAndDurationService priceAndDurationService;
     private final EmployeeService employeeServiceAssociation;
     private final PetService petService;
     private final EmployeeService employeeService;
 
-    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, ServicePriceAndDurationService servicePriceAndDurationService, EmployeeService employeeServiceAssociation, PetService petService, EmployeeService employeeService) {
+    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndDurationService priceAndDurationService, EmployeeService employeeServiceAssociation, PetService petService, EmployeeService employeeService) {
         this.appointmentRepository = appointmentRepository;
         this.serviceService = serviceService;
-        this.servicePriceAndDurationService = servicePriceAndDurationService;
+        this.priceAndDurationService = priceAndDurationService;
         this.employeeServiceAssociation = employeeServiceAssociation;
         this.petService = petService;
         this.employeeService = employeeService;
     }
 
     public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services){
-
         PetModel pet = petService.findPetById(petId);
 
         List<Integer> servicesIds = serviceService.getServiceIds(services);
 
-        String servicesNames = serviceService.getServicesNames(services);
+        String servicesNames = serviceService.getServicesNamesByIds(servicesIds);
 
         List<EmployeeModel> employees = employeeServiceAssociation
                 .listEmployeesServices(servicesIds);
 
-        Double price = servicePriceAndDurationService.calculateTotalPrice(servicesIds, pet);
-        Integer serviceDurationMinutes = servicePriceAndDurationService.calculateTotalDuration(servicesIds, pet);
+        Double price = priceAndDurationService.calculateTotalPrice(servicesIds, pet);
+        Integer serviceDurationMinutes = priceAndDurationService.calculateTotalDuration(servicesIds, pet);
 
         List<AvailableTimesModel> allAvailableTimes = new ArrayList<>();
 
