@@ -1,21 +1,18 @@
 package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
-import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
 import br.com.petcolumbia.api_pet_columbia.domain.models.AvailableTimesModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.AppointmentMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AvailableTimesRequest;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.ServiceResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.AppointmentCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.AppointmentResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.mappers.ServiceMapper;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.others.AvailableTimesRequest;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 import java.util.List;
 
@@ -33,22 +30,9 @@ public class AppointmentsController {
             description = "Receba o dia, pet e serviços solicitados")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<AvailableTimesModel>> getAvailableTimes(@RequestBody AvailableTimesRequest availableTimesRequest, @PathVariable Integer petId){
-        List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, availableTimesRequest.getServices());
+        List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, ServiceMapper.requestsToEntities(availableTimesRequest.getServices()));
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
-
-    @GetMapping("/date")
-    @Operation(summary = "Lista todos os agendamentos marcados de uma data, recebe uma data")
-    @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<AppointmentResponseDto>> listAppointmentsByDate(@RequestParam LocalDate date){
-        List<AppointmentModel> appointments = appointmentService.appointmentsByDate(date);
-
-        if (appointments.isEmpty())
-            return ResponseEntity.status(204).build();
-
-        return ResponseEntity.status(200).body(AppointmentMapper.entitiesToResponses(appointments));
-    }
-
 
     @PostMapping()
     @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de agendamento")

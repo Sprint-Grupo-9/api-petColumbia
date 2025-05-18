@@ -2,9 +2,9 @@ package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.PetMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.petDtos.PetCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.petDtos.PetUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.petDtos.PetResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.OwnerService;
 import br.com.petcolumbia.api_pet_columbia.services.PetService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ public class PetsController {
         this.ownerService = ownerService;
     }
 
-    @PostMapping
+    @PostMapping("/{ownerId}")
     @Operation(summary = "Cria um novo pet, recebe o id do usuário e uma dto de criação de pet")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PetResponseDto>registerPet(@PathVariable Integer ownerId, @Valid @RequestBody PetCreateDto pet){

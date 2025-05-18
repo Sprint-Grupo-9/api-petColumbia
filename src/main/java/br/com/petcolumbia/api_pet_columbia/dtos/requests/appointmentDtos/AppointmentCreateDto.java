@@ -1,13 +1,12 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.requests;
+package br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.ServiceModel;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class AppointmentUpdateDto {
+public class AppointmentCreateDto {
     @NotNull(message = "O Id do Pet é obrigatório")
     private Integer petId;
 
@@ -53,4 +52,5 @@ public class AppointmentUpdateDto {
     public Integer getDurationMinutes() {
         return durationMinutes;
     }
+
 }

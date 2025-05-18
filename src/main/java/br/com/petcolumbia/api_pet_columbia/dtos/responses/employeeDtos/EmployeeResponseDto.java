@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses.employeeDtos;
 
 public class EmployeeResponseDto {
     private Integer id;

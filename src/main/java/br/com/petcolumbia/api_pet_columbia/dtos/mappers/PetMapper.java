@@ -1,9 +1,10 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.mappers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.PetModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetCreateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.requests.PetUpdateDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.PetResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.petDtos.PetCreateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.requests.petDtos.PetUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.petDtos.PetOwnerInfoResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.petDtos.PetResponseDto;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,22 @@ public class PetMapper {
 
         responseDto.setId(pet.getId());
         responseDto.setOwner(OwnerMapper.entityToResponseDto(pet.getOwner()));
+        responseDto.setName(pet.getName());
+        responseDto.setSize(pet.getSize());
+        responseDto.setSpecies(pet.getSpecies());
+        responseDto.setBreed(pet.getBreed());
+        responseDto.setCoat(pet.getCoat());
+        responseDto.setAge(pet.getAge());
+        responseDto.setSex(pet.getSex());
+
+        return responseDto;
+    }
+
+    public static PetOwnerInfoResponseDto entityToInfoResponse(PetModel pet){
+        PetOwnerInfoResponseDto responseDto = new PetOwnerInfoResponseDto();
+
+        responseDto.setId(pet.getId());
+        responseDto.setOwner(OwnerMapper.entityToDetailResponseDto(pet.getOwner()));
         responseDto.setName(pet.getName());
         responseDto.setSize(pet.getSize());
         responseDto.setSpecies(pet.getSpecies());

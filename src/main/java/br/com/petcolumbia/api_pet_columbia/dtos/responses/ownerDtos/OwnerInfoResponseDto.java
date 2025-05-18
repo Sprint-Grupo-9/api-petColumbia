@@ -1,4 +1,4 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses.ownerDtos;
 
 public class OwnerInfoResponseDto {
     private Integer id;
