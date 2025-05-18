@@ -63,5 +63,6 @@ public class ServicePriceAndDurationModel {
 
     public void setDuration(Integer time) {
         this.duration = time;
+
     }
 }
