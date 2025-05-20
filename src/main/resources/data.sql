@@ -107,34 +107,31 @@ INSERT INTO employee (id, name) VALUES (2, 'Rute');
 INSERT INTO employee (id, name) VALUES (3, 'Keila');
 INSERT INTO employee (id, name) VALUES (4, 'Taina');
 
--- Inserts para tabela employee_has_services
-INSERT INTO employee (employee_id, service_id) VALUES (1, 1);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 2);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 3);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 4);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 4);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 5);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 6);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 7);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 8);
-INSERT INTO employee (employee_id, service_id) VALUES (1, 9);
+-- Inserts para tabela employees_has_services
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 3);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 4);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 9);
 
-INSERT INTO employee (employee_id, service_id) VALUES (2, 1);
-INSERT INTO employee (employee_id, service_id) VALUES (2, 6);
-INSERT INTO employee (employee_id, service_id) VALUES (2, 7);
-INSERT INTO employee (employee_id, service_id) VALUES (2, 8);
-INSERT INTO employee (employee_id, service_id) VALUES (2, 9);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 9);
 
-INSERT INTO employee (employee_id, service_id) VALUES (3, 1);
-INSERT INTO employee (employee_id, service_id) VALUES (3, 6);
-INSERT INTO employee (employee_id, service_id) VALUES (3, 7);
-INSERT INTO employee (employee_id, service_id) VALUES (3, 8);
-INSERT INTO employee (employee_id, service_id) VALUES (3, 9);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 9);
 
-INSERT INTO employee (employee_id, service_id) VALUES (4, 1);
-INSERT INTO employee (employee_id, service_id) VALUES (4, 6);
-INSERT INTO employee (employee_id, service_id) VALUES (4, 7);
-INSERT INTO employee (employee_id, service_id) VALUES (4, 8);
-INSERT INTO employee (employee_id, service_id) VALUES (4, 9);
-
-
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 9);

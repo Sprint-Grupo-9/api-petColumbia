@@ -32,7 +32,7 @@ public class ServicePriceAndDurationService {
         return servicesIds.stream()
                 .mapToInt(serviceId ->
                         durationAndPriceOfService(serviceId, pet.getSize(), pet.getCoat())
-                        .getTime())
+                        .getDuration())
                 .sum();
     }
 
