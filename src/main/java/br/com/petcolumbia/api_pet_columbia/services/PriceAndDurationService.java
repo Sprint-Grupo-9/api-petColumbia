@@ -10,14 +10,14 @@ import java.util.List;
 @Service
 public class PriceAndDurationService {
 
-    private final IServicePriceAndDurationRepository priceAndTimeRepository;
+    private final IServicePriceAndDurationRepository priceAndDurationRepository;
 
-    public PriceAndDurationService(IServicePriceAndDurationRepository priceAndTimeRepository) {
-        this.priceAndTimeRepository = priceAndTimeRepository;
+    public PriceAndDurationService(IServicePriceAndDurationRepository priceAndDurationRepository) {
+        this.priceAndDurationRepository = priceAndDurationRepository;
     }
 
     public ServicePriceAndDurationModel durationAndPriceOfService(Integer serviceId, String petSize, String petCoat){
-        return priceAndTimeRepository.findByIdAndPetSizeAndPetCoat(serviceId, petSize, petCoat);
+        return priceAndDurationRepository.findByIdAndPetSizeAndPetCoat(serviceId, petSize, petCoat);
     }
 
     public Double calculateTotalPrice(List<Integer> servicesIds, PetModel pet) {

@@ -78,9 +78,7 @@ public class OwnerMapper {
     public static OwnerModel updateDtoToEntity(OwnerUpdateDto updatedOwner){
         OwnerModel owner = new OwnerModel();
 
-        owner.setName(updatedOwner.getName());
         owner.setEmail(updatedOwner.getEmail());
-        owner.setCpf(updatedOwner.getCpf());
         owner.setPhoneNumber(updatedOwner.getPhoneNumber());
         owner.setCep(updatedOwner.getCep());
         owner.setNeighborhood(updatedOwner.getNeighborhood());

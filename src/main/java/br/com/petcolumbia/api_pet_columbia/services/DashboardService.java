@@ -1,16 +1,17 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentCountDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class DashboardService {
@@ -28,12 +29,31 @@ public class DashboardService {
         return appointmentRepository.findByStartDateTimeBetween(startOfDay, endOfDay);
     }
 
-    public List<AppointmentCountDto> amountProceduresByLastSevenDays() {
-        LocalDateTime today = LocalDateTime.now();
-        LocalDateTime sevenDaysAgo = today.minusDays(7);
+    public Map<LocalDate, Long> amountProceduresCountPerDay() {
+        LocalDateTime start = LocalDate.now().minusDays(7) .atTime(0, 0);
+        LocalDateTime end = LocalDateTime.now();
 
-        return appointmentRepository.countAppointmentsGroupedByDay(sevenDaysAgo, today);
+        List<Object[]> resultQuery = appointmentRepository.countAppointmentsGroupedByDay(start, end);
+
+        Map<LocalDate, Long> map = resultQuery.stream()
+                .collect(Collectors.toMap(
+                        row -> ((java.sql.Date) row[0]).toLocalDate(),
+                        row -> (Long) row[1]
+                ));
+
+        Map<LocalDate, Long> resultMap = new LinkedHashMap<>();
+
+        LocalDate current = start.toLocalDate();
+
+        // Complentando caso tenha dias com zero agendamentos
+        while (!current.isAfter(end.toLocalDate())) {
+            resultMap.put(current, map.getOrDefault(current, 0L));
+            current = current.plusDays(1);
+        }
+
+        return resultMap;
     }
+
 
     // Procedimento mais realizado do mes (retornar a data de inicio e fim do mes, o serviço e a quantidade)
     public ResponseEntity<?> mostPerformedProcedureByActualMonth() {

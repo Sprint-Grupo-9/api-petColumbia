@@ -6,14 +6,6 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 public class OwnerUpdateDto {
-    @NotBlank(message = "O nome é obrigatório")
-    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
-    private String name;
-
-    @NotBlank(message = "O CPF é obrigatório")
-    @CPF(message = "CPF inválido")
-    private String cpf;
-
     @NotBlank(message = "O número de telefone é obrigatório")
     @Size(min = 11, max = 11, message = "O número de telefone deve conter 11 caracteres, sem formatação")
     private String phoneNumber;
@@ -41,18 +33,6 @@ public class OwnerUpdateDto {
 
     @Size(max = 100, message = "O complemento deve ter no máximo 100 caracteres")
     private String complement;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;

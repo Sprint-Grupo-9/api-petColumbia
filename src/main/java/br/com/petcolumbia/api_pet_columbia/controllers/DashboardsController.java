@@ -2,7 +2,6 @@ package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.AppointmentMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentCountDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentsDashboardInfosResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/dashboards")
@@ -44,12 +44,12 @@ public class DashboardsController {
     }
 
     @GetMapping("/procedures /amount-last-seven-days")
-    @Operation(summary = "",
+    @Operation(summary = "Lista os últimos 7 dias a quantidade de serviços prestados ",
             description = "")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<AppointmentCountDto>> getAmountProceduresLastSevenDays() {
+    public ResponseEntity<Map<LocalDate, Long>> getAmountProceduresLastSevenDays() {
 
-        List<AppointmentCountDto> appointmentCountDtos = dashboardService.amountProceduresByLastSevenDays();
+        Map<LocalDate, Long> appointmentCountDtos = dashboardService.amountProceduresCountPerDay();
         if(appointmentCountDtos.isEmpty())
             return ResponseEntity.status(204).build();
 
