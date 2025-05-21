@@ -1,12 +1,17 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LeastServiceResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.TopServiceResponseDto;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,15 +59,69 @@ public class DashboardService {
         return resultMap;
     }
 
+    public Map<String, Long> countServicesByLastThirtyDays(){
+        LocalDateTime now = LocalDateTime.now();
 
-    // Procedimento mais realizado do mes (retornar a data de inicio e fim do mes, o serviço e a quantidade)
-    public ResponseEntity<?> mostPerformedProcedureByActualMonth() {
-        return ResponseEntity.ok("Most performed procedure of the month");
+        LocalDateTime end = now.minusDays(1).withHour(23).withMinute(59);
+
+        LocalDateTime start = end.minusDays(29).withHour(0).withMinute(0);
+
+        // Retornando apenas as strings das tuplas
+        List<String> allStringServices = appointmentRepository.findAllServicesBetween(start, end);
+
+        Map<String, Long> serviceCount = new HashMap<>();
+
+        for (String serviceLine : allStringServices) {
+            if (serviceLine == null || serviceLine.isBlank()) continue;
+
+            String[] services = serviceLine.split(",");
+
+
+            for (String service : services) {
+                service = service.trim();
+                serviceCount.put(service, serviceCount.getOrDefault(service, 0L) + 1);
+            }
+        }
+
+        return serviceCount;
     }
 
-    //  procedimento com menor demanda (retornar a data de inicio e fim do mes, serviço e quantidade)
-    public ResponseEntity<?> leastPerformedProcedureByActualMonth() {
-        return ResponseEntity.ok("Least performed procedure of the month");
+    public TopServiceResponseDto mostPerformedProcedureByLastThirtyDays() {
+        LocalDateTime now = LocalDateTime.now();
+
+        LocalDateTime end = now.minusDays(1).withHour(23).withMinute(59);
+
+        LocalDateTime start = end.minusDays(29).withHour(0).withMinute(0);
+
+        Map<String, Long> serviceCount =  countServicesByLastThirtyDays();
+
+        Map.Entry<String, Long> top = serviceCount.entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .orElse(null);
+
+        if (top == null) return null;
+
+        return new TopServiceResponseDto(top.getKey(), top.getValue(), start.toLocalDate(), end.toLocalDate());
+    }
+
+    public LeastServiceResponseDto leastPerformedProcedureByLastThirtyDays() {
+        LocalDateTime now = LocalDateTime.now();
+
+        LocalDateTime end = now.minusDays(1).withHour(23).withMinute(59);
+
+        LocalDateTime start = end.minusDays(29).withHour(0).withMinute(0);
+
+        Map<String, Long> serviceCount =  countServicesByLastThirtyDays();
+
+        Map.Entry<String, Long> top = serviceCount.entrySet()
+                .stream()
+                .min(Map.Entry.comparingByValue())
+                .orElse(null);
+
+        if (top == null) return null;
+
+        return new LeastServiceResponseDto(top.getKey(), top.getValue(), start.toLocalDate(), end.toLocalDate());
     }
 
     /*  Intervalo de maior fluxo de agendamentos no mes (retornar a data de inicio e fim do mes,
