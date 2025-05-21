@@ -2,7 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.AppointmentMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentsDashboardInfosResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.AppointmentsDashboardInfosResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

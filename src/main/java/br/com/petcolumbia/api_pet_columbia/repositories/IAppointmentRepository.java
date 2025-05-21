@@ -25,6 +25,7 @@ public interface IAppointmentRepository extends JpaRepository<AppointmentModel, 
     List<Object[]> countAppointmentsGroupedByDay(@Param("start") LocalDateTime start,
                                                  @Param("end") LocalDateTime end);
 
-
+    @Query("SELECT a.services FROM AppointmentModel a WHERE a.startDateTime BETWEEN :start AND :end")
+    List<String> findAllServicesBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
 }
