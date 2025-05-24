@@ -35,29 +35,28 @@ public class DashboardService {
     }
 
     public Map<LocalDate, Long> amountProceduresCountPerDay() {
-        LocalDateTime start = LocalDate.now().minusDays(7) .atTime(0, 0);
-        LocalDateTime end = LocalDateTime.now().minusDays(1);
+        LocalDateTime start = LocalDate.now().minusDays(7).atStartOfDay();
+        LocalDateTime end = LocalDate.now().minusDays(1).atTime(23, 59, 59);
 
-        List<Object[]> resultQuery = appointmentRepository.countAppointmentsGroupedByDay(start, end);
+        List<LocalDateTime> endDateTimes = appointmentRepository.findEndDateTimesBetween(start, end);
 
-        Map<LocalDate, Long> map = resultQuery.stream()
-                .collect(Collectors.toMap(
-                        row -> ((java.sql.Date) row[0]).toLocalDate(),
-                        row -> (Long) row[1]
+        Map<LocalDate, Long> countsByDate = endDateTimes.stream()
+                .collect(Collectors.groupingBy(
+                        LocalDateTime::toLocalDate,
+                        Collectors.counting()
                 ));
 
         Map<LocalDate, Long> resultMap = new LinkedHashMap<>();
-
         LocalDate current = start.toLocalDate();
 
-        // Complentando caso tenha dias com zero agendamentos
         while (!current.isAfter(end.toLocalDate())) {
-            resultMap.put(current, map.getOrDefault(current, 0L));
+            resultMap.put(current, countsByDate.getOrDefault(current, 0L));
             current = current.plusDays(1);
         }
 
         return resultMap;
     }
+
 
     public Map<String, Long> countServicesByLastThirtyDays(){
         LocalDateTime now = LocalDateTime.now();
