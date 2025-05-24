@@ -36,7 +36,7 @@ public class DashboardService {
 
     public Map<LocalDate, Long> amountProceduresCountPerDay() {
         LocalDateTime start = LocalDate.now().minusDays(7) .atTime(0, 0);
-        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime end = LocalDateTime.now().minusDays(1);
 
         List<Object[]> resultQuery = appointmentRepository.countAppointmentsGroupedByDay(start, end);
 

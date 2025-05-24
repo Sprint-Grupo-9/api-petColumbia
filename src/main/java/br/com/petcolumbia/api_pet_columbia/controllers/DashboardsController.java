@@ -3,6 +3,8 @@ package br.com.petcolumbia.api_pet_columbia.controllers;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.AppointmentMapper;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.AppointmentsDashboardInfosResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LeastServiceResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.TopServiceResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -43,7 +45,7 @@ public class DashboardsController {
         return ResponseEntity.status(200).body(response);
     }
 
-    @GetMapping("/procedures /amount-last-seven-days")
+    @GetMapping("/procedures/amount-last-seven-days")
     @Operation(summary = "Lista os últimos 7 dias a quantidade de serviços prestados ",
             description = "")
     @SecurityRequirement(name = "Bearer")
@@ -56,22 +58,30 @@ public class DashboardsController {
         return ResponseEntity.status(200).body(appointmentCountDtos);
     }
 
-    // Procedimento mais realizado do mes (retornar a data de inicio e fim do mes, o serviço e a quantidade)
     @GetMapping("/procedures/most-performed-month")
-    @Operation(summary = "",
-            description = "")
+    @Operation(summary = "Busca o procedimento mais realizado do mês",
+            description = "retorna data de início e fim do mês, o nome do serviço e quantidade de procedimentos realizados")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<?> getMostPerformedProcedureMonth() {
-        return ResponseEntity.ok("Most performed procedure of the month");
+    public ResponseEntity<TopServiceResponseDto> getMostPerformedProcedureMonth() {
+        TopServiceResponseDto response = dashboardService.mostPerformedProcedureByLastThirtyDays();
+
+        if (response == null)
+            return ResponseEntity.status(404).build();
+
+        return ResponseEntity.status(200).body(response);
     }
 
-    //  procedimento com menor demanda (retornar a data de inicio e fim do mes, serviço e quantidade)
     @GetMapping("/procedures/least-performed-month")
-    @Operation(summary = "",
-            description = "")
+    @Operation(summary = "Busca o procedimento menos realizado do mês",
+            description = "retorna data de início e fim do mês, o nome do serviço e quantidade de procedimentos realizados")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<?> getLeastPerformedProcedureMonth() {
-        return ResponseEntity.ok("Least performed procedure of the month");
+    public ResponseEntity<LeastServiceResponseDto> getLeastPerformedProcedureMonth() {
+        LeastServiceResponseDto response = dashboardService.leastPerformedProcedureByLastThirtyDays();
+
+        if (response == null)
+            return ResponseEntity.status(404).build();
+
+        return ResponseEntity.status(200).body(response);
     }
 
     /*  Intervalo de maior fluxo de agendamentos no mes (retornar a data de inicio e fim do mes,

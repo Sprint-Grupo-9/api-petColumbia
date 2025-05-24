@@ -14,7 +14,7 @@ public class AppointmentCreateDto {
     private Integer employee_id;
 
     @NotEmpty(message = "Os serviços são obrigatórios")
-    private List<ServiceModel> services;
+    private String servicesNames;
 
     @NotNull(message = "O preço é obrigatório")
     private Double totalPrice;
@@ -25,32 +25,51 @@ public class AppointmentCreateDto {
     @NotNull(message = "A duração é obrigatória")
     private Integer durationMinutes;
 
-    public Integer getPetId() {
+    public @NotNull(message = "O Id do Pet é obrigatório") Integer getPetId() {
         return petId;
     }
 
-    public Integer getEmployee_id() {
+    public void setPetId(@NotNull(message = "O Id do Pet é obrigatório") Integer petId) {
+        this.petId = petId;
+    }
+
+    public @NotNull(message = "O Id do Funcionário é obrigatório") Integer getEmployee_id() {
         return employee_id;
     }
 
-    public List<ServiceModel> getServices() {
-        return services;
+    public void setEmployee_id(@NotNull(message = "O Id do Funcionário é obrigatório") Integer employee_id) {
+        this.employee_id = employee_id;
     }
 
-    public void setServices (List<ServiceModel> services) {
-        this.services = services;
+    public @NotEmpty(message = "Os serviços são obrigatórios") String getServicesNames() {
+        return servicesNames;
     }
 
-    public Double getTotalPrice() {
+    public void setServicesNames(@NotEmpty(message = "Os serviços são obrigatórios") String servicesNames) {
+        this.servicesNames = servicesNames;
+    }
+
+    public @NotNull(message = "O preço é obrigatório") Double getTotalPrice() {
         return totalPrice;
     }
 
-    public LocalDateTime getStartDateTime() {
+    public void setTotalPrice(@NotNull(message = "O preço é obrigatório") Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public @NotNull(message = "A data de início é obrigatória") LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
-    public Integer getDurationMinutes() {
+    public void setStartDateTime(@NotNull(message = "A data de início é obrigatória") LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public @NotNull(message = "A duração é obrigatória") Integer getDurationMinutes() {
         return durationMinutes;
     }
 
+    public void setDurationMinutes(@NotNull(message = "A duração é obrigatória") Integer durationMinutes) {
+        this.durationMinutes = durationMinutes;
+    }
 }
