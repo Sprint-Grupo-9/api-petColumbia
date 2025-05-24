@@ -1,7 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.requests.petDtos;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public class PetCreateDto {
     @NotBlank(message = "O nome do pet é obrigatório")
@@ -19,7 +18,8 @@ public class PetCreateDto {
     @NotBlank(message = "A pelagem do pet é obrigatória")
     @Size(max = 30, message = "A pelagem deve ter no máximo 30 caracteres")
     private String coat;
-    @NotBlank(message = "A idade do pet é obrigatória")
+    @Min(0)
+    @Max(30)
     private Integer age;
     @NotBlank(message = "O sexo do pet é obrigatório")
     @Size(max = 10, message = "O sexo deve ter no máximo 10 caracteres")

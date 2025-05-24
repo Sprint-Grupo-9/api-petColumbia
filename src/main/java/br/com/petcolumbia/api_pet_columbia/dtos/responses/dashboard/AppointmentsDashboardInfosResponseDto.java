@@ -1,4 +1,7 @@
-package br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos;
+package br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard;
+
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentCardInfoResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentInfoResponseDto;
 
 import java.util.List;
 

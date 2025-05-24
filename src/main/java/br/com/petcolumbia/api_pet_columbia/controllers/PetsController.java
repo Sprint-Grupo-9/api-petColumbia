@@ -44,7 +44,7 @@ public class PetsController {
         return ResponseEntity.status(200).body(PetMapper.entityToResponse(pet));
     }
 
-    @GetMapping("/all/{id}")
+    @GetMapping("/all/{ownerId}")
     @Operation(summary = "Buscar todos os pets de um usuário", description = "recebe o id do usuário")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PetResponseDto>> getAllPetsByOwnerId(@PathVariable Integer ownerId) {

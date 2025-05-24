@@ -2,7 +2,6 @@ package br.com.petcolumbia.api_pet_columbia.repositories;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
 import br.com.petcolumbia.api_pet_columbia.domain.entities.EmployeeModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentCountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,13 +17,15 @@ public interface IAppointmentRepository extends JpaRepository<AppointmentModel, 
 
     List<AppointmentModel> findByStartDateTimeBetween(LocalDateTime start, LocalDateTime end);
 
-    @Query("SELECT new br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentCountDto(DATE(a.startDateTime), COUNT(a)) " +
+    @Query("SELECT FUNCTION('date', a.endDateTime) AS date, COUNT(a) AS count " +
             "FROM AppointmentModel a " +
-            "WHERE a.startDateTime BETWEEN :start AND :end " +
-            "GROUP BY DATE(a.startDateTime) " +
-            "ORDER BY DATE(a.startDateTime) ASC")
-    List<AppointmentCountDto> countAppointmentsGroupedByDay(@Param("start") LocalDateTime start,
-                                                            @Param("end") LocalDateTime end);
+            "WHERE a.endDateTime BETWEEN :start AND :end " +
+            "GROUP BY FUNCTION('date', a.endDateTime) " +
+            "ORDER BY FUNCTION('date', a.endDateTime) ASC")
+    List<Object[]> countAppointmentsGroupedByDay(@Param("start") LocalDateTime start,
+                                                 @Param("end") LocalDateTime end);
 
+    @Query("SELECT a.services FROM AppointmentModel a WHERE a.startDateTime BETWEEN :start AND :end")
+    List<String> findAllServicesBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
 }

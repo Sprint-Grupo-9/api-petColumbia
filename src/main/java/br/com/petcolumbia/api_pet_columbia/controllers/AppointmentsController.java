@@ -11,6 +11,7 @@ import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.Appoin
 import br.com.petcolumbia.api_pet_columbia.services.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class AppointmentsController {
         this.appointmentService = appointmentService;
     }
 
-    @GetMapping("/available-times/{petId}")
+    @PostMapping("/available-times/{petId}")
     @Operation(summary = "Lista horários disponíveis de agendamento",
             description = "Receba o dia, pet e serviços solicitados")
     @SecurityRequirement(name = "Bearer")
@@ -33,6 +34,13 @@ public class AppointmentsController {
         List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, ServiceMapper.requestsToEntities(availableTimesRequest.getServices()));
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
+
+    //lista de agendamentos de um usuário especifico
+//    @GetMapping("/{ownerId}")
+//    @Operation(summary = "a")
+//    @SecurityScheme(name = "Bearer")
+//    public ResponseEntity<List>
+//    nome do pet, dia e horario, servicos, pet e funcionario
 
     @PostMapping()
     @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de agendamento")

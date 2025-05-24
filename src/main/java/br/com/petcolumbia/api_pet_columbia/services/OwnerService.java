@@ -78,9 +78,9 @@ public class OwnerService {
         if (isDuplicateFields(updatedOwner.getEmail(), updatedOwner.getCpf(), updatedOwner.getPhoneNumber(), id))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
-        owner.setName(updatedOwner.getName());
+        owner.setName(owner.getName());
         owner.setEmail(updatedOwner.getEmail());
-        owner.setCpf(updatedOwner.getCpf());
+        owner.setCpf(owner.getCpf());
         owner.setPhoneNumber(updatedOwner.getPhoneNumber());
         owner.setCep(updatedOwner.getCep());
         owner.setNeighborhood(updatedOwner.getNeighborhood());
