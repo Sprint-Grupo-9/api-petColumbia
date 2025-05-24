@@ -17,13 +17,12 @@ public interface IAppointmentRepository extends JpaRepository<AppointmentModel, 
 
     List<AppointmentModel> findByStartDateTimeBetween(LocalDateTime start, LocalDateTime end);
 
-    @Query("SELECT FUNCTION('date', a.endDateTime) AS date, COUNT(a) AS count " +
+    @Query("SELECT a.endDateTime " +
             "FROM AppointmentModel a " +
-            "WHERE a.endDateTime BETWEEN :start AND :end " +
-            "GROUP BY FUNCTION('date', a.endDateTime) " +
-            "ORDER BY FUNCTION('date', a.endDateTime) ASC")
-    List<Object[]> countAppointmentsGroupedByDay(@Param("start") LocalDateTime start,
-                                                 @Param("end") LocalDateTime end);
+            "WHERE a.endDateTime BETWEEN :start AND :end")
+    List<LocalDateTime> findEndDateTimesBetween(@Param("start") LocalDateTime start,
+                                                @Param("end") LocalDateTime end);
+
 
     @Query("SELECT a.services FROM AppointmentModel a WHERE a.startDateTime BETWEEN :start AND :end")
     List<String> findAllServicesBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
