@@ -27,7 +27,7 @@ public class AppointmentMapper {
     public static AppointmentModel createDtoToEntity(AppointmentCreateDto dto) {
         AppointmentModel appointment = new AppointmentModel();
 
-        appointment.setServices(dto.getServices().toString());
+        appointment.setServices(dto.getServicesNames());
         appointment.setTotalPrice(dto.getTotalPrice());
         appointment.setStartDateTime(dto.getStartDateTime());
         appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));

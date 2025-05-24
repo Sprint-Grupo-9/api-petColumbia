@@ -18,4 +18,44 @@ public class AvailableTimesModel {
         this.servicesNames = servicesNames;
         this.servicePrice = servicePrice;
     }
+
+    public EmployeeResponseDto getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeResponseDto employee) {
+        this.employee = employee;
+    }
+
+    public List<LocalTime> getTimes() {
+        return times;
+    }
+
+    public void setTimes(List<LocalTime> times) {
+        this.times = times;
+    }
+
+    public Integer getDurationTime() {
+        return durationTime;
+    }
+
+    public void setDurationTime(Integer durationTime) {
+        this.durationTime = durationTime;
+    }
+
+    public String getServicesNames() {
+        return servicesNames;
+    }
+
+    public void setServicesNames(String servicesNames) {
+        this.servicesNames = servicesNames;
+    }
+
+    public Double getServicePrice() {
+        return servicePrice;
+    }
+
+    public void setServicePrice(Double servicePrice) {
+        this.servicePrice = servicePrice;
+    }
 }
