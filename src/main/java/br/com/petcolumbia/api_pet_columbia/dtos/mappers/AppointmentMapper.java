@@ -6,6 +6,8 @@ import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.Appoint
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentCardInfoResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentInfoResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LastAppointmentsListDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LastPetAndOwnerAppointmentsResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.EmployeeService;
 import br.com.petcolumbia.api_pet_columbia.services.PetService;
 
@@ -66,7 +68,7 @@ public class AppointmentMapper {
         return responseDto;
     }
 
-    public static AppointmentInfoResponseDto entityToInfoResponse (AppointmentModel entity) {
+    public static AppointmentInfoResponseDto toInfoResponse (AppointmentModel entity, LastAppointmentsListDto lastPetsAppointments, LastAppointmentsListDto lastOwnerAppointments ) {
         AppointmentInfoResponseDto responseDto = new AppointmentInfoResponseDto();
 
         responseDto.setId(entity.getId());
@@ -76,17 +78,20 @@ public class AppointmentMapper {
         responseDto.setTotalPrice(entity.getTotalPrice());
         responseDto.setStartDateTime(entity.getStartDateTime());
         responseDto.setEndDateTime(entity.getEndDateTime());
+        responseDto.setLastPetAppointments(lastPetsAppointments);
+        responseDto.setLastOwnerAppointments(lastOwnerAppointments);
 
         return responseDto;
     }
 
-    public static List<AppointmentInfoResponseDto> entitiesToInfoResponses (List<AppointmentModel> entities) {
+    public static List<AppointmentInfoResponseDto> toInfoResponses (List<AppointmentModel> entities, LastPetAndOwnerAppointmentsResponseDto lastAppointments) {
         List<AppointmentInfoResponseDto> responseDtos = new ArrayList<>();
+        List<LastAppointmentsListDto> lastPetAppointments = lastAppointments.getLastPetAppointments();
+        List<LastAppointmentsListDto> lastOwnerAppointments = lastAppointments.getLastOwnerAppointments();
 
-        for (AppointmentModel entity : entities){
-            responseDtos.add(entityToInfoResponse(entity));
+        for (int i = 0; i < entities.size(); i++){
+            responseDtos.add(toInfoResponse(entities.get(i), lastPetAppointments.get(i), lastOwnerAppointments.get(i)));
         }
-
         return responseDtos;
     }
 
