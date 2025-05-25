@@ -1,21 +1,15 @@
 package br.com.petcolumbia.api_pet_columbia.services;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LeastServiceResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.TopServiceResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.*;
 import br.com.petcolumbia.api_pet_columbia.repositories.IAppointmentRepository;
-import org.springframework.cglib.core.Local;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.YearMonth;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +19,85 @@ public class DashboardService {
 
     public DashboardService(IAppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
+    }
+
+    public LastPetAndOwnerAppointmentsResponseDto lastAppointmentsOfPetAndOwnerByAppointmentsList(List<AppointmentModel> appointments) {
+        List<LastAppointmentsListDto> lastPetAppointments = ownerLastAppointments(appointments);
+        List<LastAppointmentsListDto> lastOwnerAppointments = petLastAppointments(appointments);
+
+        return new LastPetAndOwnerAppointmentsResponseDto(lastPetAppointments, lastOwnerAppointments);
+    }
+
+    //Últimos 3 agendamentos de todos os usuários dos agendamentos passados como parâmetro
+    public List<LastAppointmentsListDto> ownerLastAppointments(List<AppointmentModel> appointments) {
+        PageRequest pageRequest = PageRequest.of(0, 3);
+
+        Map<Integer, List<AppointmentModel>> ownerCache = new HashMap<>();
+        List<LastAppointmentsListDto> response = new ArrayList<>();
+
+        for (AppointmentModel appointment : appointments) {
+            Integer ownerId = appointment.getPet().getOwner().getId();
+
+            // Cache para evitar ir no banco quando pet for repetido
+            List<AppointmentModel> last3;
+            if (ownerCache.containsKey(ownerId)) {
+                last3 = ownerCache.get(ownerId);
+            } else {
+                last3 = appointmentRepository.findTop3ByOwnerIdOrderByStartDateTimeDesc(ownerId, pageRequest);
+                ownerCache.put(ownerId, last3);
+            }
+
+            List<LastAppointmentsDto> dtoList = last3.stream().map(a ->
+                    new LastAppointmentsDto(
+                            ownerId,
+                            a.getId(),
+                            a.getStartDateTime().toLocalDate(),
+                            a.getStartDateTime().toLocalTime(),
+                            a.getEndDateTime().toLocalTime(),
+                            a.getServices(),
+                            a.getTotalPrice()
+                    )
+            ).toList();
+
+            response.add(new LastAppointmentsListDto(dtoList));
+        }
+        return response;
+    }
+
+    //Últimos 3 agendamentos de todos os pets dos agendamentos passados como parâmetro
+    public List<LastAppointmentsListDto> petLastAppointments(List<AppointmentModel> appointments){
+        PageRequest pageRequest = PageRequest.of(0, 3);
+
+        Map<Integer, List<AppointmentModel>> petCache = new HashMap<>();
+        List<LastAppointmentsListDto> response = new ArrayList<>();
+
+        for (AppointmentModel appointment : appointments) {
+            Integer petId = appointment.getPet().getId();
+
+            // Cache para evitar ir no banco quando pet for repetido
+            List<AppointmentModel> last3;
+            if (petCache.containsKey(petId)) {
+                last3 = petCache.get(petId);
+            } else {
+                last3 = appointmentRepository.findTop3ByPetIdOrderByStartDateTimeDesc(petId, pageRequest);
+                petCache.put(petId, last3);
+            }
+
+            List<LastAppointmentsDto> dtoList = last3.stream().map(a ->
+                    new LastAppointmentsDto(
+                            petId,
+                            a.getId(),
+                            a.getStartDateTime().toLocalDate(),
+                            a.getStartDateTime().toLocalTime(),
+                            a.getEndDateTime().toLocalTime(),
+                            a.getServices(),
+                            a.getTotalPrice()
+                    )
+            ).toList();
+
+            response.add(new LastAppointmentsListDto(dtoList));
+        }
+        return response;
     }
 
     public List<AppointmentModel> appointmentsByDate(LocalDate date){
@@ -57,7 +130,6 @@ public class DashboardService {
         return resultMap;
     }
 
-
     public Map<String, Long> countServicesByLastThirtyDays(){
         LocalDateTime now = LocalDateTime.now();
 
@@ -65,7 +137,6 @@ public class DashboardService {
 
         LocalDateTime start = end.minusDays(29).withHour(0).withMinute(0);
 
-        // Retornando apenas as strings das tuplas
         List<String> allStringServices = appointmentRepository.findAllServicesBetween(start, end);
 
         Map<String, Long> serviceCount = new HashMap<>();
@@ -74,7 +145,6 @@ public class DashboardService {
             if (serviceLine == null || serviceLine.isBlank()) continue;
 
             String[] services = serviceLine.split(",");
-
 
             for (String service : services) {
                 service = service.trim();
@@ -123,15 +193,55 @@ public class DashboardService {
         return new LeastServiceResponseDto(top.getKey(), top.getValue(), start.toLocalDate(), end.toLocalDate());
     }
 
-    /*  Intervalo de maior fluxo de agendamentos no mes (retornar a data de inicio e fim do mes,
-    os intervalo e a quantidade de agendamentos entre o intervalo ) */
-    public ResponseEntity<?> busiestTimeIntervalInActualMonth() {
-        return ResponseEntity.ok("Interval of more procedures");
+    public TopProceduresTimingResponse mostProceduresTimingByLastThirtyDays() {
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime start = end.minusDays(30);
+
+        List<LocalDateTime> startTimes = appointmentRepository.findStartTimesBetween(start, end);
+
+        Map<LocalTime, Long> timeCountMap  = new HashMap<>();
+
+        for (LocalDateTime dateTime : startTimes) {
+            LocalTime time = dateTime.toLocalTime().withSecond(0).withNano(0); // remove segundos/nanos
+            timeCountMap.put(time, timeCountMap.getOrDefault(time, 0L) + 1);
+        }
+
+        Optional<Map.Entry<LocalTime, Long>> mostCommon = timeCountMap.entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue());
+
+        if (mostCommon.isEmpty())
+            return null;
+
+        LocalTime time = mostCommon.get().getKey();
+        long count = mostCommon.get().getValue();
+
+        return new TopProceduresTimingResponse(start.toLocalDate(), end.toLocalDate(), time, count);
     }
 
-    /*Intervalo de menor fluxo de agendamentos no mes (retornar a data de inicio e fim do mes,
-        os intervalo e a quantidade de agendamentos entre o intervalo )*/
-    public ResponseEntity<?> quietestTimeIntervalInActualMonth() {
-        return ResponseEntity.ok("Interval of less procedures");
+    public LeastProceduresTimingResponse leastProceduresTimingByLastThirtyDays() {
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime start = end.minusDays(30);
+
+        List<LocalDateTime> startTimes = appointmentRepository.findStartTimesBetween(start, end);
+
+        Map<LocalTime, Long> timeCountMap  = new HashMap<>();
+
+        for (LocalDateTime dateTime : startTimes) {
+            LocalTime time = dateTime.toLocalTime().withSecond(0).withNano(0); // remove segundos/nanos
+            timeCountMap.put(time, timeCountMap.getOrDefault(time, 0L) + 1);
+        }
+
+        Optional<Map.Entry<LocalTime, Long>> mostCommon = timeCountMap.entrySet()
+                .stream()
+                .min(Map.Entry.comparingByValue());
+
+        if (mostCommon.isEmpty())
+            return null;
+
+        LocalTime time = mostCommon.get().getKey();
+        long count = mostCommon.get().getValue();
+
+        return new LeastProceduresTimingResponse(start.toLocalDate(), end.toLocalDate(), time, count);
     }
 }

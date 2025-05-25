@@ -1,9 +1,12 @@
 package br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos;
 
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LastAppointmentsDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LastAppointmentsListDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.employeeDtos.EmployeeResponseDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.petDtos.PetOwnerInfoResponseDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class AppointmentInfoResponseDto {
     private Integer id;
@@ -13,6 +16,8 @@ public class AppointmentInfoResponseDto {
     private Double totalPrice;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private LastAppointmentsListDto lastPetAppointments;
+    private LastAppointmentsListDto lastOwnerAppointments;
 
     public Integer getId() {
         return id;
@@ -68,5 +73,21 @@ public class AppointmentInfoResponseDto {
 
     public void setEndDateTime(LocalDateTime endDateTime) {
         this.endDateTime = endDateTime;
+    }
+
+    public LastAppointmentsListDto getLastPetAppointments() {
+        return lastPetAppointments;
+    }
+
+    public void setLastPetAppointments(LastAppointmentsListDto lastPetAppointments) {
+        this.lastPetAppointments = lastPetAppointments;
+    }
+
+    public LastAppointmentsListDto getLastOwnerAppointments() {
+        return lastOwnerAppointments;
+    }
+
+    public void setLastOwnerAppointments(LastAppointmentsListDto lastOwnerAppointments) {
+        this.lastOwnerAppointments = lastOwnerAppointments;
     }
 }
