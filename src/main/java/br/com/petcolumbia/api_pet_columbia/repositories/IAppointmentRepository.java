@@ -13,6 +13,10 @@ import java.util.List;
 
 @Repository
 public interface IAppointmentRepository extends JpaRepository<AppointmentModel, Integer> {
+
+    @Query("SELECT  a FROM AppointmentModel  a WHERE a.pet.owner.id = :ownerId")
+    List<AppointmentModel> findAllAppointmentsByOwnerId(@Param("ownerId") Integer ownerId);
+
     List<AppointmentModel> findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(
             EmployeeModel employee, LocalDateTime startOfDay, LocalDateTime endOfDay);
 

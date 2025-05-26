@@ -34,18 +34,19 @@ public class AppointmentsController {
         List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, ServiceMapper.requestsToEntities(availableTimesRequest.getServices()));
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
-
-    //lista de agendamentos de um usuário especifico
-//    @GetMapping("/{ownerId}")
-//    @Operation(summary = "a")
-//    @SecurityScheme(name = "Bearer")
-//    public ResponseEntity<List>
-//    nome do pet, dia e horario, servicos, pet e funcionario
+    
+    @GetMapping("/{ownerId}")
+    @Operation(summary = "Lista todos os agendamentos de um usuário pelo id")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<List<AppointmentResponseDto>> getAllAppointmentsByOwnerId(@PathVariable Integer ownerId){
+        List<AppointmentModel> all = appointmentService.allAppointmentsByOwnerId(ownerId);
+        return ResponseEntity.status(201).body(AppointmentMapper.entitiesToResponses(all));
+    }
 
     @PostMapping()
     @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de agendamento")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<AppointmentResponseDto>registerAppointment(@RequestBody AppointmentCreateDto newAppointment){
+    public ResponseEntity<AppointmentResponseDto> registerAppointment(@RequestBody AppointmentCreateDto newAppointment){
         AppointmentModel savedAppointment = appointmentService.createAppointment(newAppointment);
         return ResponseEntity.status(201).body(AppointmentMapper.entityToResponse(savedAppointment));
     }

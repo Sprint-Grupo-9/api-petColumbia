@@ -27,7 +27,7 @@ public class DashboardsController {
     }
 
     @GetMapping("/appointments/date")
-    @Operation(summary = "Lista todos os agendamentos marcados de uma data, recebe uma data")
+    @Operation(summary = "Lista todos os agendamentos marcados de uma data, recebe uma data", description = "Retorna ")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<AppointmentsDashboardInfosResponseDto> listAppointmentsByDate(@RequestParam LocalDate date){
         List<AppointmentModel> appointments = dashboardService.appointmentsByDate(date);
@@ -46,8 +46,7 @@ public class DashboardsController {
     }
 
     @GetMapping("/procedures/amount-last-seven-days")
-    @Operation(summary = "Lista os últimos 7 dias a quantidade de serviços prestados ",
-            description = "")
+    @Operation(summary = "Lista os últimos 7 dias a quantidade de serviços prestados ")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Map<LocalDate, Long>> getAmountProceduresLastSevenDays() {
 

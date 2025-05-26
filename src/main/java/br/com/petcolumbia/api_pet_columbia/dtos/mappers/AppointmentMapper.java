@@ -68,6 +68,16 @@ public class AppointmentMapper {
         return responseDto;
     }
 
+    public static List<AppointmentResponseDto> entitiesToResponses(List<AppointmentModel> appointments){
+        List<AppointmentResponseDto> response = new ArrayList<>();
+
+        for(AppointmentModel appointment: appointments){
+            response.add(AppointmentMapper.entityToResponse(appointment));
+        }
+
+        return response;
+    }
+
     public static AppointmentInfoResponseDto toInfoResponse (AppointmentModel entity, LastAppointmentsListDto lastPetsAppointments, LastAppointmentsListDto lastOwnerAppointments ) {
         AppointmentInfoResponseDto responseDto = new AppointmentInfoResponseDto();
 
