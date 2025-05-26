@@ -126,6 +126,10 @@ public class AppointmentService {
         return toBusyTimesDto(busyAppointments);
     }
 
+    public List<AppointmentModel> allAppointmentsByOwnerId(Integer ownerId){
+        return appointmentRepository.findAllAppointmentsByOwnerId(ownerId);
+    }
+
     public AppointmentModel createAppointment(AppointmentCreateDto dto) {
         PetModel pet = petService.findPetById(dto.getPetId());
 
