@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeModel, Integer> {
-    @Query("SELECT es.employee FROM EmployeeServiceAssociationModel es WHERE es.service.id IN :serviceIds")
+    @Query("SELECT es.employee FROM EmployeeServiceAssociationModel es WHERE es.service.id IN :serviceIds GROUP BY es.employee HAVING COUNT(DISTINCT es.service.id) = :#{#serviceIds.size()}")
     List<EmployeeModel> findEmployeesByServiceIds(List<Integer> serviceIds);
 }

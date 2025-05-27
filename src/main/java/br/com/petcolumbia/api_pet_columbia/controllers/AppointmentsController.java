@@ -9,6 +9,7 @@ import br.com.petcolumbia.api_pet_columbia.dtos.requests.others.AvailableTimesRe
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.AppointmentService;
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -34,13 +35,17 @@ public class AppointmentsController {
         List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, ServiceMapper.requestsToEntities(availableTimesRequest.getServices()));
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
-    
+
     @GetMapping("/{ownerId}")
     @Operation(summary = "Lista todos os agendamentos de um usuário pelo id")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<AppointmentResponseDto>> getAllAppointmentsByOwnerId(@PathVariable Integer ownerId){
         List<AppointmentModel> all = appointmentService.allAppointmentsByOwnerId(ownerId);
-        return ResponseEntity.status(201).body(AppointmentMapper.entitiesToResponses(all));
+
+        if (all.isEmpty())
+            return ResponseEntity.status(204).build();
+
+        return ResponseEntity.status(200).body(AppointmentMapper.entitiesToResponses(all));
     }
 
     @PostMapping()
