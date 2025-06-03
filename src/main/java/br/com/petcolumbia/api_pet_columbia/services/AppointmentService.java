@@ -25,15 +25,15 @@ public class AppointmentService {
 
     private final IAppointmentRepository appointmentRepository;
     private final ServiceService serviceService;
-    private final PriceAndDurationService priceAndDurationService;
+    private final ServicePriceAndDurationService servicePriceAndDurationService;
     private final EmployeeService employeeServiceAssociation;
     private final PetService petService;
     private final EmployeeService employeeService;
 
-    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, PriceAndDurationService priceAndDurationService, EmployeeService employeeServiceAssociation, PetService petService, EmployeeService employeeService) {
+    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, ServicePriceAndDurationService servicePriceAndDurationService, EmployeeService employeeServiceAssociation, PetService petService, EmployeeService employeeService) {
         this.appointmentRepository = appointmentRepository;
         this.serviceService = serviceService;
-        this.priceAndDurationService = priceAndDurationService;
+        this.servicePriceAndDurationService = servicePriceAndDurationService;
         this.employeeServiceAssociation = employeeServiceAssociation;
         this.petService = petService;
         this.employeeService = employeeService;
@@ -49,8 +49,8 @@ public class AppointmentService {
         List<EmployeeModel> employees = employeeServiceAssociation
                 .listEmployeesServices(servicesIds);
 
-        Double price = priceAndDurationService.calculateTotalPrice(servicesIds, pet);
-        Integer serviceDurationMinutes = priceAndDurationService.calculateTotalDuration(servicesIds, pet);
+        Double price = servicePriceAndDurationService.calculateTotalPrice(servicesIds, pet);
+        Integer serviceDurationMinutes = servicePriceAndDurationService.calculateTotalDuration(servicesIds, pet);
 
         List<AvailableTimesModel> allAvailableTimes = new ArrayList<>();
 
@@ -124,6 +124,10 @@ public class AppointmentService {
                 .findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(employee, startOfDay, endOfDay);
 
         return toBusyTimesDto(busyAppointments);
+    }
+
+    public List<AppointmentModel> allAppointmentsByOwnerId(Integer ownerId){
+        return appointmentRepository.findAllAppointmentsByOwnerId(ownerId);
     }
 
     public AppointmentModel createAppointment(AppointmentCreateDto dto) {

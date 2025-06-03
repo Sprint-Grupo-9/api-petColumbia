@@ -2,9 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.controllers;
 
 import br.com.petcolumbia.api_pet_columbia.domain.entities.AppointmentModel;
 import br.com.petcolumbia.api_pet_columbia.dtos.mappers.AppointmentMapper;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.AppointmentsDashboardInfosResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.LeastServiceResponseDto;
-import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.TopServiceResponseDto;
+import br.com.petcolumbia.api_pet_columbia.dtos.responses.dashboard.*;
 import br.com.petcolumbia.api_pet_columbia.services.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -29,7 +27,7 @@ public class DashboardsController {
     }
 
     @GetMapping("/appointments/date")
-    @Operation(summary = "Lista todos os agendamentos marcados de uma data, recebe uma data")
+    @Operation(summary = "Lista todos os agendamentos marcados de uma data, recebe uma data", description = "Retorna ")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<AppointmentsDashboardInfosResponseDto> listAppointmentsByDate(@RequestParam LocalDate date){
         List<AppointmentModel> appointments = dashboardService.appointmentsByDate(date);
@@ -39,15 +37,16 @@ public class DashboardsController {
 
         AppointmentsDashboardInfosResponseDto response  = new AppointmentsDashboardInfosResponseDto();
 
+        LastPetAndOwnerAppointmentsResponseDto lastAppointmentsDto = dashboardService.lastAppointmentsOfPetAndOwnerByAppointmentsList(appointments);
+
         response.setCardResponses(AppointmentMapper.entitiesToCardInfoResponses(appointments));
-        response.setInfoResponses(AppointmentMapper.entitiesToInfoResponses(appointments));
+        response.setInfoResponses(AppointmentMapper.toInfoResponses(appointments, lastAppointmentsDto));
 
         return ResponseEntity.status(200).body(response);
     }
 
     @GetMapping("/procedures/amount-last-seven-days")
-    @Operation(summary = "Lista os últimos 7 dias a quantidade de serviços prestados ",
-            description = "")
+    @Operation(summary = "Lista os últimos 7 dias a quantidade de serviços prestados ")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Map<LocalDate, Long>> getAmountProceduresLastSevenDays() {
 
@@ -58,7 +57,7 @@ public class DashboardsController {
         return ResponseEntity.status(200).body(appointmentCountDtos);
     }
 
-    @GetMapping("/procedures/most-performed-month")
+    @GetMapping("/procedures/most-performed-last-thirty-days")
     @Operation(summary = "Busca o procedimento mais realizado do mês",
             description = "retorna data de início e fim do mês, o nome do serviço e quantidade de procedimentos realizados")
     @SecurityRequirement(name = "Bearer")
@@ -66,12 +65,12 @@ public class DashboardsController {
         TopServiceResponseDto response = dashboardService.mostPerformedProcedureByLastThirtyDays();
 
         if (response == null)
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(204).build();
 
         return ResponseEntity.status(200).body(response);
     }
 
-    @GetMapping("/procedures/least-performed-month")
+    @GetMapping("/procedures/least-performed-last-thirty-days")
     @Operation(summary = "Busca o procedimento menos realizado do mês",
             description = "retorna data de início e fim do mês, o nome do serviço e quantidade de procedimentos realizados")
     @SecurityRequirement(name = "Bearer")
@@ -79,29 +78,35 @@ public class DashboardsController {
         LeastServiceResponseDto response = dashboardService.leastPerformedProcedureByLastThirtyDays();
 
         if (response == null)
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(204).build();
 
         return ResponseEntity.status(200).body(response);
     }
 
-    /*  Intervalo de maior fluxo de agendamentos no mes (retornar a data de inicio e fim do mes,
-    os intervalo e a quantidade de agendamentos entre o intervalo ) */
-    @GetMapping("/procedures/busiest-time-interval-month")
-    @Operation(summary = "",
-            description = "")
+    @GetMapping("/procedures/most-procedures-timing-last-thirty-days")
+    @Operation(summary = "Busca o horário mais agendado dos últimos 30 dias",
+            description = "Retorna a data de 30 dias atrás e o dia atual, o horário mais agendado e a quantidade")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<?> getBusiestTimeIntervalInMonth() {
-        return ResponseEntity.ok("Interval of more procedures");
+    public ResponseEntity<TopProceduresTimingResponse> getMostProceduresTimingByLastThirtyDays() {
+        TopProceduresTimingResponse response = dashboardService.mostProceduresTimingByLastThirtyDays();
+
+        if (response == null)
+            return ResponseEntity.status(204).build();
+
+        return ResponseEntity.status(200).body(response);
     }
 
-    /*Intervalo de menor fluxo de agendamentos no mes (retornar a data de inicio e fim do mes,
-        os intervalo e a quantidade de agendamentos entre o intervalo )*/
-    @GetMapping("/procedures/quietest-time-interval-month")
-    @Operation(summary = "",
-            description = "")
+    @GetMapping("/procedures/least-procedures-timing-last-thirty-days")
+    @Operation(summary = "Busca o horário menos agendado dos últimos 30 dias",
+            description = "Retorna a data de 30 dias atrás e o dia atual, o horário menos agendado e a quantidade")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<?> getQuietestTimeIntervalInMonth() {
-        return ResponseEntity.ok("Interval of less procedures");
+    public ResponseEntity<LeastProceduresTimingResponse> getLeastProceduresTimingByLastThirtyDays() {
+        LeastProceduresTimingResponse response = dashboardService.leastProceduresTimingByLastThirtyDays();
+
+        if (response == null)
+            return ResponseEntity.status(204).build();
+
+        return ResponseEntity.status(200).body(response);
     }
 
 

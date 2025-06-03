@@ -9,6 +9,7 @@ import br.com.petcolumbia.api_pet_columbia.dtos.requests.others.AvailableTimesRe
 import br.com.petcolumbia.api_pet_columbia.dtos.requests.appointmentDtos.AppointmentCreateDto;
 import br.com.petcolumbia.api_pet_columbia.dtos.responses.appointmentDtos.AppointmentResponseDto;
 import br.com.petcolumbia.api_pet_columbia.services.AppointmentService;
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -35,17 +36,22 @@ public class AppointmentsController {
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
 
-    //lista de agendamentos de um usuário especifico
-//    @GetMapping("/{ownerId}")
-//    @Operation(summary = "a")
-//    @SecurityScheme(name = "Bearer")
-//    public ResponseEntity<List>
-//    nome do pet, dia e horario, servicos, pet e funcionario
+    @GetMapping("/{ownerId}")
+    @Operation(summary = "Lista todos os agendamentos de um usuário pelo id")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<List<AppointmentResponseDto>> getAllAppointmentsByOwnerId(@PathVariable Integer ownerId){
+        List<AppointmentModel> all = appointmentService.allAppointmentsByOwnerId(ownerId);
+
+        if (all.isEmpty())
+            return ResponseEntity.status(204).build();
+
+        return ResponseEntity.status(200).body(AppointmentMapper.entitiesToResponses(all));
+    }
 
     @PostMapping()
     @Operation(summary = "Regista um novo agendamento, Recebe um dto de criação de agendamento")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<AppointmentResponseDto>registerAppointment(@RequestBody AppointmentCreateDto newAppointment){
+    public ResponseEntity<AppointmentResponseDto> registerAppointment(@RequestBody AppointmentCreateDto newAppointment){
         AppointmentModel savedAppointment = appointmentService.createAppointment(newAppointment);
         return ResponseEntity.status(201).body(AppointmentMapper.entityToResponse(savedAppointment));
     }
