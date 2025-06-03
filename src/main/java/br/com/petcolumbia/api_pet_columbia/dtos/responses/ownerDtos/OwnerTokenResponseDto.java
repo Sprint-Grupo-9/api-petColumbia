@@ -5,6 +5,7 @@ public class OwnerTokenResponseDto {
     private String name;
     private String email;
     private String token;
+    private Boolean isAdmin;
 
     public Integer getId() {
         return id;
@@ -30,11 +31,19 @@ public class OwnerTokenResponseDto {
         this.email = email;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public void setToken(String token) {
         this.token = token;
     }
 
-    public String getToken() {
-        return token;
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

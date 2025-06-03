@@ -47,6 +47,7 @@ public class OwnerMapper {
         ownerToken.setEmail(owner.getEmail());
         ownerToken.setName(owner.getName());
         ownerToken.setToken(token);
+        ownerToken.setAdmin(owner.getAdm());
 
         return ownerToken;
     }
