@@ -17,7 +17,8 @@ public class AppointmentModel {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private EmployeeModel employee;
-
+    private String observations;
+    private Boolean taxiService;
     private String services;
     private Double totalPrice;
     private LocalDateTime startDateTime;
@@ -25,6 +26,22 @@ public class AppointmentModel {
     private Boolean isFinished;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdate;
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+    public Boolean getTaxiService() {
+        return taxiService;
+    }
+
+    public void setTaxiService(Boolean taxiService) {
+        this.taxiService = taxiService;
+    }
 
     public Integer getId() {
         return id;

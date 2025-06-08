@@ -140,7 +140,14 @@ public class AppointmentService {
         appointment.setPet(pet);
         appointment.setEmployee(employee);
         appointment.setServices(dto.getServicesNames());
-        appointment.setTotalPrice(dto.getTotalPrice());
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
+
+        if (dto.getTaxiService())
+            appointment.setTotalPrice(dto.getTotalPrice() + 20.0);
+        else
+            appointment.setTotalPrice(dto.getTotalPrice());
+
         appointment.setStartDateTime(dto.getStartDateTime());
         appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
         appointment.setFinished(false);
@@ -163,7 +170,14 @@ public class AppointmentService {
         appointment.setPet(pet);
         appointment.setEmployee(employee);
         appointment.setServices(dto.getServices().toString());
-        appointment.setTotalPrice(dto.getTotalPrice());
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
+
+        if (dto.getTaxiService())
+            appointment.setTotalPrice(dto.getTotalPrice() + 20.0);
+        else
+            appointment.setTotalPrice(dto.getTotalPrice());
+
         appointment.setStartDateTime(dto.getStartDateTime());
         appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
         appointment.setLastUpdate(LocalDateTime.now());
