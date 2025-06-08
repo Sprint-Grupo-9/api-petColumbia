@@ -10,6 +10,15 @@ public class AppointmentCardInfoResponseDto {
     private String petBreed;
     private String servicesNames;
     private Double price;
+    private Boolean taxiService;
+
+    public Boolean getTaxiService() {
+        return taxiService;
+    }
+
+    public void setTaxiService(Boolean taxiService) {
+        this.taxiService = taxiService;
+    }
 
     public LocalTime getStartTime() {
         return startTime;

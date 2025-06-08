@@ -29,6 +29,8 @@ public class AppointmentMapper {
     public static AppointmentModel createDtoToEntity(AppointmentCreateDto dto) {
         AppointmentModel appointment = new AppointmentModel();
 
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
         appointment.setServices(dto.getServicesNames());
         appointment.setTotalPrice(dto.getTotalPrice());
         appointment.setStartDateTime(dto.getStartDateTime());
@@ -43,6 +45,8 @@ public class AppointmentMapper {
     public static AppointmentModel updateDtoToEntity(AppointmentUpdateDto dto) {
         AppointmentModel appointment = new AppointmentModel();
 
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
         appointment.setServices(dto.getServices().toString());
         appointment.setTotalPrice(dto.getTotalPrice());
         appointment.setStartDateTime(dto.getStartDateTime());
@@ -62,6 +66,8 @@ public class AppointmentMapper {
         responseDto.setEmployee(EmployeeMapper.entityToResponse(entity.getEmployee()));
         responseDto.setServices(entity.getServices());
         responseDto.setTotalPrice(entity.getTotalPrice());
+        responseDto.setObservations(entity.getObservations());
+        responseDto.setTaxiService(entity.getTaxiService());
         responseDto.setStartDateTime(entity.getStartDateTime());
         responseDto.setEndDateTime(entity.getEndDateTime());
 
@@ -86,6 +92,8 @@ public class AppointmentMapper {
         responseDto.setEmployee(EmployeeMapper.entityToResponse(entity.getEmployee()));
         responseDto.setServices(entity.getServices());
         responseDto.setTotalPrice(entity.getTotalPrice());
+        responseDto.setObservations(entity.getObservations());
+        responseDto.setTaxiService(entity.getTaxiService());
         responseDto.setStartDateTime(entity.getStartDateTime());
         responseDto.setEndDateTime(entity.getEndDateTime());
         responseDto.setLastPetAppointments(lastPetsAppointments);
@@ -115,6 +123,7 @@ public class AppointmentMapper {
         responseDto.setPetBreed(entity.getPet().getBreed());
         responseDto.setServicesNames(entity.getServices());
         responseDto.setPrice(entity.getTotalPrice());
+        responseDto.setTaxiService(entity.getTaxiService());
 
         return  responseDto;
     }

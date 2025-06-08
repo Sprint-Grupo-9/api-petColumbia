@@ -1,13 +1,54 @@
 -- Inserts para tabela service
 INSERT INTO service (id, description, name) VALUES (1, 'Banho completo conforme o porte e pelagem do pet', 'Banho');
-INSERT INTO service (id, description, name) VALUES (2, 'Tosa higiênica de regiões específicas do pet', 'Tosa higiênica');
-INSERT INTO service (id, description, name) VALUES (3, 'Tosa geral com máquina elétrica', 'Tosa na máquina');
-INSERT INTO service (id, description, name) VALUES (4, 'Tosa suave ideal para filhotes', 'Tosa bebê');
-INSERT INTO service (id, description, name) VALUES (5, 'Corte de pelos em formato de botinha', 'Botinha');
+INSERT INTO service (id, description, name) VALUES (2, 'Tosa para manter a higiene em partes específicas como barriga, bumbum, olhos e inferior das patas', 'Tosa higiênica');
+INSERT INTO service (id, description, name) VALUES (3, 'Tosa geral do corpo e cabeça com a lâmina escolhida', 'Tosa na máquina');
+INSERT INTO service (id, description, name) VALUES (4, 'Corpinho na máquina, e cabeça feita na tesoura', 'Tosa bebê');
+INSERT INTO service (id, description, name) VALUES (5, 'Tosa higiênica com adicional de tirar todos os pelos das patas', 'Botinha');
 INSERT INTO service (id, description, name) VALUES (6, 'Desembolo dos pelos do pet', 'Desembolo');
 INSERT INTO service (id, description, name) VALUES (7, 'Escovação dos dentes do pet', 'Escovação dentária');
 INSERT INTO service (id, description, name) VALUES (8, 'Hidratação dos pelos', 'Hidratação');
 INSERT INTO service (id, description, name) VALUES (9, 'Corte das unhas do pet', 'Corte de unha');
+
+-- Inserts para tabela employee
+INSERT INTO employee (id, name) VALUES (1, 'Priscila');
+INSERT INTO employee (id, name) VALUES (2, 'Rute');
+INSERT INTO employee (id, name) VALUES (3, 'Keila');
+INSERT INTO employee (id, name) VALUES (4, 'Taina');
+
+-- Inserts para tabela employees_has_services
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 3);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 4);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 9);
+
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 9);
+
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 9);
+
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 9);
 
 -- Inserts para tabela service_price_and_duration
 INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price, service_id) VALUES (1, 30, 'curta', 'pp', 55.0,  1);
@@ -100,41 +141,6 @@ INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price,
 INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price, service_id) VALUES (88, 10, 'longa', 'm', 20.0,  9);
 INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price, service_id) VALUES (89, 10, 'longa', 'g', 20.0,  9);
 INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price, service_id) VALUES (90, 10, 'longa', 'gg', 20.0,  9);
-
--- Inserts para tabela employee
-INSERT INTO employee (id, name) VALUES (1, 'Priscila');
-INSERT INTO employee (id, name) VALUES (2, 'Rute');
-INSERT INTO employee (id, name) VALUES (3, 'Keila');
-INSERT INTO employee (id, name) VALUES (4, 'Taina');
-
--- Inserts para tabela employees_has_services
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 2);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 3);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 4);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 5);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 9);
-
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 9);
-
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 9);
-
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 9);
 
 INSERT INTO owner (
     id, cep, complement, cpf, created_at, email, is_adm, last_update,
