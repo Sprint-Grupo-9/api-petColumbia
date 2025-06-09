@@ -39,7 +39,7 @@ public class AppointmentService {
         this.employeeService = employeeService;
     }
 
-    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services){
+    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services, Boolean taxiService) {
         PetModel pet = petService.findPetById(petId);
 
         List<Integer> servicesIds = serviceService.getServiceIds(services);
@@ -50,6 +50,10 @@ public class AppointmentService {
                 .listEmployeesServices(servicesIds);
 
         Double price = servicePriceAndDurationService.calculateTotalPrice(servicesIds, pet);
+
+        if(taxiService)
+            price += 20.0;
+
         Integer serviceDurationMinutes = servicePriceAndDurationService.calculateTotalDuration(servicesIds, pet);
 
         List<AvailableTimesModel> allAvailableTimes = new ArrayList<>();
@@ -142,12 +146,6 @@ public class AppointmentService {
         appointment.setServices(dto.getServicesNames());
         appointment.setObservations(dto.getObservations());
         appointment.setTaxiService(dto.getTaxiService());
-
-        if (dto.getTaxiService())
-            appointment.setTotalPrice(dto.getTotalPrice() + 20.0);
-        else
-            appointment.setTotalPrice(dto.getTotalPrice());
-
         appointment.setStartDateTime(dto.getStartDateTime());
         appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
         appointment.setFinished(false);
@@ -172,12 +170,6 @@ public class AppointmentService {
         appointment.setServices(dto.getServices().toString());
         appointment.setObservations(dto.getObservations());
         appointment.setTaxiService(dto.getTaxiService());
-
-        if (dto.getTaxiService())
-            appointment.setTotalPrice(dto.getTotalPrice() + 20.0);
-        else
-            appointment.setTotalPrice(dto.getTotalPrice());
-
         appointment.setStartDateTime(dto.getStartDateTime());
         appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
         appointment.setLastUpdate(LocalDateTime.now());
