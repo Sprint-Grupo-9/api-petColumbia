@@ -8,6 +8,19 @@ import java.util.List;
 public class AvailableTimesRequest {
     private LocalDate date;
     private List<ServiceRequest> services;
+    private Boolean taxiService;
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Boolean getTaxiService() {
+        return taxiService;
+    }
+
+    public void setTaxiService(Boolean taxiService) {
+        this.taxiService = taxiService;
+    }
 
     public LocalDate getDate() {
         return date;
