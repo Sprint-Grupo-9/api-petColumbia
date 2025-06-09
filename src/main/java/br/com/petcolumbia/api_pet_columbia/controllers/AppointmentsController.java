@@ -32,7 +32,7 @@ public class AppointmentsController {
             description = "Receba o dia, pet e serviços solicitados")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<AvailableTimesModel>> getAvailableTimes(@RequestBody AvailableTimesRequest availableTimesRequest, @PathVariable Integer petId){
-        List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, ServiceMapper.requestsToEntities(availableTimesRequest.getServices()), availableTimesRequest.getTaxiService());
+        List<AvailableTimesModel> allAvailableTimes = appointmentService.getAvailableTimes(availableTimesRequest.getDate(), petId, ServiceMapper.requestsToEntities(availableTimesRequest.getServices()));
         return ResponseEntity.status(200).body(allAvailableTimes);
     }
 
