@@ -39,7 +39,7 @@ public class AppointmentService {
         this.employeeService = employeeService;
     }
 
-    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services){
+    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services, Boolean taxiService) {
         PetModel pet = petService.findPetById(petId);
 
         List<Integer> servicesIds = serviceService.getServiceIds(services);
@@ -50,6 +50,10 @@ public class AppointmentService {
                 .listEmployeesServices(servicesIds);
 
         Double price = servicePriceAndDurationService.calculateTotalPrice(servicesIds, pet);
+
+        if(taxiService)
+            price += 20.0;
+
         Integer serviceDurationMinutes = servicePriceAndDurationService.calculateTotalDuration(servicesIds, pet);
 
         List<AvailableTimesModel> allAvailableTimes = new ArrayList<>();
@@ -80,11 +84,11 @@ public class AppointmentService {
             EmployeeModel employee, LocalDate date, String servicesNames, Double price, Integer serviceDurationMinutes) {
 
         List<LocalTime> availableTimes = new ArrayList<>(Arrays.asList(
-                LocalTime.of(8, 0), LocalTime.of(8, 30), LocalTime.of(9, 0), LocalTime.of(9, 30),
+                LocalTime.of(9, 0), LocalTime.of(9, 30),
                 LocalTime.of(10, 0), LocalTime.of(10, 30), LocalTime.of(11, 0), LocalTime.of(11, 30),
                 LocalTime.of(12, 0), LocalTime.of(12, 30), LocalTime.of(13, 0), LocalTime.of(13, 30),
                 LocalTime.of(14, 0), LocalTime.of(14, 30), LocalTime.of(15, 0), LocalTime.of(15, 30),
-                LocalTime.of(16, 0), LocalTime.of(16, 30), LocalTime.of(17, 0)
+                LocalTime.of(16, 0), LocalTime.of(16, 30)
         ));
 
         List<BusyTime> busyTimes = appointmentByDateAndEmployee(employee, date);
@@ -140,7 +144,8 @@ public class AppointmentService {
         appointment.setPet(pet);
         appointment.setEmployee(employee);
         appointment.setServices(dto.getServicesNames());
-        appointment.setTotalPrice(dto.getTotalPrice());
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
         appointment.setStartDateTime(dto.getStartDateTime());
         appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
         appointment.setFinished(false);
@@ -163,7 +168,8 @@ public class AppointmentService {
         appointment.setPet(pet);
         appointment.setEmployee(employee);
         appointment.setServices(dto.getServices().toString());
-        appointment.setTotalPrice(dto.getTotalPrice());
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
         appointment.setStartDateTime(dto.getStartDateTime());
         appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
         appointment.setLastUpdate(LocalDateTime.now());

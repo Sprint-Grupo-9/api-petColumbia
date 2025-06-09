@@ -19,11 +19,31 @@ public class AppointmentCreateDto {
     @NotNull(message = "O preço é obrigatório")
     private Double totalPrice;
 
+    private String observations;
+
+    private Boolean taxiService;
+
     @NotNull(message = "A data de início é obrigatória")
     private LocalDateTime startDateTime;
 
     @NotNull(message = "A duração é obrigatória")
     private Integer durationMinutes;
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+    public Boolean getTaxiService() {
+        return taxiService;
+    }
+
+    public void setTaxiService(Boolean taxiService) {
+        this.taxiService = taxiService;
+    }
 
     public @NotNull(message = "O Id do Pet é obrigatório") Integer getPetId() {
         return petId;

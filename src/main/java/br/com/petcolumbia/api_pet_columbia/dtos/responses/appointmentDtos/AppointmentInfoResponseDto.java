@@ -14,10 +14,28 @@ public class AppointmentInfoResponseDto {
     private EmployeeResponseDto employee;
     private String services;
     private Double totalPrice;
+    private String observations;
+    private Boolean taxiService;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private LastAppointmentsListDto lastPetAppointments;
     private LastAppointmentsListDto lastOwnerAppointments;
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+    public Boolean getTaxiService() {
+        return taxiService;
+    }
+
+    public void setTaxiService(Boolean taxiService) {
+        this.taxiService = taxiService;
+    }
 
     public Integer getId() {
         return id;

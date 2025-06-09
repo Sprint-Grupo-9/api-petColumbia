@@ -1,13 +1,54 @@
 -- Inserts para tabela service
 INSERT INTO service (id, description, name) VALUES (1, 'Banho completo conforme o porte e pelagem do pet', 'Banho');
-INSERT INTO service (id, description, name) VALUES (2, 'Tosa higiênica de regiões específicas do pet', 'Tosa higiênica');
-INSERT INTO service (id, description, name) VALUES (3, 'Tosa geral com máquina elétrica', 'Tosa na máquina');
-INSERT INTO service (id, description, name) VALUES (4, 'Tosa suave ideal para filhotes', 'Tosa bebê');
-INSERT INTO service (id, description, name) VALUES (5, 'Corte de pelos em formato de botinha', 'Botinha');
+INSERT INTO service (id, description, name) VALUES (2, 'Tosa para manter a higiene em partes específicas como barriga, bumbum, olhos e inferior das patas', 'Tosa higiênica');
+INSERT INTO service (id, description, name) VALUES (3, 'Tosa geral do corpo e cabeça com a lâmina escolhida', 'Tosa na máquina');
+INSERT INTO service (id, description, name) VALUES (4, 'Corpinho na máquina, e cabeça feita na tesoura', 'Tosa bebê');
+INSERT INTO service (id, description, name) VALUES (5, 'Tosa higiênica com adicional de tirar todos os pelos das patas', 'Botinha');
 INSERT INTO service (id, description, name) VALUES (6, 'Desembolo dos pelos do pet', 'Desembolo');
 INSERT INTO service (id, description, name) VALUES (7, 'Escovação dos dentes do pet', 'Escovação dentária');
 INSERT INTO service (id, description, name) VALUES (8, 'Hidratação dos pelos', 'Hidratação');
 INSERT INTO service (id, description, name) VALUES (9, 'Corte das unhas do pet', 'Corte de unha');
+
+-- Inserts para tabela employee
+INSERT INTO employee (id, name) VALUES (1, 'Priscila');
+INSERT INTO employee (id, name) VALUES (2, 'Rute');
+INSERT INTO employee (id, name) VALUES (3, 'Keila');
+INSERT INTO employee (id, name) VALUES (4, 'Taina');
+
+-- Inserts para tabela employees_has_services
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 3);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 4);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 9);
+
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 9);
+
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 9);
+
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 1);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 2);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 5);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 6);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 7);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 8);
+INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 9);
 
 -- Inserts para tabela service_price_and_duration
 INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price, service_id) VALUES (1, 30, 'curta', 'pp', 55.0,  1);
@@ -101,47 +142,12 @@ INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price,
 INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price, service_id) VALUES (89, 10, 'longa', 'g', 20.0,  9);
 INSERT INTO service_price_and_duration (id, duration, pet_coat, pet_size, price, service_id) VALUES (90, 10, 'longa', 'gg', 20.0,  9);
 
--- Inserts para tabela employee
-INSERT INTO employee (id, name) VALUES (1, 'Priscila');
-INSERT INTO employee (id, name) VALUES (2, 'Rute');
-INSERT INTO employee (id, name) VALUES (3, 'Keila');
-INSERT INTO employee (id, name) VALUES (4, 'Taina');
-
--- Inserts para tabela employees_has_services
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 2);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 3);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 4);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 5);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (1, 9);
-
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (2, 9);
-
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (3, 9);
-
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 1);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 6);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 7);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 8);
-INSERT INTO employees_has_services (employee_id, service_id) VALUES (4, 9);
-
 INSERT INTO owner (
     id, cep, complement, cpf, created_at, email, is_adm, last_update,
     name, neighborhood, number, password, phone_number, street
 ) VALUES
       (  -- Hash da senha, senha real é 'Teste123.'
-          DEFAULT, '01234567', 'Apto Teste', '12345678901', NOW(), 'solarium.teste@email.com', true, NOW(),
+          DEFAULT, '01234567', 'Apto Teste', '12345678901', NOW(), 'solarium@teste.com', true, NOW(),
           'Solarium Teste', 'Centro', '123', '$2a$10$6DNYINTrKZPcxhmMR2fxyOoBcAKQEu8TZz.cbbU0RYmSrAiNZ9/t.',
        '11987654321', 'Rua dos Testes'
       ),
@@ -177,30 +183,33 @@ INSERT INTO appointment (
     id, created_at, end_date_time, is_finished, last_update,
     services, start_date_time, total_price, employee_id, pet_id
 ) VALUES
--- 7 dias atrás
-(DEFAULT, '2025-05-16 09:00:00', '2025-05-16 10:30:00', true, '2025-05-16 11:00:00', 'Banho, Desembolo', '2025-05-16 10:00:00', 70.00, 1, 1),
-(DEFAULT, '2025-05-16 09:30:00', '2025-05-16 12:00:00', true, '2025-05-16 12:10:00', 'Tosa bebê, Hidratação', '2025-05-16 10:30:00', 80.00, 2, 2),
+-- 03/06/2025 (poucos agendamentos - 1)
+(DEFAULT, '2025-06-03 08:30:00', '2025-06-03 10:00:00', true, '2025-06-03 08:30:00', 'Banho, Desembolo', '2025-06-03 09:00:00', 70.00, 1, 1),
 
--- 6 dias atrás
-(DEFAULT, '2025-05-17 09:15:00', '2025-05-17 11:15:00', true, '2025-05-17 11:30:00', 'Corte de unha, Banho', '2025-05-17 10:00:00', 60.00, 3, 1),
-(DEFAULT, '2025-05-17 10:00:00', '2025-05-17 12:00:00', true, '2025-05-17 12:10:00', 'Tosa na máquina', '2025-05-17 10:30:00', 70.00, 4, 3),
+-- 04/06/2025 (médio - 2)
+(DEFAULT, '2025-06-04 09:00:00', '2025-06-04 10:30:00', true, '2025-06-04 09:00:00', 'Corte de unha', '2025-06-04 09:30:00', 40.00, 2, 2),
+(DEFAULT, '2025-06-04 10:00:00', '2025-06-04 12:00:00', true, '2025-06-04 10:00:00', 'Banho, Tosa bebê', '2025-06-04 10:30:00', 65.00, 3, 3),
 
--- 5 dias atrás
-(DEFAULT, '2025-05-18 08:30:00', '2025-05-18 11:00:00', true, '2025-05-18 11:15:00', 'Hidratação', '2025-05-18 10:00:00', 55.00, 1, 2),
-(DEFAULT, '2025-05-18 09:45:00', '2025-05-18 11:45:00', true, '2025-05-18 12:00:00', 'Banho', '2025-05-18 10:15:00', 55.00, 2, 3),
+-- 05/06/2025 (muito - 4)
+(DEFAULT, '2025-06-05 08:00:00', '2025-06-05 09:30:00', true, '2025-06-05 08:00:00', 'Banho, Hidratação', '2025-06-05 08:30:00', 60.00, 1, 2),
+(DEFAULT, '2025-06-05 09:30:00', '2025-06-05 11:00:00', true, '2025-06-05 09:30:00', 'Banho, Tosa higiênica', '2025-06-05 10:00:00', 70.00, 2, 1),
+(DEFAULT, '2025-06-05 11:00:00', '2025-06-05 12:30:00', true, '2025-06-05 11:00:00', 'Banho', '2025-06-05 11:30:00', 50.00, 3, 3),
+(DEFAULT, '2025-06-05 13:00:00', '2025-06-05 14:30:00', true, '2025-06-05 13:00:00', 'Banho, Escovação dentária', '2025-06-05 13:30:00', 75.00, 4, 1),
 
--- 4 dias atrás
-(DEFAULT, '2025-05-19 08:50:00', '2025-05-19 10:20:00', true, '2025-05-19 10:30:00', 'Escovação dentária', '2025-05-19 10:00:00', 40.00, 3, 1),
-(DEFAULT, '2025-05-19 09:10:00', '2025-05-19 11:10:00', true, '2025-05-19 11:25:00', 'Banho, Tosa higiênica', '2025-05-19 10:15:00', 70.00, 4, 2),
+-- 06/06/2025 (poucos - 1)
+(DEFAULT, '2025-06-06 09:00:00', '2025-06-06 10:30:00', true, '2025-06-06 09:00:00', 'Banho, Tosa na máquina', '2025-06-06 09:30:00', 65.00, 2, 3),
 
--- 3 dias atrás
-(DEFAULT, '2025-05-20 09:30:00', '2025-05-20 11:30:00', true, '2025-05-20 11:45:00', 'Desembolo', '2025-05-20 10:00:00', 60.00, 1, 3),
-(DEFAULT, '2025-05-20 10:15:00', '2025-05-20 12:45:00', true, '2025-05-20 13:00:00', 'Banho', '2025-05-20 10:30:00', 55.00, 2, 2),
+-- 07/06/2025 (médio - 3)
+(DEFAULT, '2025-06-07 08:30:00', '2025-06-07 10:00:00', true, '2025-06-07 08:30:00', 'Banho', '2025-06-07 09:00:00', 50.00, 1, 2),
+(DEFAULT, '2025-06-07 10:00:00', '2025-06-07 11:30:00', true, '2025-06-07 10:00:00', 'Banho, Desembolo', '2025-06-07 10:30:00', 70.00, 3, 1),
+(DEFAULT, '2025-06-07 13:00:00', '2025-06-07 14:30:00', true, '2025-06-07 13:00:00', 'Banho, Hidratação', '2025-06-07 13:30:00', 60.00, 2, 3),
 
--- 2 dias atrás
-(DEFAULT, '2025-05-21 09:20:00', '2025-05-21 11:00:00', true, '2025-05-21 11:20:00', 'Corte de unha, Hidratação', '2025-05-21 10:00:00', 65.00, 3, 1),
-(DEFAULT, '2025-05-21 09:45:00', '2025-05-21 12:00:00', true, '2025-05-21 12:15:00', 'Banho, Desembolo', '2025-05-21 10:30:00', 70.00, 4, 3),
+-- 08/06/2025 (mais agendamentos - 4)
+(DEFAULT, '2025-06-08 08:00:00', '2025-06-08 09:30:00', true, '2025-06-08 08:00:00', 'Banho, Tosa bebê', '2025-06-08 08:30:00', 65.00, 3, 1),
+(DEFAULT, '2025-06-08 09:30:00', '2025-06-08 11:00:00', true, '2025-06-08 09:30:00', 'Banho', '2025-06-08 10:00:00', 50.00, 4, 2),
+(DEFAULT, '2025-06-08 11:00:00', '2025-06-08 12:30:00', true, '2025-06-08 11:00:00', 'Banho, Escovação dentária', '2025-06-08 11:30:00', 75.00, 1, 3),
+(DEFAULT, '2025-06-08 14:00:00', '2025-06-08 15:30:00', true, '2025-06-08 14:00:00', 'Corte de unha', '2025-06-08 14:30:00', 40.00, 2, 2),
 
--- 1 dia atrás
-(DEFAULT, '2025-05-22 09:10:00', '2025-05-22 11:10:00', true, '2025-05-22 11:30:00', 'Tosa higiênica, Hidratação', '2025-05-22 10:00:00', 60.00, 2, 1),
-(DEFAULT, '2025-05-22 09:50:00', '2025-05-22 12:00:00', true, '2025-05-22 12:10:00', 'Banho, Escovação dentária', '2025-05-22 10:30:00', 75.00, 1, 2);
+-- 09/06/2025 (hoje - médio - 2)
+(DEFAULT, '2025-06-09 09:00:00', '2025-06-09 10:30:00', true, '2025-06-09 09:00:00', 'Banho, Hidratação', '2025-06-09 09:30:00', 60.00, 3, 2),
+(DEFAULT, '2025-06-09 11:00:00', '2025-06-09 12:30:00', true, '2025-06-09 11:00:00', 'Banho, Desembolo', '2025-06-09 11:30:00', 70.00, 4, 3);
