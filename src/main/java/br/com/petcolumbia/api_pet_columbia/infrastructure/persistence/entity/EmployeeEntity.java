@@ -1,0 +1,65 @@
+package br.com.petcolumbia.api_pet_columbia.infrastructure.persistence.entity;
+
+import br.com.petcolumbia.api_pet_columbia.infrastructure.persistence.entity.association.EmployeeProcedureAssociationEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+import java.util.List;
+
+@Entity
+@Table(name = "employee")
+public class EmployeeEntity {
+    @Id
+    private Integer id;
+    private String name;
+
+    @OneToMany(mappedBy = "employee")
+    private List<AppointmentEntity> appointments;
+
+    @OneToMany(mappedBy = "employee")
+    private List<EmployeeProcedureAssociationEntity> employeeProcedures;
+
+    public EmployeeEntity() {
+    }
+
+    public EmployeeEntity(Integer id, String name, List<AppointmentEntity> appointments, List<EmployeeProcedureAssociationEntity> employeeProcedures) {
+        this.id = id;
+        this.name = name;
+        this.appointments = appointments;
+        this.employeeProcedures = employeeProcedures;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<AppointmentEntity> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<AppointmentEntity> appointments) {
+        this.appointments = appointments;
+    }
+
+    public List<EmployeeProcedureAssociationEntity> getEmployeeProcedures() {
+        return employeeProcedures;
+    }
+
+    public void setEmployeeProcedures(List<EmployeeProcedureAssociationEntity> employeeProcedures) {
+        this.employeeProcedures = employeeProcedures;
+    }
+}

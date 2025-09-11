@@ -1,0 +1,217 @@
+package br.com.petcolumbia.api_pet_columbia.old.services;
+
+import br.com.petcolumbia.api_pet_columbia.old.domain.entities.AppointmentModel;
+import br.com.petcolumbia.api_pet_columbia.old.domain.entities.EmployeeModel;
+import br.com.petcolumbia.api_pet_columbia.old.domain.entities.PetModel;
+import br.com.petcolumbia.api_pet_columbia.old.domain.entities.ServiceModel;
+import br.com.petcolumbia.api_pet_columbia.old.domain.models.AvailableTimesModel;
+import br.com.petcolumbia.api_pet_columbia.old.dtos.mappers.EmployeeMapper;
+import br.com.petcolumbia.api_pet_columbia.old.dtos.requests.appointmentDtos.AppointmentCreateDto;
+import br.com.petcolumbia.api_pet_columbia.old.dtos.requests.appointmentDtos.AppointmentUpdateDto;
+import br.com.petcolumbia.api_pet_columbia.old.dtos.responses.others.BusyTime;
+import br.com.petcolumbia.api_pet_columbia.old.exceptions.EntityNotFoundException;
+import br.com.petcolumbia.api_pet_columbia.old.repositories.IAppointmentRepository;
+import br.com.petcolumbia.api_pet_columbia.old.repositories.IPetRepository;
+import org.springframework.stereotype.Service;
+
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AppointmentService {
+
+    private final IAppointmentRepository appointmentRepository;
+    private final ServiceService serviceService;
+    private final ServicePriceAndDurationService servicePriceAndDurationService;
+    private final EmployeeService employeeServiceAssociation;
+    private final PetService petService;
+    private final EmployeeService employeeService;
+    private final IPetRepository petRepository;
+
+    public AppointmentService(IAppointmentRepository appointmentRepository, ServiceService serviceService, ServicePriceAndDurationService servicePriceAndDurationService, EmployeeService employeeServiceAssociation, PetService petService, EmployeeService employeeService, IPetRepository petRepository) {
+        this.appointmentRepository = appointmentRepository;
+        this.serviceService = serviceService;
+        this.servicePriceAndDurationService = servicePriceAndDurationService;
+        this.employeeServiceAssociation = employeeServiceAssociation;
+        this.petService = petService;
+        this.employeeService = employeeService;
+        this.petRepository = petRepository;
+    }
+
+    public List<AvailableTimesModel> getAvailableTimes(LocalDate date, Integer petId, List<ServiceModel> services) {
+        Optional<PetModel> optionalPet = petRepository.findById(petId);
+
+        if(optionalPet.isEmpty())
+            throw new EntityNotFoundException("Pet não encontrado");
+
+        PetModel pet = optionalPet.get();
+
+        List<Integer> servicesIds = serviceService.getServiceIds(services);
+
+        String servicesNames = serviceService.getServicesNamesByIds(servicesIds);
+
+        List<EmployeeModel> employees = employeeServiceAssociation
+                .listEmployeesServices(servicesIds);
+
+        Double price = servicePriceAndDurationService.calculateTotalPrice(servicesIds, pet);
+
+        Integer serviceDurationMinutes = servicePriceAndDurationService.calculateTotalDuration(servicesIds, pet);
+
+        List<AvailableTimesModel> allAvailableTimes = new ArrayList<>();
+
+        for(EmployeeModel employee : employees){
+            AvailableTimesModel employeeAvailableTimes = getEmployeeAvailableTimes(
+                    employee, date, servicesNames, price, serviceDurationMinutes);
+
+            allAvailableTimes.add(employeeAvailableTimes);
+        }
+
+        return allAvailableTimes;
+    }
+
+    private void removeOccupiedTimes(List<LocalTime> availableTimes, BusyTime busyTime, Integer serviceDurationMinutes) {
+
+        //remove da lista de times os horários entre busyTime
+        availableTimes.removeIf(h -> !h.isBefore(busyTime.getStartDateTime()) && h.isBefore(busyTime.getEndDateTime()));
+
+        //remove horários que possam interferir em busyTime
+        availableTimes.removeIf(h -> {
+            LocalTime endTime = h.plusMinutes(serviceDurationMinutes);
+            return h.isBefore(busyTime.getStartDateTime()) && !endTime.isBefore(busyTime.getStartDateTime());
+        });
+    }
+
+    private AvailableTimesModel getEmployeeAvailableTimes(
+            EmployeeModel employee, LocalDate date, String servicesNames, Double price, Integer serviceDurationMinutes) {
+
+        List<LocalTime> availableTimes = new ArrayList<>(Arrays.asList(
+                LocalTime.of(9, 0), LocalTime.of(9, 30),
+                LocalTime.of(10, 0), LocalTime.of(10, 30), LocalTime.of(11, 0), LocalTime.of(11, 30),
+                LocalTime.of(12, 0), LocalTime.of(12, 30), LocalTime.of(13, 0), LocalTime.of(13, 30),
+                LocalTime.of(14, 0), LocalTime.of(14, 30), LocalTime.of(15, 0), LocalTime.of(15, 30),
+                LocalTime.of(16, 0), LocalTime.of(16, 30)
+        ));
+
+        List<BusyTime> busyTimes = appointmentByDateAndEmployee(employee, date);
+
+        if (busyTimes.isEmpty())
+            return new AvailableTimesModel(EmployeeMapper.entityToResponse(employee), availableTimes, serviceDurationMinutes, servicesNames, price);
+
+        for (BusyTime busyTime : busyTimes) {
+            removeOccupiedTimes(availableTimes, busyTime, serviceDurationMinutes);
+        }
+
+        return new AvailableTimesModel(EmployeeMapper.entityToResponse(employee), availableTimes, serviceDurationMinutes, servicesNames, price);
+    }
+
+    public List<BusyTime> toBusyTimesDto(List<AppointmentModel> busyAppointments){
+        List<BusyTime> busyTimes = new ArrayList<>();
+
+        for(AppointmentModel appointment: busyAppointments){
+
+            BusyTime busyTime = new BusyTime();
+            busyTime.setStartDateTime(appointment.getStartDateTime().toLocalTime());
+            busyTime.setEndDateTime(appointment.getEndDateTime().toLocalTime());
+
+            busyTimes.add(busyTime);
+        }
+
+        return busyTimes;
+    }
+
+    public List<BusyTime> appointmentByDateAndEmployee(
+            EmployeeModel employee, LocalDate date){
+
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(23, 59, 59, 999999999);
+
+        List<AppointmentModel> busyAppointments = appointmentRepository
+                .findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(employee, startOfDay, endOfDay);
+
+        return toBusyTimesDto(busyAppointments);
+    }
+
+    public List<AppointmentModel> allAppointmentsByOwnerId(Integer ownerId){
+        return appointmentRepository.findAllAppointmentsByOwnerId(ownerId);
+    }
+
+    public AppointmentModel createAppointment(AppointmentCreateDto dto) {
+        Optional<PetModel> optionalPet = petRepository.findById(dto.getPetId());
+
+        if(optionalPet.isEmpty())
+            throw new EntityNotFoundException("Pet não encontrado");
+
+        PetModel pet = optionalPet.get();
+
+        EmployeeModel employee = employeeService.findEmployeeById(dto.getEmployee_id());
+
+        AppointmentModel appointment = new AppointmentModel();
+
+        appointment.setPet(pet);
+        appointment.setEmployee(employee);
+        appointment.setServices(dto.getServicesNames());
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
+
+        if (dto.getTaxiService())
+            appointment.setTotalPrice(dto.getTotalPrice() + 20.0);
+        else
+            appointment.setTotalPrice(dto.getTotalPrice());
+
+        appointment.setStartDateTime(dto.getStartDateTime());
+        appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
+        appointment.setFinished(false);
+        appointment.setCreatedAt(LocalDateTime.now());
+        appointment.setLastUpdate(LocalDateTime.now());
+
+        appointmentRepository.saveAndFlush(appointment);
+
+        return appointment;
+    }
+
+    public AppointmentModel updateAppointmentById(Integer id, AppointmentUpdateDto dto) {
+        AppointmentModel appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado"));
+
+        Optional<PetModel> optionalPet = petRepository.findById(dto.getPetId());
+
+        if(optionalPet.isEmpty())
+            throw new EntityNotFoundException("Pet não encontrado");
+
+        PetModel pet = optionalPet.get();
+
+        EmployeeModel employee = employeeService.findEmployeeById(dto.getEmployee_id());
+
+        appointment.setPet(pet);
+        appointment.setEmployee(employee);
+        appointment.setServices(dto.getServices().toString());
+        appointment.setObservations(dto.getObservations());
+        appointment.setTaxiService(dto.getTaxiService());
+
+        if (dto.getTaxiService())
+            appointment.setTotalPrice(dto.getTotalPrice() + 20.0);
+        else
+            appointment.setTotalPrice(dto.getTotalPrice());
+
+        appointment.setStartDateTime(dto.getStartDateTime());
+        appointment.setEndDateTime(dto.getStartDateTime().plusMinutes(dto.getDurationMinutes()));
+        appointment.setLastUpdate(LocalDateTime.now());
+
+        appointmentRepository.saveAndFlush(appointment);
+
+        return appointment;
+    }
+
+    public void deleteAppointmentById(Integer id) {
+        if(!appointmentRepository.existsById(id))
+            throw new EntityNotFoundException("Não encontrado usuário com id:" + id);
+
+        appointmentRepository.deleteById(id);
+    }
+}
