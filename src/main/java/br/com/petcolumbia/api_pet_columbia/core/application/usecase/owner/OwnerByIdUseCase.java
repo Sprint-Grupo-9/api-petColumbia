@@ -1,8 +1,8 @@
 package br.com.petcolumbia.api_pet_columbia.core.application.usecase.owner;
 
-import br.com.petcolumbia.api_pet_columbia.core.adapter.OwnerGateway;
-import br.com.petcolumbia.api_pet_columbia.core.domain.owner.Owner;
-import br.com.petcolumbia.api_pet_columbia.old.exceptions.EntityNotFoundException;
+import br.com.petcolumbia.api_pet_columbia.core.adapter.owner.OwnerGateway;
+import br.com.petcolumbia.api_pet_columbia.core.application.exception.EntityNotFoundException;
+import br.com.petcolumbia.api_pet_columbia.core.domain.model.owner.Owner;
 
 public class OwnerByIdUseCase {
     private final OwnerGateway ownerGateway;

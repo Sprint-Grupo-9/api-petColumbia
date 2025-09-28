@@ -1,43 +1,27 @@
 package br.com.petcolumbia.api_pet_columbia.core.application.usecase.owner;
 
-import br.com.petcolumbia.api_pet_columbia.core.adapter.OwnerGateway;
+import br.com.petcolumbia.api_pet_columbia.core.adapter.owner.OwnerGateway;
 import br.com.petcolumbia.api_pet_columbia.core.application.command.owner.OwnerCreateCommand;
-import br.com.petcolumbia.api_pet_columbia.core.domain.owner.Owner;
-import br.com.petcolumbia.api_pet_columbia.core.domain.owner.valueobject.Adress;
-import br.com.petcolumbia.api_pet_columbia.core.domain.owner.valueobject.PersonalInfo;
-import br.com.petcolumbia.api_pet_columbia.old.exceptions.EntityConflictException;
+import br.com.petcolumbia.api_pet_columbia.core.application.dto.mapper.OwnerCoreMapper;
+import br.com.petcolumbia.api_pet_columbia.core.application.exception.EntityConflictException;
+import br.com.petcolumbia.api_pet_columbia.core.application.service.OwnerValidationService;
+import br.com.petcolumbia.api_pet_columbia.core.domain.model.owner.Owner;
 
 public class CreateOwnerUseCase {
 
     private final OwnerGateway ownerGateway;
+    private final OwnerValidationService validationService;
 
-    public CreateOwnerUseCase(OwnerGateway ownerGateway) {
+    public CreateOwnerUseCase(OwnerGateway ownerGateway, OwnerValidationService validationService) {
         this.ownerGateway = ownerGateway;
+        this.validationService = validationService;
     }
 
     public Owner execute(OwnerCreateCommand command) {
-        if(ownerGateway.isDuplicateFields(command.email(),command.cpf(),command.phoneNumber(),null))
+        if(validationService.checkDuplicateFieldsOnCreate(command.email(),command.cpf(),command.phoneNumber()))
             throw new EntityConflictException("Já existe um usuário com o e-mail, CPF ou telefone informados.");
 
-        Owner owner = new Owner();
-
-        owner.setName(command.name());
-        owner.setEmail(command.email());
-        owner.setPersonalInfo(new PersonalInfo(
-                command.cpf(),
-                command.phoneNumber()
-        ));
-        owner.setEmail(command.email());
-        owner.setPassword(command.password());
-        owner.setAdress(new Adress(
-                command.cep(),
-                command.neighborhood(),
-                command.street(),
-                command.number(),
-                command.complement()
-        ));
-        owner.setAdm(false);
-
+        Owner owner = OwnerCoreMapper.of(command);
         return ownerGateway.create(owner);
     }
 }
