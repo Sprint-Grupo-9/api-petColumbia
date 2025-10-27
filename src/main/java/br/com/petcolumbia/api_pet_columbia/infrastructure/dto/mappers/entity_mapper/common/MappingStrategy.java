@@ -69,21 +69,21 @@ public interface MappingStrategy {
                 case PET_OWNER -> true;
                 case PET_APPOINTMENTS -> false; // Prevent circular reference
                 case EMPLOYEE_APPOINTMENTS -> false; // Prevent circular reference
-                case EMPLOYEE_PROCEDURES -> true;
+                case EMPLOYEE_PET_OFFERINGS -> true;
                 default -> false;
             };
         }
     }
 
     /**
-     * Strategy for mapping employees with procedures but without appointments
+     * Strategy for mapping employees with pet offerings but without appointments
      */
-    class EmployeeWithProceduresMapping implements MappingStrategy {
+    class EmployeeWithPetOfferingsMapping implements MappingStrategy {
         @Override
         public boolean shouldInclude(RelationType relationType) {
             return switch (relationType) {
-                case EMPLOYEE_PROCEDURES -> true;
-                case PROCEDURE_EMPLOYEES -> false; // Prevent circular reference
+                case EMPLOYEE_PET_OFFERINGS -> true;
+                case PET_OFFERING_EMPLOYEES -> false; // Prevent circular reference
                 case EMPLOYEE_APPOINTMENTS -> false;
                 default -> false;
             };
