@@ -1,11 +1,9 @@
 package br.com.petcolumbia.api_pet_columbia.infrastructure.dto.request.appointment;
 
-import br.com.petcolumbia.api_pet_columbia.core.domain.model.procedure.Procedure;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class AppointmentUpdateDto {
     @NotNull(message = "O Id do Pet é obrigatório")
@@ -14,8 +12,8 @@ public class AppointmentUpdateDto {
     @NotNull(message = "O Id do Funcionário é obrigatório")
     private Integer employee_id;
 
-    @NotEmpty(message = "Os serviços são obrigatórios")
-    private List<Procedure> procedures;
+    @NotEmpty(message = "Os procedimentos são obrigatórios")
+    private String procedures;
 
     @NotNull(message = "O preço é obrigatório")
     private Double totalPrice;
@@ -50,15 +48,23 @@ public class AppointmentUpdateDto {
         return petId;
     }
 
+    public void setPetId(Integer petId) {
+        this.petId = petId;
+    }
+
     public Integer getEmployee_id() {
         return employee_id;
     }
 
-    public List<Procedure> getProcedures() {
+    public void setEmployee_id(Integer employee_id) {
+        this.employee_id = employee_id;
+    }
+
+    public String getProcedures() {
         return procedures;
     }
 
-    public void setProcedures(List<Procedure> procedures) {
+    public void setProcedures(String procedures) {
         this.procedures = procedures;
     }
 
@@ -66,11 +72,23 @@ public class AppointmentUpdateDto {
         return totalPrice;
     }
 
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
     public Integer getDurationMinutes() {
         return durationMinutes;
+    }
+
+    public void setDurationMinutes(Integer durationMinutes) {
+        this.durationMinutes = durationMinutes;
     }
 }

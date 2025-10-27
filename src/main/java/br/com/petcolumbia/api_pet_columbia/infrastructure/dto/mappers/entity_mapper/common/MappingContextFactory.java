@@ -35,7 +35,7 @@ public final class MappingContextFactory {
      * Creates a context for mapping employees with their procedures, but without appointments
      */
     public static MappingContext employeeWithProcedures() {
-        return new MappingContext(new MappingStrategy.EmployeeWithProceduresMapping());
+        return new MappingContext(new MappingStrategy.EmployeeWithPetOfferingsMapping());
     }
 
     /**

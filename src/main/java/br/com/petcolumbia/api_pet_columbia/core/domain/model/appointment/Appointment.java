@@ -11,7 +11,7 @@ public class Appointment {
     private Employee employee;
     private String observations;
     private Boolean taxiService;
-    private String services;
+    private String procedures;
     private Double totalPrice;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
@@ -22,13 +22,13 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(Integer id, Pet pet, Employee employee, String observations, Boolean taxiService, String services, Double totalPrice, LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean isFinished, LocalDateTime createdAt, LocalDateTime lastUpdate) {
+    public Appointment(Integer id, Pet pet, Employee employee, String observations, Boolean taxiService, String procedures, Double totalPrice, LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean isFinished, LocalDateTime createdAt, LocalDateTime lastUpdate) {
         this.id = id;
         this.pet = pet;
         this.employee = employee;
         this.observations = observations;
         this.taxiService = taxiService;
-        this.services = services;
+        this.procedures = procedures;
         this.totalPrice = totalPrice;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
@@ -77,12 +77,12 @@ public class Appointment {
         this.taxiService = taxiService;
     }
 
-    public String getServices() {
-        return services;
+    public String getProcedures() {
+        return procedures;
     }
 
-    public void setServices(String services) {
-        this.services = services;
+    public void setProcedures(String procedures) {
+        this.procedures = procedures;
     }
 
     public Double getTotalPrice() {

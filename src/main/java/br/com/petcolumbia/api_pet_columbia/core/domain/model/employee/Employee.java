@@ -1,7 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.core.domain.model.employee;
 
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.appointment.Appointment;
-import br.com.petcolumbia.api_pet_columbia.core.domain.model.associations.EmployeeProcedureAssociation;
+import br.com.petcolumbia.api_pet_columbia.core.domain.model.associations.EmployeePetOfferingAssociation;
 
 import java.util.List;
 
@@ -9,16 +9,16 @@ public class Employee {
     private Integer id;
     private String name;
     private List<Appointment> appointments;
-    private List<EmployeeProcedureAssociation> employeeProcedures;
+    private List<EmployeePetOfferingAssociation> employeePetOfferings;
 
     public Employee() {
     }
 
-    public Employee(Integer id, String name, List<Appointment> appointments, List<EmployeeProcedureAssociation> employeeProcedures) {
+    public Employee(Integer id, String name, List<Appointment> appointments, List<EmployeePetOfferingAssociation> employeeProcedures) {
         this.id = id;
         this.name = name;
         this.appointments = appointments;
-        this.employeeProcedures = employeeProcedures;
+        this.employeePetOfferings = employeeProcedures;
     }
 
     public Integer getId() {
@@ -45,11 +45,11 @@ public class Employee {
         this.appointments = appointments;
     }
 
-    public List<EmployeeProcedureAssociation> getEmployeeProcedures() {
-        return employeeProcedures;
+    public List<EmployeePetOfferingAssociation> getEmployeePetOfferings() {
+        return employeePetOfferings;
     }
 
-    public void setEmployeeProcedures(List<EmployeeProcedureAssociation> employeeProcedures) {
-        this.employeeProcedures = employeeProcedures;
+    public void setEmployeePetOfferings(List<EmployeePetOfferingAssociation> employeePetOfferings) {
+        this.employeePetOfferings = employeePetOfferings;
     }
 }

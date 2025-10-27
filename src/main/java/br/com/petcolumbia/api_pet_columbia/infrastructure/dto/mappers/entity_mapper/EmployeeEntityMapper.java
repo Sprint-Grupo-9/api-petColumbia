@@ -1,7 +1,7 @@
 package br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_mapper;
 
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.employee.Employee;
-import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_mapper.association.EmployeeProcedureAssociationEntityMapper;
+import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_mapper.association.EmployeePetOfferingAssociationEntityMapper;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_mapper.common.MappingContext;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_mapper.common.MappingStrategy;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_mapper.common.RelationType;
@@ -33,8 +33,8 @@ public class EmployeeEntityMapper {
                     context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_APPOINTMENTS)
                         ? AppointmentEntityMapper.toDomainList(entity.getAppointments(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PROCEDURES)
-                        ? EmployeeProcedureAssociationEntityMapper.toDomainList(entity.getEmployeeProcedures(), context)
+                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)
+                        ? EmployeePetOfferingAssociationEntityMapper.toDomainList(entity.getEmployeePetOfferings(), context)
                         : null
             );
         } finally {
@@ -62,8 +62,8 @@ public class EmployeeEntityMapper {
                     context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_APPOINTMENTS)
                         ? AppointmentEntityMapper.toEntityList(employee.getAppointments(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PROCEDURES)
-                        ? EmployeeProcedureAssociationEntityMapper.toEntityList(employee.getEmployeeProcedures(), context)
+                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)
+                        ? EmployeePetOfferingAssociationEntityMapper.toEntityList(employee.getEmployeePetOfferings(), context)
                         : null
             );
         } finally {
@@ -73,7 +73,7 @@ public class EmployeeEntityMapper {
 
     // Convenience methods for backward compatibility
     public static Employee toDomain(EmployeeEntity entity) {
-        return toDomain(entity, new MappingContext(new MappingStrategy.EmployeeWithProceduresMapping()));
+        return toDomain(entity, new MappingContext(new MappingStrategy.EmployeeWithPetOfferingsMapping()));
     }
 
     public static EmployeeEntity toEntity(Employee employee) {
@@ -91,7 +91,7 @@ public class EmployeeEntityMapper {
     }
 
     public static List<Employee> toDomainList(List<EmployeeEntity> entities) {
-        return toDomainList(entities, new MappingContext(new MappingStrategy.EmployeeWithProceduresMapping()));
+        return toDomainList(entities, new MappingContext(new MappingStrategy.EmployeeWithPetOfferingsMapping()));
     }
 
     public static List<EmployeeEntity> toEntityList(List<Employee> employees, MappingContext context) {
@@ -115,8 +115,8 @@ public class EmployeeEntityMapper {
                 null,
                 context.shouldMapRelation(
                     MappingContext.createEntityKey("Employee", entity.getId()),
-                    RelationType.EMPLOYEE_PROCEDURES)
-                    ? EmployeeProcedureAssociationEntityMapper.toDomainList(entity.getEmployeeProcedures(), context)
+                    RelationType.EMPLOYEE_PET_OFFERINGS)
+                    ? EmployeePetOfferingAssociationEntityMapper.toDomainList(entity.getEmployeePetOfferings(), context)
                     : null
         );
     }
@@ -128,8 +128,8 @@ public class EmployeeEntityMapper {
                 null,
                 context.shouldMapRelation(
                     MappingContext.createEntityKey("Employee", employee.getId()),
-                    RelationType.EMPLOYEE_PROCEDURES)
-                    ? EmployeeProcedureAssociationEntityMapper.toEntityList(employee.getEmployeeProcedures(), context)
+                    RelationType.EMPLOYEE_PET_OFFERINGS)
+                    ? EmployeePetOfferingAssociationEntityMapper.toEntityList(employee.getEmployeePetOfferings(), context)
                     : null
         );
     }
