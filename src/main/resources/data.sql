@@ -222,3 +222,17 @@ INSERT INTO appointment (
 (3, '2025-01-05 09:00:00', '2025-01-05 10:05:00', true, '2025-01-05 09:00:00', 'Primeira vez no petshop',
  'Banho, Escovação dentária', '2025-01-05 09:30:00', false, 75.0, 3, 3);
 
+-- ============================================================================
+-- RESET DAS SEQUÊNCIAS DE AUTO-INCREMENT
+-- ============================================================================
+-- Importante: Resetar as sequências após inserções manuais com IDs específicos
+-- para evitar conflitos de chave primária ao inserir novos registros
+-- ============================================================================
+
+ALTER TABLE pet_offering ALTER COLUMN id RESTART WITH 10;
+ALTER TABLE employee ALTER COLUMN id RESTART WITH 5;
+ALTER TABLE pet_offering_price_and_duration ALTER COLUMN id RESTART WITH 91;
+ALTER TABLE owner ALTER COLUMN id RESTART WITH 6;
+ALTER TABLE pet ALTER COLUMN id RESTART WITH 9;
+ALTER TABLE appointment ALTER COLUMN id RESTART WITH 4;
+

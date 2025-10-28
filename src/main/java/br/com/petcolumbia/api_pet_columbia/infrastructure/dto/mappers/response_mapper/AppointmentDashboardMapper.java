@@ -12,6 +12,10 @@ import java.util.List;
 public class AppointmentDashboardMapper {
 
     public static AppointmentCardInfoResponseDto toCardInfoResponse(Appointment appointment) {
+        if (appointment == null || appointment.getPet() == null || appointment.getPet().getOwner() == null) {
+            throw new IllegalArgumentException("Appointment, Pet or Owner cannot be null");
+        }
+
         AppointmentCardInfoResponseDto dto = new AppointmentCardInfoResponseDto();
 
         dto.setStartTime(appointment.getStartDateTime().toLocalTime());

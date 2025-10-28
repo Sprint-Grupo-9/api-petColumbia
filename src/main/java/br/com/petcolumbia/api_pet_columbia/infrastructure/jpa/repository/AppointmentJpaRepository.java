@@ -14,13 +14,14 @@ import java.util.List;
 @Repository
 public interface AppointmentJpaRepository extends JpaRepository<AppointmentEntity, Integer> {
 
-    @Query("SELECT a FROM AppointmentEntity a WHERE a.pet.owner.id = :ownerId")
+    @Query("SELECT a FROM AppointmentEntity a JOIN FETCH a.pet p JOIN FETCH p.owner WHERE a.pet.owner.id = :ownerId")
     List<AppointmentEntity> findAllAppointmentsByOwnerId(@Param("ownerId") Integer ownerId);
 
     List<AppointmentEntity> findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(
             EmployeeEntity employee, LocalDateTime startOfDay, LocalDateTime endOfDay);
 
-    List<AppointmentEntity> findByStartDateTimeBetween(LocalDateTime start, LocalDateTime end);
+    @Query("SELECT a FROM AppointmentEntity a JOIN FETCH a.pet p JOIN FETCH p.owner JOIN FETCH a.employee WHERE a.startDateTime BETWEEN :start AND :end")
+    List<AppointmentEntity> findByStartDateTimeBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     @Query("SELECT a.startDateTime FROM AppointmentEntity a WHERE a.startDateTime BETWEEN :start AND :end")
     List<LocalDateTime> findStartTimesBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
@@ -31,10 +32,10 @@ public interface AppointmentJpaRepository extends JpaRepository<AppointmentEntit
     @Query("SELECT a.procedures FROM AppointmentEntity a WHERE a.startDateTime BETWEEN :start AND :end")
     List<String> findAllProceduresBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query("SELECT a FROM AppointmentEntity a WHERE a.pet.owner.id = :ownerId ORDER BY a.startDateTime DESC")
+    @Query("SELECT a FROM AppointmentEntity a JOIN FETCH a.pet p JOIN FETCH p.owner WHERE a.pet.owner.id = :ownerId ORDER BY a.startDateTime DESC")
     List<AppointmentEntity> findTop3ByOwnerIdOrderByStartDateTimeDesc(@Param("ownerId") Integer ownerId, Pageable pageable);
 
-    @Query("SELECT a FROM AppointmentEntity a WHERE a.pet.id = :petId ORDER BY a.startDateTime DESC")
+    @Query("SELECT a FROM AppointmentEntity a JOIN FETCH a.pet p JOIN FETCH p.owner WHERE a.pet.id = :petId ORDER BY a.startDateTime DESC")
     List<AppointmentEntity> findTop3ByPetIdOrderByStartDateTimeDesc(@Param("petId") Integer petId, Pageable pageable);
 }
 
