@@ -13,7 +13,7 @@ public class AppointmentCreateDto {
     private Integer employee_id;
 
     @NotEmpty(message = "Os serviços são obrigatórios")
-    private String proceduresNames;
+    private String petOfferingNames;
 
     @NotNull(message = "O preço é obrigatório")
     private Double totalPrice;
@@ -60,12 +60,12 @@ public class AppointmentCreateDto {
         this.employee_id = employee_id;
     }
 
-    public @NotEmpty(message = "Os serviços são obrigatórios") String getProceduresNames() {
-        return proceduresNames;
+    public @NotEmpty(message = "Os serviços são obrigatórios") String getPetOfferingNames() {
+        return petOfferingNames;
     }
 
-    public void setProceduresNames(@NotEmpty(message = "Os serviços são obrigatórios") String proceduresNames) {
-        this.proceduresNames = proceduresNames;
+    public void setPetOfferingNames(@NotEmpty(message = "Os serviços são obrigatórios") String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public @NotNull(message = "O preço é obrigatório") Double getTotalPrice() {

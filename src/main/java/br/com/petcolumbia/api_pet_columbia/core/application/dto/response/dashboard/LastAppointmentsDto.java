@@ -9,19 +9,19 @@ public class LastAppointmentsDto {
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
-    private String proceduresNames;
+    private String petOfferingNames;
     private Double price;
 
     public LastAppointmentsDto() {
     }
 
-    public LastAppointmentsDto(Integer id, Integer appointmentId, LocalDate date, LocalTime start, LocalTime end, String proceduresNames, Double price) {
+    public LastAppointmentsDto(Integer id, Integer appointmentId, LocalDate date, LocalTime start, LocalTime end, String petOfferingNames, Double price) {
         this.id = id;
         this.appointmentId = appointmentId;
         this.date = date;
         this.start = start;
         this.end = end;
-        this.proceduresNames = proceduresNames;
+        this.petOfferingNames = petOfferingNames;
         this.price = price;
     }
 
@@ -65,12 +65,12 @@ public class LastAppointmentsDto {
         this.end = end;
     }
 
-    public String getProceduresNames() {
-        return proceduresNames;
+    public String getPetOfferingNames() {
+        return petOfferingNames;
     }
 
-    public void setProceduresNames(String proceduresNames) {
-        this.proceduresNames = proceduresNames;
+    public void setPetOfferingNames(String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public Double getPrice() {

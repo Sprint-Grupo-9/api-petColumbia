@@ -19,7 +19,8 @@ public class PetEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Pet", petEntity.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.PET_OWNER)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createPetWithoutRelations(petEntity);
         }
 
@@ -28,7 +29,7 @@ public class PetEntityMapper {
         try {
             return new Pet(
                     petEntity.getId(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_OWNER)
+                    context.shouldIncludeRelation(RelationType.PET_OWNER)
                         ? OwnerEntityMapper.toDomain(petEntity.getOwner(), context)
                         : null,
                     petEntity.getName(),
@@ -40,7 +41,7 @@ public class PetEntityMapper {
                     petEntity.getSex(),
                     petEntity.getCreatedAt(),
                     petEntity.getLastUpdate(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_APPOINTMENTS)
+                    context.shouldIncludeRelation(RelationType.PET_APPOINTMENTS)
                         ? AppointmentEntityMapper.toDomainList(petEntity.getAppointments(), context)
                         : null
             );
@@ -56,7 +57,8 @@ public class PetEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Pet", pet.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.PET_OWNER)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createPetEntityWithoutRelations(pet);
         }
 
@@ -65,7 +67,7 @@ public class PetEntityMapper {
         try {
             return new PetEntity(
                     pet.getId(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_OWNER)
+                    context.shouldIncludeRelation(RelationType.PET_OWNER)
                         ? OwnerEntityMapper.toEntity(pet.getOwner(), context)
                         : null,
                     pet.getName(),
@@ -77,7 +79,7 @@ public class PetEntityMapper {
                     pet.getSex(),
                     pet.getCreatedAt(),
                     pet.getLastUpdate(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_APPOINTMENTS)
+                    context.shouldIncludeRelation(RelationType.PET_APPOINTMENTS)
                         ? AppointmentEntityMapper.toEntityList(pet.getAppointments(), context)
                         : null
             );

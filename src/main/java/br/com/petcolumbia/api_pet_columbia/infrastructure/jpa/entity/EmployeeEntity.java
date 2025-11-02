@@ -1,6 +1,6 @@
 package br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.entity;
 
-import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.entity.association.EmployeeProcedureAssociationEntity;
+import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.entity.association.EmployeePetOfferingAssociationEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -19,16 +19,16 @@ public class EmployeeEntity {
     private List<AppointmentEntity> appointments;
 
     @OneToMany(mappedBy = "employee")
-    private List<EmployeeProcedureAssociationEntity> employeeProcedures;
+    private List<EmployeePetOfferingAssociationEntity> employeePetOfferings;
 
     public EmployeeEntity() {
     }
 
-    public EmployeeEntity(Integer id, String name, List<AppointmentEntity> appointments, List<EmployeeProcedureAssociationEntity> employeeProcedures) {
+    public EmployeeEntity(Integer id, String name, List<AppointmentEntity> appointments, List<EmployeePetOfferingAssociationEntity> employeePetOfferings) {
         this.id = id;
         this.name = name;
         this.appointments = appointments;
-        this.employeeProcedures = employeeProcedures;
+        this.employeePetOfferings = employeePetOfferings;
     }
 
     public Integer getId() {
@@ -55,11 +55,11 @@ public class EmployeeEntity {
         this.appointments = appointments;
     }
 
-    public List<EmployeeProcedureAssociationEntity> getEmployeeProcedures() {
-        return employeeProcedures;
+    public List<EmployeePetOfferingAssociationEntity> getEmployeePetOfferings() {
+        return employeePetOfferings;
     }
 
-    public void setEmployeeProcedures(List<EmployeeProcedureAssociationEntity> employeeProcedures) {
-        this.employeeProcedures = employeeProcedures;
+    public void setEmployeePetOfferings(List<EmployeePetOfferingAssociationEntity> employeePetOfferings) {
+        this.employeePetOfferings = employeePetOfferings;
     }
 }

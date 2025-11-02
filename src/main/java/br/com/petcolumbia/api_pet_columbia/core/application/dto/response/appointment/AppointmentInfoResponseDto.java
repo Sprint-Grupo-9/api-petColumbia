@@ -10,7 +10,7 @@ public class AppointmentInfoResponseDto {
     private Integer id;
     private PetOwnerInfoResponseDto pet;
     private EmployeeResponseDto employee;
-    private String procedures;
+    private String petOfferingNames;
     private Double totalPrice;
     private String observations;
     private Boolean taxiService;
@@ -59,12 +59,12 @@ public class AppointmentInfoResponseDto {
         this.employee = employee;
     }
 
-    public String getProcedures() {
-        return procedures;
+    public String getPetOfferingNames() {
+        return petOfferingNames;
     }
 
-    public void setProcedures(String procedures) {
-        this.procedures = procedures;
+    public void setPetOfferingNames(String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public Double getTotalPrice() {

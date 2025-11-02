@@ -19,7 +19,8 @@ public class AppointmentEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Appointment", entity.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.APPOINTMENT_PET)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createAppointmentWithoutRelations(entity);
         }
 
@@ -28,15 +29,15 @@ public class AppointmentEntityMapper {
         try {
             return new Appointment(
                     entity.getId(),
-                    context.shouldMapRelation(entityKey, RelationType.APPOINTMENT_PET)
+                    context.shouldIncludeRelation(RelationType.APPOINTMENT_PET)
                         ? PetEntityMapper.toDomain(entity.getPet(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.APPOINTMENT_EMPLOYEE)
+                    context.shouldIncludeRelation(RelationType.APPOINTMENT_EMPLOYEE)
                         ? EmployeeEntityMapper.toDomain(entity.getEmployee(), context)
                         : null,
                     entity.getObservations(),
                     entity.getTaxiService(),
-                    entity.getProcedures(),
+                    entity.getPetOfferings(),
                     entity.getTotalPrice(),
                     entity.getStartDateTime(),
                     entity.getEndDateTime(),
@@ -56,7 +57,8 @@ public class AppointmentEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Appointment", appointment.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.APPOINTMENT_PET)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createAppointmentEntityWithoutRelations(appointment);
         }
 
@@ -65,15 +67,15 @@ public class AppointmentEntityMapper {
         try {
             return new AppointmentEntity(
                     appointment.getId(),
-                    context.shouldMapRelation(entityKey, RelationType.APPOINTMENT_PET)
+                    context.shouldIncludeRelation(RelationType.APPOINTMENT_PET)
                         ? PetEntityMapper.toEntity(appointment.getPet(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.APPOINTMENT_EMPLOYEE)
+                    context.shouldIncludeRelation(RelationType.APPOINTMENT_EMPLOYEE)
                         ? EmployeeEntityMapper.toEntity(appointment.getEmployee(), context)
                         : null,
                     appointment.getObservations(),
                     appointment.getTaxiService(),
-                    appointment.getServices(),
+                    appointment.getPetOfferingNames(),
                     appointment.getTotalPrice(),
                     appointment.getStartDateTime(),
                     appointment.getEndDateTime(),
@@ -132,7 +134,7 @@ public class AppointmentEntityMapper {
                 null,
                 entity.getObservations(),
                 entity.getTaxiService(),
-                entity.getProcedures(),
+                entity.getPetOfferings(),
                 entity.getTotalPrice(),
                 entity.getStartDateTime(),
                 entity.getEndDateTime(),
@@ -149,7 +151,7 @@ public class AppointmentEntityMapper {
                 null,
                 appointment.getObservations(),
                 appointment.getTaxiService(),
-                appointment.getServices(),
+                appointment.getPetOfferingNames(),
                 appointment.getTotalPrice(),
                 appointment.getStartDateTime(),
                 appointment.getEndDateTime(),

@@ -39,7 +39,7 @@ package br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_ma
  *    - MappingContextFactory.ownerWithPets(): Owner + Pets (sem appointments)
  *    - MappingContextFactory.petWithOwner(): Pet + Owner (sem pets do owner)
  *    - MappingContextFactory.appointmentFull(): Appointment + Pet + Owner + Employee
- *    - MappingContextFactory.employeeWithProcedures(): Employee + Procedures (sem appointments)
+ *    - MappingContextFactory.employeeWithPetOfferings(): Employee + PetOffering (sem appointments)
  *    - MappingContextFactory.shallow(): Sem relacionamentos
  *    - MappingContextFactory.full(): Todos os relacionamentos (usar com cuidado)
  *

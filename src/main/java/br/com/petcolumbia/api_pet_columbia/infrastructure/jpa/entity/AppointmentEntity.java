@@ -20,7 +20,10 @@ public class AppointmentEntity {
     private EmployeeEntity employee;
     private String observations;
     private Boolean taxiService;
-    private String procedures;
+
+    @Column(name = "pet_offerings")
+    private String petOfferings;
+
     private Double totalPrice;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
@@ -31,13 +34,13 @@ public class AppointmentEntity {
     public AppointmentEntity() {
     }
 
-    public AppointmentEntity(Integer id, PetEntity pet, EmployeeEntity employee, String observations, Boolean taxiService, String procedures, Double totalPrice, LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean isFinished, LocalDateTime createdAt, LocalDateTime lastUpdate) {
+    public AppointmentEntity(Integer id, PetEntity pet, EmployeeEntity employee, String observations, Boolean taxiService, String petOfferings, Double totalPrice, LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean isFinished, LocalDateTime createdAt, LocalDateTime lastUpdate) {
         this.id = id;
         this.pet = pet;
         this.employee = employee;
         this.observations = observations;
         this.taxiService = taxiService;
-        this.procedures = procedures;
+        this.petOfferings = petOfferings;
         this.totalPrice = totalPrice;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
@@ -86,12 +89,12 @@ public class AppointmentEntity {
         this.taxiService = taxiService;
     }
 
-    public String getProcedures() {
-        return procedures;
+    public String getPetOfferings() {
+        return petOfferings;
     }
 
-    public void setProcedures(String services) {
-        this.procedures = services;
+    public void setPetOfferings(String petOfferingNames) {
+        this.petOfferings = petOfferingNames;
     }
 
     public Double getTotalPrice() {

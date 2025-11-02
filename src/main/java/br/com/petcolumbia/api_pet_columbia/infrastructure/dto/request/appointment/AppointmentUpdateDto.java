@@ -1,11 +1,9 @@
 package br.com.petcolumbia.api_pet_columbia.infrastructure.dto.request.appointment;
 
-import br.com.petcolumbia.api_pet_columbia.core.domain.model.procedure.Procedure;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class AppointmentUpdateDto {
     @NotNull(message = "O Id do Pet é obrigatório")
@@ -15,7 +13,7 @@ public class AppointmentUpdateDto {
     private Integer employee_id;
 
     @NotEmpty(message = "Os serviços são obrigatórios")
-    private List<Procedure> procedures;
+    private String petOfferingNames;
 
     @NotNull(message = "O preço é obrigatório")
     private Double totalPrice;
@@ -50,27 +48,47 @@ public class AppointmentUpdateDto {
         return petId;
     }
 
+    public void setPetId(Integer petId) {
+        this.petId = petId;
+    }
+
     public Integer getEmployee_id() {
         return employee_id;
     }
 
-    public List<Procedure> getProcedures() {
-        return procedures;
+    public void setEmployee_id(Integer employee_id) {
+        this.employee_id = employee_id;
     }
 
-    public void setProcedures(List<Procedure> procedures) {
-        this.procedures = procedures;
+    public String getPetOfferingNames() {
+        return petOfferingNames;
+    }
+
+    public void setPetOfferingNames(String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public Double getTotalPrice() {
         return totalPrice;
     }
 
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
     public Integer getDurationMinutes() {
         return durationMinutes;
+    }
+
+    public void setDurationMinutes(Integer durationMinutes) {
+        this.durationMinutes = durationMinutes;
     }
 }

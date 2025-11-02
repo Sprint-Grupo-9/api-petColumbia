@@ -27,7 +27,7 @@ public class AuthenticationService implements UserDetailsService {
         if (entity == null)
             throw new EntityNotFoundException("Usuário não encontrado com o email: " + username);
 
-        Owner owner = OwnerEntityMapper.of(entity);
+        Owner owner = OwnerEntityMapper.ofWithoutPets(entity);
 
         var a = OwnerResponseMapper.toDetailsDto(owner);
         return a;
