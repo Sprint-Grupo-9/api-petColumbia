@@ -32,8 +32,8 @@ public interface AppointmentJpaRepository extends JpaRepository<AppointmentEntit
     @Query("SELECT a.endDateTime FROM AppointmentEntity a WHERE a.endDateTime BETWEEN :start AND :end")
     List<LocalDateTime> findEndDateTimesBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query("SELECT a.procedures FROM AppointmentEntity a WHERE a.startDateTime BETWEEN :start AND :end")
-    List<String> findAllProceduresBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    @Query("SELECT a.petOfferings FROM AppointmentEntity a WHERE a.startDateTime BETWEEN :start AND :end")
+    List<String> findAllPetOfferingsBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     @Query("SELECT a FROM AppointmentEntity a JOIN FETCH a.pet p JOIN FETCH p.owner WHERE a.pet.owner.id = :ownerId ORDER BY a.startDateTime DESC")
     List<AppointmentEntity> findTop3ByOwnerIdOrderByStartDateTimeDesc(@Param("ownerId") Integer ownerId, Pageable pageable);
