@@ -9,7 +9,7 @@ public class AppointmentResponseDto {
     private Integer id;
     private PetResponseDto pet;
     private EmployeeResponseDto employee;
-    private String procedures;
+    private String petOfferingNames;
     private Double totalPrice;
     private String observations;
     private Boolean taxiService;
@@ -52,12 +52,12 @@ public class AppointmentResponseDto {
         this.employee = employee;
     }
 
-    public String getProcedures() {
-        return procedures;
+    public String getPetOfferingNames() {
+        return petOfferingNames;
     }
 
-    public void setProcedures(String procedures) {
-        this.procedures = procedures;
+    public void setPetOfferingNames(String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public void setTotalPrice(Double totalPrice) {

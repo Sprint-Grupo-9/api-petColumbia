@@ -12,10 +12,10 @@ public class EmployeePetOfferingAssociation {
     public EmployeePetOfferingAssociation() {
     }
 
-    public EmployeePetOfferingAssociation(EmployeePetOfferingAssociationId id, Employee employee, PetOffering procedure) {
+    public EmployeePetOfferingAssociation(EmployeePetOfferingAssociationId id, Employee employee, PetOffering petOffering) {
         this.id = id;
         this.employee = employee;
-        this.petOffering = procedure;
+        this.petOffering = petOffering;
     }
 
     public EmployeePetOfferingAssociationId getId() {

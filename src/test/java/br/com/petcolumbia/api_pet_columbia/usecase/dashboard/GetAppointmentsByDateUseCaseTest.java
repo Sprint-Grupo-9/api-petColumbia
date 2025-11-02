@@ -76,7 +76,7 @@ class GetAppointmentsByDateUseCaseTest {
             testDate.minusDays(5), // data do último agendamento
             testDate.minusDays(5).atTime(10, 0).toLocalTime(), // start
             testDate.minusDays(5).atTime(11, 0).toLocalTime(), // end
-            "Banho", // proceduresNames
+            "Banho", // petOfferingNames
             80.0 // price
         );
 
@@ -86,7 +86,7 @@ class GetAppointmentsByDateUseCaseTest {
             testDate.minusDays(3), // data do último agendamento
             testDate.minusDays(3).atTime(14, 0).toLocalTime(), // start
             testDate.minusDays(3).atTime(15, 0).toLocalTime(), // end
-            "Tosa", // proceduresNames
+            "Tosa", // petOfferingNames
             60.0 // price
         );
 

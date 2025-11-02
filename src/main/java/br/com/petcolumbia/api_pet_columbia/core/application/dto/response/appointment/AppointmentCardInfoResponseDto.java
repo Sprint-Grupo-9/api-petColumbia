@@ -8,7 +8,7 @@ public class AppointmentCardInfoResponseDto {
     private String ownerName;
     private String petName;
     private String petBreed;
-    private String proceduresNames;
+    private String petOfferingNames;
     private Double price;
     private Boolean taxiService;
 
@@ -60,12 +60,12 @@ public class AppointmentCardInfoResponseDto {
         this.petBreed = petBreed;
     }
 
-    public String getProceduresNames() {
-        return proceduresNames;
+    public String getPetOfferingNames() {
+        return petOfferingNames;
     }
 
-    public void setProceduresNames(String proceduresNames) {
-        this.proceduresNames = proceduresNames;
+    public void setPetOfferingNames(String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public Double getPrice() {

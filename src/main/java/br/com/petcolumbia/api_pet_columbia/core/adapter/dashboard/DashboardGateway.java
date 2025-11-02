@@ -10,10 +10,10 @@ import java.util.Map;
 public interface DashboardGateway {
     List<Appointment> findAppointmentsByDate(LocalDate date);
     LastPetAndOwnerAppointmentsResponseDto getLastAppointmentsOfPetAndOwner(List<Appointment> appointments);
-    Map<LocalDate, Long> getAmountProceduresCountPerDay();
-    TopServiceResponseDto getMostPerformedProcedureLastThirtyDays();
-    LeastServiceResponseDto getLeastPerformedProcedureLastThirtyDays();
-    TopProceduresTimingResponse getMostProceduresTimingLastThirtyDays();
-    LeastProceduresTimingResponse getLeastProceduresTimingLastThirtyDays();
+    Map<LocalDate, Long> getAmountPetOfferingsCountPerDay();
+    TopPetOfferingResponseDto getMostPerformedPetOfferingLastThirtyDays();
+    LeastPetOfferingResponseDto getLeastPerformedPetOfferingLastThirtyDays();
+    TopPetOfferingsTimingResponse getMostPetOfferingsTimingLastThirtyDays();
+    LeastPetOfferingsTimingResponse getLeastPetOfferingsTimingLastThirtyDays();
 }
 

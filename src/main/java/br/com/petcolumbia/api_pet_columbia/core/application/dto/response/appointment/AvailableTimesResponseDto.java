@@ -9,17 +9,17 @@ public class AvailableTimesResponseDto {
     private EmployeeResponseDto employee;
     private List<LocalTime> times;
     private Integer durationTime;
-    private String servicesNames;
+    private String petOfferingNames;
     private Double servicePrice;
 
     public AvailableTimesResponseDto() {
     }
 
-    public AvailableTimesResponseDto(EmployeeResponseDto employee, List<LocalTime> times, Integer durationTime, String servicesNames, Double servicePrice) {
+    public AvailableTimesResponseDto(EmployeeResponseDto employee, List<LocalTime> times, Integer durationTime, String petOfferingNames, Double servicePrice) {
         this.employee = employee;
         this.times = times;
         this.durationTime = durationTime;
-        this.servicesNames = servicesNames;
+        this.petOfferingNames = petOfferingNames;
         this.servicePrice = servicePrice;
     }
 
@@ -47,12 +47,12 @@ public class AvailableTimesResponseDto {
         this.durationTime = durationTime;
     }
 
-    public String getServicesNames() {
-        return servicesNames;
+    public String getPetOfferingNames() {
+        return petOfferingNames;
     }
 
-    public void setServicesNames(String servicesNames) {
-        this.servicesNames = servicesNames;
+    public void setPetOfferingNames(String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public Double getServicePrice() {

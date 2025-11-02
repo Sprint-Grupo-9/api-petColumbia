@@ -23,6 +23,14 @@ public final class MappingContext {
         return strategy.shouldInclude(relationType);
     }
 
+    public boolean isBeingProcessed(String entityKey) {
+        return processedEntities.contains(entityKey);
+    }
+
+    public boolean shouldIncludeRelation(RelationType relationType) {
+        return strategy.shouldInclude(relationType);
+    }
+
     public void markAsProcessed(String entityKey) {
         processedEntities.add(entityKey);
     }

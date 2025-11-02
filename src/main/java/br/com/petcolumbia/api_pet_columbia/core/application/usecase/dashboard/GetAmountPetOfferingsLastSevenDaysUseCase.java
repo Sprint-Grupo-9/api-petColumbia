@@ -5,16 +5,16 @@ import br.com.petcolumbia.api_pet_columbia.core.adapter.dashboard.DashboardGatew
 import java.time.LocalDate;
 import java.util.Map;
 
-public class GetAmountProceduresLastSevenDaysUseCase {
+public class GetAmountPetOfferingsLastSevenDaysUseCase {
 
     private final DashboardGateway dashboardGateway;
 
-    public GetAmountProceduresLastSevenDaysUseCase(DashboardGateway dashboardGateway) {
+    public GetAmountPetOfferingsLastSevenDaysUseCase(DashboardGateway dashboardGateway) {
         this.dashboardGateway = dashboardGateway;
     }
 
     public Map<LocalDate, Long> execute() {
-        return dashboardGateway.getAmountProceduresCountPerDay();
+        return dashboardGateway.getAmountPetOfferingsCountPerDay();
     }
 }
 

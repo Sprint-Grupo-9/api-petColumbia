@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record AppointmentUpdateCommand(
         Integer petId,
         Integer employeeId,
-        String services,
+        String petOfferingNames,
         Double totalPrice,
         String observations,
         Boolean taxiService,

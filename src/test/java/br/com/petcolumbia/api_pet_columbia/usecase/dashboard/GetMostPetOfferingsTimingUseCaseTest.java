@@ -1,8 +1,8 @@
 package br.com.petcolumbia.api_pet_columbia.usecase.dashboard;
 
 import br.com.petcolumbia.api_pet_columbia.core.adapter.dashboard.DashboardGateway;
-import br.com.petcolumbia.api_pet_columbia.core.application.dto.response.dashboard.TopProceduresTimingResponse;
-import br.com.petcolumbia.api_pet_columbia.core.application.usecase.dashboard.GetMostProceduresTimingUseCase;
+import br.com.petcolumbia.api_pet_columbia.core.application.dto.response.dashboard.TopPetOfferingsTimingResponse;
+import br.com.petcolumbia.api_pet_columbia.core.application.usecase.dashboard.GetMostPetOfferingsTimingUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,20 +18,20 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("GetMostProceduresTimingUseCase - Unit Tests")
-class GetMostProceduresTimingUseCaseTest {
+@DisplayName("GetMostPetOfferingsTimingUseCase - Unit Tests")
+class GetMostPetOfferingsTimingUseCaseTest {
 
     @Mock
     private DashboardGateway dashboardGateway;
 
     @InjectMocks
-    private GetMostProceduresTimingUseCase useCase;
+    private GetMostPetOfferingsTimingUseCase useCase;
 
-    private TopProceduresTimingResponse mockResponse;
+    private TopPetOfferingsTimingResponse mockResponse;
 
     @BeforeEach
     void setUp() {
-        mockResponse = new TopProceduresTimingResponse(
+        mockResponse = new TopPetOfferingsTimingResponse(
             LocalDate.now().minusDays(30),
             LocalDate.now(),
             LocalTime.of(9, 0),
@@ -40,29 +40,29 @@ class GetMostProceduresTimingUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should get most procedures timing successfully")
-    void shouldGetMostProceduresTimingSuccessfully() {
+    @DisplayName("Should get most pet offerings timing successfully")
+    void shouldGetMostPetOfferingsTimingSuccessfully() {
         // Arrange
-        when(dashboardGateway.getMostProceduresTimingLastThirtyDays()).thenReturn(mockResponse);
+        when(dashboardGateway.getMostPetOfferingsTimingLastThirtyDays()).thenReturn(mockResponse);
 
         // Act
-        TopProceduresTimingResponse result = useCase.execute();
+        TopPetOfferingsTimingResponse result = useCase.execute();
 
         // Assert
         assertThat(result).isNotNull();
         assertThat(result.getHour()).isEqualTo(LocalTime.of(9, 0));
         assertThat(result.getCount()).isEqualTo(35L);
-        verify(dashboardGateway, times(1)).getMostProceduresTimingLastThirtyDays();
+        verify(dashboardGateway, times(1)).getMostPetOfferingsTimingLastThirtyDays();
     }
 
     @Test
     @DisplayName("Should validate count is positive")
     void shouldValidateCountIsPositive() {
         // Arrange
-        when(dashboardGateway.getMostProceduresTimingLastThirtyDays()).thenReturn(mockResponse);
+        when(dashboardGateway.getMostPetOfferingsTimingLastThirtyDays()).thenReturn(mockResponse);
 
         // Act
-        TopProceduresTimingResponse result = useCase.execute();
+        TopPetOfferingsTimingResponse result = useCase.execute();
 
         // Assert
         assertThat(result.getCount()).isPositive();

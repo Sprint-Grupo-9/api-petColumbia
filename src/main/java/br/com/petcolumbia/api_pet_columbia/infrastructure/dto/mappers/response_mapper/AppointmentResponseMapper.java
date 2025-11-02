@@ -26,7 +26,7 @@ public class AppointmentResponseMapper {
 
         dto.setObservations(appointment.getObservations());
         dto.setTaxiService(appointment.getTaxiService());
-        dto.setProcedures(appointment.getProcedures());
+        dto.setPetOfferingNames(appointment.getPetOfferingNames());
         dto.setTotalPrice(appointment.getTotalPrice());
         dto.setStartDateTime(appointment.getStartDateTime());
         dto.setEndDateTime(appointment.getEndDateTime());

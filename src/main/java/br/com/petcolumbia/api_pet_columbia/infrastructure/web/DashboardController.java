@@ -18,26 +18,26 @@ import java.util.Map;
 public class DashboardController {
 
     private final GetAppointmentsByDateUseCase getAppointmentsByDateUseCase;
-    private final GetAmountProceduresLastSevenDaysUseCase getAmountProceduresLastSevenDaysUseCase;
-    private final GetMostPerformedProcedureUseCase getMostPerformedProcedureUseCase;
-    private final GetLeastPerformedProcedureUseCase getLeastPerformedProcedureUseCase;
-    private final GetMostProceduresTimingUseCase getMostProceduresTimingUseCase;
-    private final GetLeastProceduresTimingUseCase getLeastProceduresTimingUseCase;
+    private final GetAmountPetOfferingsLastSevenDaysUseCase getAmountPetOfferingsLastSevenDaysUseCase;
+    private final GetMostPerformedPetOfferingsUseCase getMostPerformedPetOfferingsUseCase;
+    private final GetLeastPerformedPetOfferingsUseCase getLeastPerformedPetOfferingsUseCase;
+    private final GetMostPetOfferingsTimingUseCase getMostPetOfferingsTimingUseCase;
+    private final GetLeastPetOfferingsTimingUseCase getLeastPetOfferingsTimingUseCase;
 
     public DashboardController(
             GetAppointmentsByDateUseCase getAppointmentsByDateUseCase,
-            GetAmountProceduresLastSevenDaysUseCase getAmountProceduresLastSevenDaysUseCase,
-            GetMostPerformedProcedureUseCase getMostPerformedProcedureUseCase,
-            GetLeastPerformedProcedureUseCase getLeastPerformedProcedureUseCase,
-            GetMostProceduresTimingUseCase getMostProceduresTimingUseCase,
-            GetLeastProceduresTimingUseCase getLeastProceduresTimingUseCase
+            GetAmountPetOfferingsLastSevenDaysUseCase getAmountPetOfferingsLastSevenDaysUseCase,
+            GetMostPerformedPetOfferingsUseCase getMostPerformedPetOfferingsUseCase,
+            GetLeastPerformedPetOfferingsUseCase getLeastPerformedPetOfferingsUseCase,
+            GetMostPetOfferingsTimingUseCase getMostPetOfferingsTimingUseCase,
+            GetLeastPetOfferingsTimingUseCase getLeastPetOfferingsTimingUseCase
     ) {
         this.getAppointmentsByDateUseCase = getAppointmentsByDateUseCase;
-        this.getAmountProceduresLastSevenDaysUseCase = getAmountProceduresLastSevenDaysUseCase;
-        this.getMostPerformedProcedureUseCase = getMostPerformedProcedureUseCase;
-        this.getLeastPerformedProcedureUseCase = getLeastPerformedProcedureUseCase;
-        this.getMostProceduresTimingUseCase = getMostProceduresTimingUseCase;
-        this.getLeastProceduresTimingUseCase = getLeastProceduresTimingUseCase;
+        this.getAmountPetOfferingsLastSevenDaysUseCase = getAmountPetOfferingsLastSevenDaysUseCase;
+        this.getMostPerformedPetOfferingsUseCase = getMostPerformedPetOfferingsUseCase;
+        this.getLeastPerformedPetOfferingsUseCase = getLeastPerformedPetOfferingsUseCase;
+        this.getMostPetOfferingsTimingUseCase = getMostPetOfferingsTimingUseCase;
+        this.getLeastPetOfferingsTimingUseCase = getLeastPetOfferingsTimingUseCase;
     }
 
     @GetMapping("/appointments/date")
@@ -56,11 +56,11 @@ public class DashboardController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/procedures/amount-last-seven-days")
-    @Operation(summary = "Lista os últimos 7 dias a quantidade de procedimentos prestados")
+    @GetMapping("/pet-offerings/amount-last-seven-days")
+    @Operation(summary = "Lista os últimos 7 dias a quantidade de serviços prestados")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<Map<LocalDate, Long>> getAmountProceduresLastSevenDays() {
-        Map<LocalDate, Long> appointmentCounts = getAmountProceduresLastSevenDaysUseCase.execute();
+    public ResponseEntity<Map<LocalDate, Long>> getAmountPetOfferingsLastSevenDays() {
+        Map<LocalDate, Long> appointmentCounts = getAmountPetOfferingsLastSevenDaysUseCase.execute();
 
         if (appointmentCounts.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -69,12 +69,12 @@ public class DashboardController {
         return ResponseEntity.ok(appointmentCounts);
     }
 
-    @GetMapping("/procedures/most-performed-last-thirty-days")
-    @Operation(summary = "Busca o procedimento mais realizado do mês",
-            description = "Retorna data de início e fim do mês, o nome do procedimento e quantidade realizados")
+    @GetMapping("/pet-offerings/most-performed-last-thirty-days")
+    @Operation(summary = "Busca o serviço mais realizado do mês",
+            description = "Retorna data de início e fim do mês, o nome do serviço e quantidade realizados")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<TopServiceResponseDto> getMostPerformedProcedureMonth() {
-        TopServiceResponseDto response = getMostPerformedProcedureUseCase.execute();
+    public ResponseEntity<TopPetOfferingResponseDto> getMostPerformedPetOfferingMonth() {
+        TopPetOfferingResponseDto response = getMostPerformedPetOfferingsUseCase.execute();
 
         if (response == null) {
             return ResponseEntity.noContent().build();
@@ -83,12 +83,12 @@ public class DashboardController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/procedures/least-performed-last-thirty-days")
-    @Operation(summary = "Busca o procedimento menos realizado do mês",
-            description = "Retorna data de início e fim do mês, o nome do procedimento e quantidade realizados")
+    @GetMapping("/pet-offerings/least-performed-last-thirty-days")
+    @Operation(summary = "Busca o serviço menos realizado do mês",
+            description = "Retorna data de início e fim do mês, o nome do serviço e quantidade realizados")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<LeastServiceResponseDto> getLeastPerformedProcedureMonth() {
-        LeastServiceResponseDto response = getLeastPerformedProcedureUseCase.execute();
+    public ResponseEntity<LeastPetOfferingResponseDto> getLeastPerformedPetOfferingMonth() {
+        LeastPetOfferingResponseDto response = getLeastPerformedPetOfferingsUseCase.execute();
 
         if (response == null) {
             return ResponseEntity.noContent().build();
@@ -97,12 +97,12 @@ public class DashboardController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/procedures/most-procedures-timing-last-thirty-days")
+    @GetMapping("/pet-offerings/most-timing-last-thirty-days")
     @Operation(summary = "Busca o horário mais agendado dos últimos 30 dias",
             description = "Retorna a data de 30 dias atrás e o dia atual, o horário mais agendado e a quantidade")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<TopProceduresTimingResponse> getMostProceduresTimingByLastThirtyDays() {
-        TopProceduresTimingResponse response = getMostProceduresTimingUseCase.execute();
+    public ResponseEntity<TopPetOfferingsTimingResponse> getMostPetOfferingsTimingByLastThirtyDays() {
+        TopPetOfferingsTimingResponse response = getMostPetOfferingsTimingUseCase.execute();
 
         if (response == null) {
             return ResponseEntity.noContent().build();
@@ -111,12 +111,12 @@ public class DashboardController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/procedures/least-procedures-timing-last-thirty-days")
+    @GetMapping("/pet-offerings/least-timing-last-thirty-days")
     @Operation(summary = "Busca o horário menos agendado dos últimos 30 dias",
             description = "Retorna a data de 30 dias atrás e o dia atual, o horário menos agendado e a quantidade")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<LeastProceduresTimingResponse> getLeastProceduresTimingByLastThirtyDays() {
-        LeastProceduresTimingResponse response = getLeastProceduresTimingUseCase.execute();
+    public ResponseEntity<LeastPetOfferingsTimingResponse> getLeastPetOfferingsTimingByLastThirtyDays() {
+        LeastPetOfferingsTimingResponse response = getLeastPetOfferingsTimingUseCase.execute();
 
         if (response == null) {
             return ResponseEntity.noContent().build();

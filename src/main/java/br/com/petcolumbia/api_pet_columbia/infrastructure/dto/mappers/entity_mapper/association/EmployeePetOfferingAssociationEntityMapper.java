@@ -20,9 +20,10 @@ public class EmployeePetOfferingAssociationEntityMapper {
             return null;
         }
 
-        String entityKey = MappingContext.createEntityKey("EmployeeProcedureAssociation", entity.getId().getEmployeeId());
+        String entityKey = MappingContext.createEntityKey("EmployeePetOfferingAssociation", entity.getId().getEmployeeId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createAssociationWithoutRelations(entity);
         }
 
@@ -31,10 +32,10 @@ public class EmployeePetOfferingAssociationEntityMapper {
         try {
             return new EmployeePetOfferingAssociation(
                     EmployeePetOfferingAssociationIdMapper.toDomain(entity.getId()),
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)
+                    context.shouldIncludeRelation(RelationType.EMPLOYEE_PET_OFFERINGS)
                         ? EmployeeEntityMapper.toDomain(entity.getEmployee(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_EMPLOYEES)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_EMPLOYEES)
                         ? PetOfferingEntityMapper.toDomain(entity.getPetOffering(), context)
                         : null
             );
@@ -50,7 +51,8 @@ public class EmployeePetOfferingAssociationEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("EmployeePetOfferingAssociation", association.getId().getEmployeeId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createEntityWithoutRelations(association);
         }
 
@@ -59,10 +61,10 @@ public class EmployeePetOfferingAssociationEntityMapper {
         try {
             return new EmployeePetOfferingAssociationEntity(
                     EmployeePetOfferingAssociationIdMapper.toEntity(association.getId()),
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)
+                    context.shouldIncludeRelation(RelationType.EMPLOYEE_PET_OFFERINGS)
                         ? EmployeeEntityMapper.toEntity(association.getEmployee(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_EMPLOYEES)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_EMPLOYEES)
                         ? PetOfferingEntityMapper.toEntity(association.getPetOffering(), context)
                         : null
             );

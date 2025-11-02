@@ -20,7 +20,8 @@ public class PetOfferingEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("PetOffering", entity.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_EMPLOYEES)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createPetOfferingWithoutRelations(entity, context);
         }
 
@@ -31,10 +32,10 @@ public class PetOfferingEntityMapper {
                     entity.getId(),
                     entity.getName(),
                     entity.getDescription(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_EMPLOYEES)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_EMPLOYEES)
                         ? EmployeePetOfferingAssociationEntityMapper.toDomainList(entity.getEmployeePetOfferings(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_PRICES_DURATIONS)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_PRICES_DURATIONS)
                         ? PetOfferingPriceAndDurationEntityMapper.toDomainList(entity.getPricesAndDurations(), context)
                         : null
             );
@@ -50,7 +51,8 @@ public class PetOfferingEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("PetOffering", petOffering.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_EMPLOYEES)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createPetOfferingEntityWithoutRelations(petOffering, context);
         }
 
@@ -61,10 +63,10 @@ public class PetOfferingEntityMapper {
                     petOffering.getId(),
                     petOffering.getName(),
                     petOffering.getDescription(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_EMPLOYEES)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_EMPLOYEES)
                         ? EmployeePetOfferingAssociationEntityMapper.toEntityList(petOffering.getEmployeePetOfferings(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_PRICES_DURATIONS)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_PRICES_DURATIONS)
                         ? PetOfferingPriceAndDurationEntityMapper.toEntityList(petOffering.getPricesAndDurations(), context)
                         : null
             );

@@ -20,7 +20,8 @@ public class EmployeeEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Employee", entity.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_APPOINTMENTS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createEmployeeWithoutRelations(entity, context);
         }
 
@@ -30,10 +31,10 @@ public class EmployeeEntityMapper {
             return new Employee(
                     entity.getId(),
                     entity.getName(),
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_APPOINTMENTS)
+                    context.shouldIncludeRelation(RelationType.EMPLOYEE_APPOINTMENTS)
                         ? AppointmentEntityMapper.toDomainList(entity.getAppointments(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)
+                    context.shouldIncludeRelation(RelationType.EMPLOYEE_PET_OFFERINGS)
                         ? EmployeePetOfferingAssociationEntityMapper.toDomainList(entity.getEmployeePetOfferings(), context)
                         : null
             );
@@ -49,7 +50,8 @@ public class EmployeeEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Employee", employee.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_APPOINTMENTS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createEmployeeEntityWithoutRelations(employee, context);
         }
 
@@ -59,10 +61,10 @@ public class EmployeeEntityMapper {
             return new EmployeeEntity(
                     employee.getId(),
                     employee.getName(),
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_APPOINTMENTS)
+                    context.shouldIncludeRelation(RelationType.EMPLOYEE_APPOINTMENTS)
                         ? AppointmentEntityMapper.toEntityList(employee.getAppointments(), context)
                         : null,
-                    context.shouldMapRelation(entityKey, RelationType.EMPLOYEE_PET_OFFERINGS)
+                    context.shouldIncludeRelation(RelationType.EMPLOYEE_PET_OFFERINGS)
                         ? EmployeePetOfferingAssociationEntityMapper.toEntityList(employee.getEmployeePetOfferings(), context)
                         : null
             );

@@ -39,7 +39,7 @@ class CreateAppointmentUseCaseTest {
         command = new AppointmentCreateCommand(
             1,                      // petId
             1,                      // employeeId
-            "Banho, Tosa",         // servicesNames
+            "Banho, Tosa",         // petOfferingNames
             140.0,                  // totalPrice
             "Observação teste",     // observations
             false,                  // taxiService

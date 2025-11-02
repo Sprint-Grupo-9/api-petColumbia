@@ -23,7 +23,7 @@ public class AppointmentDashboardMapper {
         dto.setOwnerName(appointment.getPet().getOwner().getName());
         dto.setPetName(appointment.getPet().getName());
         dto.setPetBreed(appointment.getPet().getBreed());
-        dto.setProceduresNames(appointment.getProcedures());
+        dto.setPetOfferingNames(appointment.getPetOfferingNames());
         dto.setPrice(appointment.getTotalPrice());
         dto.setTaxiService(appointment.getTaxiService());
 
@@ -50,7 +50,7 @@ public class AppointmentDashboardMapper {
         dto.setId(appointment.getId());
         dto.setPet(PetResponseMapper.toOwnerInfoResponse(appointment.getPet()));
         dto.setEmployee(EmployeeResponseMapper.toResponse(appointment.getEmployee()));
-        dto.setProcedures(appointment.getProcedures());
+        dto.setPetOfferingNames(appointment.getPetOfferingNames());
         dto.setTotalPrice(appointment.getTotalPrice());
         dto.setObservations(appointment.getObservations());
         dto.setTaxiService(appointment.getTaxiService());

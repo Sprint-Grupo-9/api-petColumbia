@@ -56,7 +56,7 @@ class GetPetOfferingsPricesByPetUseCaseTest {
         // Assert
         assertThat(result).isNotNull();
         assertThat(result).hasSize(3);
-        assertThat(result.get(0).getProcedureName()).isEqualTo("Banho");
+        assertThat(result.get(0).getPetOfferingName()).isEqualTo("Banho");
         verify(priceAndDurationGateway, times(1))
             .getPetOfferingsPricesByPetIdAndPetOfferingIds(petId, petOfferingIds);
     }

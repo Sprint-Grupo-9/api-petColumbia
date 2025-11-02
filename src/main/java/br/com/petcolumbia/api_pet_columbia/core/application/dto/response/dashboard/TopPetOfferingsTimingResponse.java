@@ -3,16 +3,16 @@ package br.com.petcolumbia.api_pet_columbia.core.application.dto.response.dashbo
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class LeastProceduresTimingResponse {
+public class TopPetOfferingsTimingResponse {
     private LocalDate start;
     private LocalDate end;
     private LocalTime hour;
     private long count;
 
-    public LeastProceduresTimingResponse() {
+    public TopPetOfferingsTimingResponse() {
     }
 
-    public LeastProceduresTimingResponse(LocalDate start, LocalDate end, LocalTime hour, long count) {
+    public TopPetOfferingsTimingResponse(LocalDate start, LocalDate end, LocalTime hour, long count) {
         this.start = start;
         this.end = end;
         this.hour = hour;

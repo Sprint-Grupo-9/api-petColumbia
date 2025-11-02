@@ -209,9 +209,10 @@ INSERT INTO pet (
  'Miau', 'macho', 'p', 'gato', 5);
 
 -- Tabela: appointment
+-- Agendamentos antigos (fora dos últimos 7 dias)
 INSERT INTO appointment (
     id, created_at, end_date_time, is_finished, last_update, observations,
-    procedures, start_date_time, taxi_service, total_price, employee_id, pet_id
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
 ) VALUES
 (1, '2025-01-01 08:00:00', '2025-01-01 09:30:00', true, '2025-01-01 08:00:00', 'Pet comportado',
  'Banho, Corte de unha', '2025-01-01 09:00:00', false, 120.0, 1, 1),
@@ -221,6 +222,112 @@ INSERT INTO appointment (
 
 (3, '2025-01-05 09:00:00', '2025-01-05 10:05:00', true, '2025-01-05 09:00:00', 'Primeira vez no petshop',
  'Banho, Escovação dentária', '2025-01-05 09:30:00', false, 75.0, 3, 3);
+
+-- Agendamentos dos últimos 7 dias (para dashboard)
+-- Usando DATEADD para calcular datas dinâmicas relativas a hoje
+
+-- Hoje
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(4, CURRENT_TIMESTAMP, DATEADD('HOUR', 1, DATEADD('HOUR', 9, CURRENT_DATE)), false, CURRENT_TIMESTAMP, 'Cliente VIP',
+ 'Banho, Tosa na máquina, Corte de unha', DATEADD('HOUR', 9, CURRENT_DATE), false, 140.0, 1, 1),
+
+(5, CURRENT_TIMESTAMP, DATEADD('MINUTE', 50, DATEADD('HOUR', 14, CURRENT_DATE)), false, CURRENT_TIMESTAMP, null,
+ 'Banho, Hidratação', DATEADD('HOUR', 14, CURRENT_DATE), false, 90.0, 2, 2);
+
+-- Ontem (dia -1)
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(6, DATEADD('DAY', -1, CURRENT_TIMESTAMP), DATEADD('HOUR', 1, DATEADD('HOUR', 10, DATEADD('DAY', -1, CURRENT_DATE))), true, DATEADD('DAY', -1, CURRENT_TIMESTAMP), 'Pet muito peludo',
+ 'Banho, Desembolo', DATEADD('HOUR', 10, DATEADD('DAY', -1, CURRENT_DATE)), true, 120.0, 3, 3),
+
+(7, DATEADD('DAY', -1, CURRENT_TIMESTAMP), DATEADD('MINUTE', 120, DATEADD('HOUR', 15, DATEADD('DAY', -1, CURRENT_DATE))), true, DATEADD('DAY', -1, CURRENT_TIMESTAMP), 'Banho relaxante',
+ 'Banho, Hidratação, Escovação dentária', DATEADD('HOUR', 15, DATEADD('DAY', -1, CURRENT_DATE)), false, 165.0, 4, 4),
+
+(8, DATEADD('DAY', -1, CURRENT_TIMESTAMP), DATEADD('MINUTE', 60, DATEADD('HOUR', 11, DATEADD('DAY', -1, CURRENT_DATE))), true, DATEADD('DAY', -1, CURRENT_TIMESTAMP), null,
+ 'Tosa higiênica, Botinha, Corte de unha', DATEADD('HOUR', 11, DATEADD('DAY', -1, CURRENT_DATE)), false, 55.0, 1, 5);
+
+-- Dia -2
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(9, DATEADD('DAY', -2, CURRENT_TIMESTAMP), DATEADD('HOUR', 1, DATEADD('HOUR', 9, DATEADD('DAY', -2, CURRENT_DATE))), true, DATEADD('DAY', -2, CURRENT_TIMESTAMP), 'Muito dengosa',
+ 'Banho, Tosa bebê', DATEADD('HOUR', 9, DATEADD('DAY', -2, CURRENT_DATE)), false, 100.0, 2, 6),
+
+(10, DATEADD('DAY', -2, CURRENT_TIMESTAMP), DATEADD('MINUTE', 50, DATEADD('HOUR', 16, DATEADD('DAY', -2, CURRENT_DATE))), true, DATEADD('DAY', -2, CURRENT_TIMESTAMP), null,
+ 'Banho, Corte de unha', DATEADD('HOUR', 16, DATEADD('DAY', -2, CURRENT_DATE)), false, 90.0, 3, 7);
+
+-- Dia -3
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(11, DATEADD('DAY', -3, CURRENT_TIMESTAMP), DATEADD('MINUTE', 45, DATEADD('HOUR', 10, DATEADD('DAY', -3, CURRENT_DATE))), true, DATEADD('DAY', -3, CURRENT_TIMESTAMP), 'Pet agitado',
+ 'Banho, Tosa higiênica, Escovação dentária', DATEADD('HOUR', 10, DATEADD('DAY', -3, CURRENT_DATE)), false, 80.0, 4, 8),
+
+(12, DATEADD('DAY', -3, CURRENT_TIMESTAMP), DATEADD('HOUR', 1, DATEADD('HOUR', 14, DATEADD('DAY', -3, CURRENT_DATE))), true, DATEADD('DAY', -3, CURRENT_TIMESTAMP), 'Primeira tosa',
+ 'Banho, Tosa na máquina', DATEADD('HOUR', 14, DATEADD('DAY', -3, CURRENT_DATE)), false, 110.0, 1, 1),
+
+(13, DATEADD('DAY', -3, CURRENT_TIMESTAMP), DATEADD('MINUTE', 50, DATEADD('HOUR', 11, DATEADD('DAY', -3, CURRENT_DATE))), true, DATEADD('DAY', -3, CURRENT_TIMESTAMP), null,
+ 'Banho, Hidratação, Corte de unha', DATEADD('HOUR', 11, DATEADD('DAY', -3, CURRENT_DATE)), true, 110.0, 2, 2);
+
+-- Dia -4
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(14, DATEADD('DAY', -4, CURRENT_TIMESTAMP), DATEADD('HOUR', 1, DATEADD('HOUR', 9, DATEADD('DAY', -4, CURRENT_DATE))), true, DATEADD('DAY', -4, CURRENT_TIMESTAMP), 'Gatinha tranquila',
+ 'Banho, Escovação dentária, Corte de unha', DATEADD('HOUR', 9, DATEADD('DAY', -4, CURRENT_DATE)), false, 95.0, 3, 3),
+
+(15, DATEADD('DAY', -4, CURRENT_TIMESTAMP), DATEADD('MINUTE', 120, DATEADD('HOUR', 15, DATEADD('DAY', -4, CURRENT_DATE))), true, DATEADD('DAY', -4, CURRENT_TIMESTAMP), 'Banho completo',
+ 'Banho, Desembolo, Hidratação', DATEADD('HOUR', 15, DATEADD('DAY', -4, CURRENT_DATE)), false, 190.0, 4, 4);
+
+-- Dia -5
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(16, DATEADD('DAY', -5, CURRENT_TIMESTAMP), DATEADD('MINUTE', 60, DATEADD('HOUR', 10, DATEADD('DAY', -5, CURRENT_DATE))), true, DATEADD('DAY', -5, CURRENT_TIMESTAMP), 'Pet alegre',
+ 'Banho, Tosa higiênica, Botinha', DATEADD('HOUR', 10, DATEADD('DAY', -5, CURRENT_DATE)), false, 85.0, 1, 5),
+
+(17, DATEADD('DAY', -5, CURRENT_TIMESTAMP), DATEADD('HOUR', 1, DATEADD('HOUR', 14, DATEADD('DAY', -5, CURRENT_DATE))), true, DATEADD('DAY', -5, CURRENT_TIMESTAMP), 'Tosa estilo bebê',
+ 'Banho, Tosa bebê, Corte de unha', DATEADD('HOUR', 14, DATEADD('DAY', -5, CURRENT_DATE)), false, 120.0, 2, 6),
+
+(18, DATEADD('DAY', -5, CURRENT_TIMESTAMP), DATEADD('MINUTE', 50, DATEADD('HOUR', 16, DATEADD('DAY', -5, CURRENT_DATE))), true, DATEADD('DAY', -5, CURRENT_TIMESTAMP), null,
+ 'Banho, Escovação dentária', DATEADD('HOUR', 16, DATEADD('DAY', -5, CURRENT_DATE)), false, 75.0, 3, 7);
+
+-- Dia -6
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(19, DATEADD('DAY', -6, CURRENT_TIMESTAMP), DATEADD('MINUTE', 45, DATEADD('HOUR', 9, DATEADD('DAY', -6, CURRENT_DATE))), true, DATEADD('DAY', -6, CURRENT_TIMESTAMP), 'Gato manhoso',
+ 'Banho, Corte de unha', DATEADD('HOUR', 9, DATEADD('DAY', -6, CURRENT_DATE)), false, 70.0, 4, 8),
+
+(20, DATEADD('DAY', -6, CURRENT_TIMESTAMP), DATEADD('HOUR', 1, DATEADD('HOUR', 11, DATEADD('DAY', -6, CURRENT_DATE))), true, DATEADD('DAY', -6, CURRENT_TIMESTAMP), 'Banho express',
+ 'Banho, Tosa higiênica', DATEADD('HOUR', 11, DATEADD('DAY', -6, CURRENT_DATE)), false, 120.0, 1, 1),
+
+(21, DATEADD('DAY', -6, CURRENT_TIMESTAMP), DATEADD('MINUTE', 50, DATEADD('HOUR', 15, DATEADD('DAY', -6, CURRENT_DATE))), true, DATEADD('DAY', -6, CURRENT_TIMESTAMP), 'Cliente frequente',
+ 'Banho, Hidratação, Corte de unha', DATEADD('HOUR', 15, DATEADD('DAY', -6, CURRENT_DATE)), true, 110.0, 2, 2);
+
+-- Dia -7
+INSERT INTO appointment (
+    id, created_at, end_date_time, is_finished, last_update, observations,
+    pet_offerings, start_date_time, taxi_service, total_price, employee_id, pet_id
+) VALUES
+(22, DATEADD('DAY', -7, CURRENT_TIMESTAMP), DATEADD('HOUR', 1, DATEADD('HOUR', 10, DATEADD('DAY', -7, CURRENT_DATE))), true, DATEADD('DAY', -7, CURRENT_TIMESTAMP), 'Pet muito fofo',
+ 'Banho, Tosa bebê, Hidratação', DATEADD('HOUR', 10, DATEADD('DAY', -7, CURRENT_DATE)), false, 120.0, 3, 3),
+
+(23, DATEADD('DAY', -7, CURRENT_TIMESTAMP), DATEADD('MINUTE', 120, DATEADD('HOUR', 14, DATEADD('DAY', -7, CURRENT_DATE))), true, DATEADD('DAY', -7, CURRENT_TIMESTAMP), 'Cachorro grande',
+ 'Banho, Desembolo, Tosa higiênica', DATEADD('HOUR', 14, DATEADD('DAY', -7, CURRENT_DATE)), false, 170.0, 4, 4),
+
+(24, DATEADD('DAY', -7, CURRENT_TIMESTAMP), DATEADD('MINUTE', 60, DATEADD('HOUR', 16, DATEADD('DAY', -7, CURRENT_DATE))), true, DATEADD('DAY', -7, CURRENT_TIMESTAMP), null,
+ 'Banho, Tosa na máquina, Corte de unha', DATEADD('HOUR', 16, DATEADD('DAY', -7, CURRENT_DATE)), false, 105.0, 1, 5);
 
 -- ============================================================================
 -- RESET DAS SEQUÊNCIAS DE AUTO-INCREMENT
@@ -234,5 +341,5 @@ ALTER TABLE employee ALTER COLUMN id RESTART WITH 5;
 ALTER TABLE pet_offering_price_and_duration ALTER COLUMN id RESTART WITH 91;
 ALTER TABLE owner ALTER COLUMN id RESTART WITH 6;
 ALTER TABLE pet ALTER COLUMN id RESTART WITH 9;
-ALTER TABLE appointment ALTER COLUMN id RESTART WITH 4;
+ALTER TABLE appointment ALTER COLUMN id RESTART WITH 25;
 

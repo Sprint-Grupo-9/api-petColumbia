@@ -14,30 +14,30 @@ public class DashboardBeanConfig {
     }
 
     @Bean
-    public GetAmountProceduresLastSevenDaysUseCase getAmountProceduresLastSevenDaysUseCase(
+    public GetAmountPetOfferingsLastSevenDaysUseCase getAmountPetOfferingsLastSevenDaysUseCase(
             DashboardGateway dashboardGateway
     ) {
-        return new GetAmountProceduresLastSevenDaysUseCase(dashboardGateway);
+        return new GetAmountPetOfferingsLastSevenDaysUseCase(dashboardGateway);
     }
 
     @Bean
-    public GetMostPerformedProcedureUseCase getMostPerformedProcedureUseCase(DashboardGateway dashboardGateway) {
-        return new GetMostPerformedProcedureUseCase(dashboardGateway);
+    public GetMostPerformedPetOfferingsUseCase getMostPerformedPetOfferingsUseCase(DashboardGateway dashboardGateway) {
+        return new GetMostPerformedPetOfferingsUseCase(dashboardGateway);
     }
 
     @Bean
-    public GetLeastPerformedProcedureUseCase getLeastPerformedProcedureUseCase(DashboardGateway dashboardGateway) {
-        return new GetLeastPerformedProcedureUseCase(dashboardGateway);
+    public GetLeastPerformedPetOfferingsUseCase getLeastPerformedPetOfferingsUseCase(DashboardGateway dashboardGateway) {
+        return new GetLeastPerformedPetOfferingsUseCase(dashboardGateway);
     }
 
     @Bean
-    public GetMostProceduresTimingUseCase getMostProceduresTimingUseCase(DashboardGateway dashboardGateway) {
-        return new GetMostProceduresTimingUseCase(dashboardGateway);
+    public GetMostPetOfferingsTimingUseCase getMostPetOfferingsTimingUseCase(DashboardGateway dashboardGateway) {
+        return new GetMostPetOfferingsTimingUseCase(dashboardGateway);
     }
 
     @Bean
-    public GetLeastProceduresTimingUseCase getLeastProceduresTimingUseCase(DashboardGateway dashboardGateway) {
-        return new GetLeastProceduresTimingUseCase(dashboardGateway);
+    public GetLeastPetOfferingsTimingUseCase getLeastPetOfferingsTimingUseCase(DashboardGateway dashboardGateway) {
+        return new GetLeastPetOfferingsTimingUseCase(dashboardGateway);
     }
 }
 

@@ -4,6 +4,7 @@ import br.com.petcolumbia.api_pet_columbia.core.application.command.appointment.
 import br.com.petcolumbia.api_pet_columbia.core.application.command.appointment.AppointmentUpdateCommand;
 import br.com.petcolumbia.api_pet_columbia.core.application.dto.response.appointment.AppointmentResponseDto;
 import br.com.petcolumbia.api_pet_columbia.core.application.dto.response.appointment.AvailableTimesResponseDto;
+import br.com.petcolumbia.api_pet_columbia.core.application.dto.response.common.PageResponse;
 import br.com.petcolumbia.api_pet_columbia.core.application.usecase.appointment.*;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.appointment.Appointment;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.command_mapper.AppointmentCommandMapper;
@@ -48,30 +49,46 @@ public class AppointmentController {
             description = "Recebe o dia, pet e procedimentos solicitados")
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<AvailableTimesResponseDto>> getAvailableTimes(
-            @RequestBody AvailableTimesRequestDto request,
+            @Valid @RequestBody AvailableTimesRequestDto request,
             @PathVariable Integer petId
     ) {
         List<AvailableTimesResponseDto> availableTimes = getAvailableTimesUseCase.execute(
                 request.getDate(),
                 petId,
-                request.getProcedureIds()
+                request.getPetOfferingIds()
         );
         return ResponseEntity.ok(availableTimes);
     }
 
     @GetMapping("/owner/{ownerId}")
-    @Operation(summary = "Lista todos os agendamentos de um usuário pelo id")
+    @Operation(summary = "Lista todos os agendamentos de um usuário pelo id com paginação",
+            description = "Retorna uma página de agendamentos ordenados por data de início (mais recentes primeiro). " +
+                    "Use os parâmetros 'page' (número da página, inicia em 0) e 'size' (itens por página, padrão 10)")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<AppointmentResponseDto>> getAllAppointmentsByOwnerId(
-            @PathVariable Integer ownerId
+    public ResponseEntity<PageResponse<AppointmentResponseDto>> getAllAppointmentsByOwnerId(
+            @PathVariable Integer ownerId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
-        List<Appointment> appointments = listAllAppointmentsByOwnerUseCase.execute(ownerId);
+        PageResponse<Appointment> appointmentsPage = listAllAppointmentsByOwnerUseCase.executePaginated(ownerId, page, size);
 
-        if (appointments.isEmpty()) {
+        if (appointmentsPage.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        List<AppointmentResponseDto> response = AppointmentResponseMapper.toResponseList(appointments);
+        List<AppointmentResponseDto> responseList = AppointmentResponseMapper.toResponseList(appointmentsPage.getContent());
+
+        PageResponse<AppointmentResponseDto> response = new PageResponse<>(
+                responseList,
+                appointmentsPage.getPageNumber(),
+                appointmentsPage.getPageSize(),
+                appointmentsPage.getTotalElements(),
+                appointmentsPage.getTotalPages(),
+                appointmentsPage.isFirst(),
+                appointmentsPage.isLast(),
+                appointmentsPage.isEmpty()
+        );
+
         return ResponseEntity.ok(response);
     }
 

@@ -12,8 +12,8 @@ public class AppointmentUpdateDto {
     @NotNull(message = "O Id do Funcionário é obrigatório")
     private Integer employee_id;
 
-    @NotEmpty(message = "Os procedimentos são obrigatórios")
-    private String procedures;
+    @NotEmpty(message = "Os serviços são obrigatórios")
+    private String petOfferingNames;
 
     @NotNull(message = "O preço é obrigatório")
     private Double totalPrice;
@@ -60,12 +60,12 @@ public class AppointmentUpdateDto {
         this.employee_id = employee_id;
     }
 
-    public String getProcedures() {
-        return procedures;
+    public String getPetOfferingNames() {
+        return petOfferingNames;
     }
 
-    public void setProcedures(String procedures) {
-        this.procedures = procedures;
+    public void setPetOfferingNames(String petOfferingNames) {
+        this.petOfferingNames = petOfferingNames;
     }
 
     public Double getTotalPrice() {

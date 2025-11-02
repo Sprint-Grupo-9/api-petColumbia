@@ -14,11 +14,11 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Integer id, String name, List<Appointment> appointments, List<EmployeePetOfferingAssociation> employeeProcedures) {
+    public Employee(Integer id, String name, List<Appointment> appointments, List<EmployeePetOfferingAssociation> employeePetOfferings) {
         this.id = id;
         this.name = name;
         this.appointments = appointments;
-        this.employeePetOfferings = employeeProcedures;
+        this.employeePetOfferings = employeePetOfferings;
     }
 
     public Integer getId() {

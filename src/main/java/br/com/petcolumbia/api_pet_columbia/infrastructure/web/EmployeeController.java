@@ -17,14 +17,14 @@ import java.util.List;
 public class EmployeeController {
 
     private final FindEmployeeByIdUseCase findEmployeeByIdUseCase;
-    private final ListEmployeesByPetOfferingsUseCase listEmployeesByProceduresUseCase;
+    private final ListEmployeesByPetOfferingsUseCase listEmployeesByPetOfferingsUseCase;
 
     public EmployeeController(
             FindEmployeeByIdUseCase findEmployeeByIdUseCase,
             ListEmployeesByPetOfferingsUseCase listEmployeesByPetOfferingsUseCase
     ) {
         this.findEmployeeByIdUseCase = findEmployeeByIdUseCase;
-        this.listEmployeesByProceduresUseCase = listEmployeesByPetOfferingsUseCase;
+        this.listEmployeesByPetOfferingsUseCase = listEmployeesByPetOfferingsUseCase;
     }
 
     @GetMapping("/{id}")
@@ -35,13 +35,13 @@ public class EmployeeController {
         return ResponseEntity.ok(EmployeeResponseMapper.toResponse(employee));
     }
 
-    @GetMapping("/by-procedures")
-    @Operation(summary = "Lista funcionários que oferecem todos os procedimentos especificados")
+    @GetMapping("/by-pet-offerings")
+    @Operation(summary = "Lista funcionários que oferecem todos os serviços especificados")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<EmployeeResponseDto>> getEmployeesByProcedures(
-            @RequestParam List<Integer> procedureIds
+    public ResponseEntity<List<EmployeeResponseDto>> getEmployeesByPetOfferings(
+            @RequestParam List<Integer> petOfferingIds
     ) {
-        List<Employee> employees = listEmployeesByProceduresUseCase.execute(procedureIds);
+        List<Employee> employees = listEmployeesByPetOfferingsUseCase.execute(petOfferingIds);
 
         if (employees.isEmpty()) {
             return ResponseEntity.noContent().build();

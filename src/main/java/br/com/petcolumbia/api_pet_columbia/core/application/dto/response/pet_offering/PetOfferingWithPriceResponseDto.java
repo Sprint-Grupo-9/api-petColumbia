@@ -2,15 +2,15 @@ package br.com.petcolumbia.api_pet_columbia.core.application.dto.response.pet_of
 
 public class PetOfferingWithPriceResponseDto {
     private Integer id;
-    private String procedureName;
+    private String petOfferingName;
     private Double price;
 
     public PetOfferingWithPriceResponseDto() {
     }
 
-    public PetOfferingWithPriceResponseDto(Integer id, String procedureName, Double price) {
+    public PetOfferingWithPriceResponseDto(Integer id, String petOfferingName, Double price) {
         this.id = id;
-        this.procedureName = procedureName;
+        this.petOfferingName = petOfferingName;
         this.price = price;
     }
 
@@ -22,12 +22,12 @@ public class PetOfferingWithPriceResponseDto {
         this.id = id;
     }
 
-    public String getProcedureName() {
-        return procedureName;
+    public String getPetOfferingName() {
+        return petOfferingName;
     }
 
-    public void setProcedureName(String procedureName) {
-        this.procedureName = procedureName;
+    public void setPetOfferingName(String petOfferingName) {
+        this.petOfferingName = petOfferingName;
     }
 
     public Double getPrice() {

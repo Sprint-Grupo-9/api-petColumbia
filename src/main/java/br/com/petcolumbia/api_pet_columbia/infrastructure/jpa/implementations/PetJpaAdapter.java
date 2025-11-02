@@ -49,7 +49,7 @@ public class PetJpaAdapter implements PetGateway {
             throw new EntityNotFoundException("Pet não encontrado");
         }
 
-        if (!petEntity.get().getOwner().getId().equals(ownerId)) {
+        if (ownerId != null && !petEntity.get().getOwner().getId().equals(ownerId)) {
             throw new EntityConflictException("Pet não encontrado para o dono informado");
         }
 

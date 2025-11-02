@@ -2,25 +2,25 @@ package br.com.petcolumbia.api_pet_columbia.core.application.dto.response.dashbo
 
 import java.time.LocalDate;
 
-public class LeastServiceResponseDto {
-    private String procedureName;
+public class LeastPetOfferingResponseDto {
+    private String petOfferingName;
     private Long count;
     private LocalDate start;
     private LocalDate end;
 
-    public LeastServiceResponseDto(String procedureName, Long count, LocalDate start, LocalDate end) {
-        this.procedureName = procedureName;
+    public LeastPetOfferingResponseDto(String petOfferingName, Long count, LocalDate start, LocalDate end) {
+        this.petOfferingName = petOfferingName;
         this.count = count;
         this.start = start;
         this.end = end;
     }
 
-    public String getProcedureName() {
-        return procedureName;
+    public String getPetOfferingName() {
+        return petOfferingName;
     }
 
-    public void setProcedureName(String procedureName) {
-        this.procedureName = procedureName;
+    public void setPetOfferingName(String petOfferingName) {
+        this.petOfferingName = petOfferingName;
     }
 
     public Long getCount() {

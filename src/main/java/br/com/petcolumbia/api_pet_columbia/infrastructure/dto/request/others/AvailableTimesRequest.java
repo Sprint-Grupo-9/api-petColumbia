@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AvailableTimesRequest {
     private LocalDate date;
-    private List<PetOfferingRequest> procedures;
+    private List<PetOfferingRequest> petOfferings;
 
     public void setDate(LocalDate date) {
         this.date = date;
@@ -17,11 +17,11 @@ public class AvailableTimesRequest {
         return date;
     }
 
-    public List<PetOfferingRequest> getProcedures() {
-        return procedures;
+    public List<PetOfferingRequest> getPetOfferings() {
+        return petOfferings;
     }
 
-    public void setProcedures(List<PetOfferingRequest> procedures) {
-        this.procedures = procedures;
+    public void setPetOfferings(List<PetOfferingRequest> petOfferings) {
+        this.petOfferings = petOfferings;
     }
 }

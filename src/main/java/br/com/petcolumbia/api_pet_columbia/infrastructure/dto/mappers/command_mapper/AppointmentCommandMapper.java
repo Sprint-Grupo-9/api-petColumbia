@@ -11,7 +11,7 @@ public class AppointmentCommandMapper {
         return new AppointmentCreateCommand(
                 dto.getPetId(),
                 dto.getEmployee_id(),
-                dto.getProceduresNames(),
+                dto.getPetOfferingNames(),
                 dto.getTotalPrice(),
                 dto.getObservations(),
                 dto.getTaxiService(),
@@ -24,7 +24,7 @@ public class AppointmentCommandMapper {
         return new AppointmentUpdateCommand(
                 dto.getPetId(),
                 dto.getEmployee_id(),
-                dto.getProcedures(),
+                dto.getPetOfferingNames(),
                 dto.getTotalPrice(),
                 dto.getObservations(),
                 dto.getTaxiService(),

@@ -41,26 +41,26 @@ public class GetAvailableTimesUseCase {
         this.petGateway = petGateway;
     }
 
-    public List<AvailableTimesResponseDto> execute(LocalDate date, Integer petId, List<Integer> procedureIds) {
+    public List<AvailableTimesResponseDto> execute(LocalDate date, Integer petId, List<Integer> petOfferingIds) {
         Pet pet = petGateway.findPetById(petId, null); // null para owner pois não precisa validar
 
         if (pet == null) {
             throw new EntityNotFoundException("Pet não encontrado");
         }
 
-        String proceduresNames = petOfferingGateway.getPetOfferingsNamesByIds(procedureIds);
+        String petOfferingNames = petOfferingGateway.getPetOfferingsNamesByIds(petOfferingIds);
 
-        List<Employee> employees = employeeGateway.listEmployeesByPetOfferings(procedureIds);
+        List<Employee> employees = employeeGateway.listEmployeesByPetOfferings(petOfferingIds);
 
-        Double price = priceAndDurationGateway.calculateTotalPrice(procedureIds, pet.getSize(), pet.getCoat());
+        Double price = priceAndDurationGateway.calculateTotalPrice(petOfferingIds, pet.getSize(), pet.getCoat());
 
-        Integer serviceDurationMinutes = priceAndDurationGateway.calculateTotalDuration(procedureIds, pet.getSize(), pet.getCoat());
+        Integer serviceDurationMinutes = priceAndDurationGateway.calculateTotalDuration(petOfferingIds, pet.getSize(), pet.getCoat());
 
         List<AvailableTimesResponseDto> allAvailableTimes = new ArrayList<>();
 
         for (Employee employee : employees) {
             AvailableTimesResponseDto employeeAvailableTimes = getEmployeeAvailableTimes(
-                    employee, date, proceduresNames, price, serviceDurationMinutes);
+                    employee, date, petOfferingNames, price, serviceDurationMinutes);
 
             allAvailableTimes.add(employeeAvailableTimes);
         }
@@ -80,7 +80,7 @@ public class GetAvailableTimesUseCase {
     }
 
     private AvailableTimesResponseDto getEmployeeAvailableTimes(
-            Employee employee, LocalDate date, String servicesNames, Double price, Integer serviceDurationMinutes) {
+            Employee employee, LocalDate date, String petOfferingNames, Double price, Integer serviceDurationMinutes) {
 
         List<LocalTime> availableTimes = new ArrayList<>(Arrays.asList(
                 LocalTime.of(9, 0), LocalTime.of(9, 30),
@@ -95,14 +95,14 @@ public class GetAvailableTimesUseCase {
         EmployeeResponseDto employeeDto = EmployeeResponseMapper.toResponse(employee);
 
         if (busyTimes.isEmpty()) {
-            return new AvailableTimesResponseDto(employeeDto, availableTimes, serviceDurationMinutes, servicesNames, price);
+            return new AvailableTimesResponseDto(employeeDto, availableTimes, serviceDurationMinutes, petOfferingNames, price);
         }
 
         for (BusyTimeResponseDto busyTime : busyTimes) {
             removeOccupiedTimes(availableTimes, busyTime, serviceDurationMinutes);
         }
 
-        return new AvailableTimesResponseDto(employeeDto, availableTimes, serviceDurationMinutes, servicesNames, price);
+        return new AvailableTimesResponseDto(employeeDto, availableTimes, serviceDurationMinutes, petOfferingNames, price);
     }
 }
 

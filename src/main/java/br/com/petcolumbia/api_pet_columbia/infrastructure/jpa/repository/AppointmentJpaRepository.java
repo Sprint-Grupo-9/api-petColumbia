@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.repository;
 
 import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.entity.AppointmentEntity;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.entity.EmployeeEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,8 @@ public interface AppointmentJpaRepository extends JpaRepository<AppointmentEntit
 
     @Query("SELECT a FROM AppointmentEntity a JOIN FETCH a.pet p JOIN FETCH p.owner WHERE a.pet.owner.id = :ownerId")
     List<AppointmentEntity> findAllAppointmentsByOwnerId(@Param("ownerId") Integer ownerId);
+
+    Page<AppointmentEntity> findAllAppointmentsByOwnerIdPaginated(@Param("ownerId") Integer ownerId, Pageable pageable);
 
     List<AppointmentEntity> findByEmployeeAndStartDateTimeGreaterThanEqualAndStartDateTimeLessThan(
             EmployeeEntity employee, LocalDateTime startOfDay, LocalDateTime endOfDay);

@@ -39,14 +39,14 @@ public class DashboardJpaAdapter implements DashboardGateway {
 
     @Override
     public LastPetAndOwnerAppointmentsResponseDto getLastAppointmentsOfPetAndOwner(List<Appointment> appointments) {
-        List<LastAppointmentsListDto> lastPetAppointments = getOwnerLastAppointments(appointments);
-        List<LastAppointmentsListDto> lastOwnerAppointments = getPetLastAppointments(appointments);
+        List<LastAppointmentsListDto> lastPetAppointments = getPetLastAppointments(appointments);
+        List<LastAppointmentsListDto> lastOwnerAppointments = getOwnerLastAppointments(appointments);
 
         return new LastPetAndOwnerAppointmentsResponseDto(lastPetAppointments, lastOwnerAppointments);
     }
 
     @Override
-    public Map<LocalDate, Long> getAmountProceduresCountPerDay() {
+    public Map<LocalDate, Long> getAmountPetOfferingsCountPerDay() {
         LocalDateTime start = LocalDate.now().minusDays(7).atStartOfDay();
         LocalDateTime end = LocalDate.now().minusDays(1).atTime(23, 59, 59);
 
@@ -70,43 +70,43 @@ public class DashboardJpaAdapter implements DashboardGateway {
     }
 
     @Override
-    public TopServiceResponseDto getMostPerformedProcedureLastThirtyDays() {
+    public TopPetOfferingResponseDto getMostPerformedPetOfferingLastThirtyDays() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime end = now.minusDays(1).withHour(23).withMinute(59);
         LocalDateTime start = end.minusDays(29).withHour(0).withMinute(0);
 
-        Map<String, Long> serviceCount = countProceduresByLastThirtyDays();
+        Map<String, Long> petOfferingCount = countPetOfferingsByLastThirtyDays();
 
-        Map.Entry<String, Long> top = serviceCount.entrySet()
+        Map.Entry<String, Long> top = petOfferingCount.entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())
                 .orElse(null);
 
         if (top == null) return null;
 
-        return new TopServiceResponseDto(top.getKey(), top.getValue(), start.toLocalDate(), end.toLocalDate());
+        return new TopPetOfferingResponseDto(top.getKey(), top.getValue(), start.toLocalDate(), end.toLocalDate());
     }
 
     @Override
-    public LeastServiceResponseDto getLeastPerformedProcedureLastThirtyDays() {
+    public LeastPetOfferingResponseDto getLeastPerformedPetOfferingLastThirtyDays() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime end = now.minusDays(1).withHour(23).withMinute(59);
         LocalDateTime start = end.minusDays(29).withHour(0).withMinute(0);
 
-        Map<String, Long> serviceCount = countProceduresByLastThirtyDays();
+        Map<String, Long> petOfferingCount = countPetOfferingsByLastThirtyDays();
 
-        Map.Entry<String, Long> least = serviceCount.entrySet()
+        Map.Entry<String, Long> least = petOfferingCount.entrySet()
                 .stream()
                 .min(Map.Entry.comparingByValue())
                 .orElse(null);
 
         if (least == null) return null;
 
-        return new LeastServiceResponseDto(least.getKey(), least.getValue(), start.toLocalDate(), end.toLocalDate());
+        return new LeastPetOfferingResponseDto(least.getKey(), least.getValue(), start.toLocalDate(), end.toLocalDate());
     }
 
     @Override
-    public TopProceduresTimingResponse getMostProceduresTimingLastThirtyDays() {
+    public TopPetOfferingsTimingResponse getMostPetOfferingsTimingLastThirtyDays() {
         LocalDateTime end = LocalDateTime.now();
         LocalDateTime start = end.minusDays(30);
 
@@ -129,11 +129,11 @@ public class DashboardJpaAdapter implements DashboardGateway {
         LocalTime time = mostCommon.get().getKey();
         long count = mostCommon.get().getValue();
 
-        return new TopProceduresTimingResponse(start.toLocalDate(), end.toLocalDate(), time, count);
+        return new TopPetOfferingsTimingResponse(start.toLocalDate(), end.toLocalDate(), time, count);
     }
 
     @Override
-    public LeastProceduresTimingResponse getLeastProceduresTimingLastThirtyDays() {
+    public LeastPetOfferingsTimingResponse getLeastPetOfferingsTimingLastThirtyDays() {
         LocalDateTime end = LocalDateTime.now();
         LocalDateTime start = end.minusDays(30);
 
@@ -156,7 +156,7 @@ public class DashboardJpaAdapter implements DashboardGateway {
         LocalTime time = leastCommon.get().getKey();
         long count = leastCommon.get().getValue();
 
-        return new LeastProceduresTimingResponse(start.toLocalDate(), end.toLocalDate(), time, count);
+        return new LeastPetOfferingsTimingResponse(start.toLocalDate(), end.toLocalDate(), time, count);
     }
 
     // Helper methods
@@ -184,7 +184,7 @@ public class DashboardJpaAdapter implements DashboardGateway {
                             a.getStartDateTime().toLocalDate(),
                             a.getStartDateTime().toLocalTime(),
                             a.getEndDateTime().toLocalTime(),
-                            a.getProcedures(),
+                            a.getPetOfferings(),
                             a.getTotalPrice()
                     )
             ).toList();
@@ -218,7 +218,7 @@ public class DashboardJpaAdapter implements DashboardGateway {
                             a.getStartDateTime().toLocalDate(),
                             a.getStartDateTime().toLocalTime(),
                             a.getEndDateTime().toLocalTime(),
-                            a.getProcedures(),
+                            a.getPetOfferings(),
                             a.getTotalPrice()
                     )
             ).toList();
@@ -228,27 +228,27 @@ public class DashboardJpaAdapter implements DashboardGateway {
         return response;
     }
 
-    private Map<String, Long> countProceduresByLastThirtyDays() {
+    private Map<String, Long> countPetOfferingsByLastThirtyDays() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime end = now.minusDays(1).withHour(23).withMinute(59);
         LocalDateTime start = end.minusDays(29).withHour(0).withMinute(0);
 
-        List<String> allStringProcedures = appointmentRepository.findAllProceduresBetween(start, end);
+        List<String> allStringPetOfferings = appointmentRepository.findAllPetOfferingsBetween(start, end);
 
-        Map<String, Long> procedureCount = new HashMap<>();
+        Map<String, Long> petOfferingCount = new HashMap<>();
 
-        for (String procedureLine : allStringProcedures) {
-            if (procedureLine == null || procedureLine.isBlank()) continue;
+        for (String petOfferingLine : allStringPetOfferings) {
+            if (petOfferingLine == null || petOfferingLine.isBlank()) continue;
 
-            String[] procedures = procedureLine.split(",");
+            String[] petOfferings = petOfferingLine.split(",");
 
-            for (String procedure : procedures) {
-                procedure = procedure.trim();
-                procedureCount.put(procedure, procedureCount.getOrDefault(procedure, 0L) + 1);
+            for (String petOffering : petOfferings) {
+                petOffering = petOffering.trim();
+                petOfferingCount.put(petOffering, petOfferingCount.getOrDefault(petOffering, 0L) + 1);
             }
         }
 
-        return procedureCount;
+        return petOfferingCount;
     }
 }
 

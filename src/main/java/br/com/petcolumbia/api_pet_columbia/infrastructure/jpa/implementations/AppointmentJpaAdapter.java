@@ -4,6 +4,7 @@ import br.com.petcolumbia.api_pet_columbia.core.adapter.appointment.AppointmentG
 import br.com.petcolumbia.api_pet_columbia.core.application.command.appointment.AppointmentCreateCommand;
 import br.com.petcolumbia.api_pet_columbia.core.application.command.appointment.AppointmentUpdateCommand;
 import br.com.petcolumbia.api_pet_columbia.core.application.dto.response.appointment.BusyTimeResponseDto;
+import br.com.petcolumbia.api_pet_columbia.core.application.dto.response.common.PageResponse;
 import br.com.petcolumbia.api_pet_columbia.core.application.exception.EntityNotFoundException;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.appointment.Appointment;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.entity_mapper.AppointmentEntityMapper;
@@ -15,6 +16,9 @@ import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.entity.PetEntity;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.repository.AppointmentJpaRepository;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.repository.EmployeeJpaRepository;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.jpa.repository.PetJpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -49,6 +53,27 @@ public class AppointmentJpaAdapter implements AppointmentGateway {
     }
 
     @Override
+    public PageResponse<Appointment> findAllAppointmentsByOwnerIdPaginated(Integer ownerId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<AppointmentEntity> pageResult = appointmentRepository.findAllAppointmentsByOwnerIdPaginated(ownerId, pageable);
+
+        // Use AppointmentFullMapping para carregar dados completos
+        MappingContext context = new MappingContext(new MappingStrategy.AppointmentFullMapping());
+        List<Appointment> appointments = AppointmentEntityMapper.toDomainList(pageResult.getContent(), context);
+
+        return new PageResponse<>(
+                appointments,
+                pageResult.getNumber(),
+                pageResult.getSize(),
+                pageResult.getTotalElements(),
+                pageResult.getTotalPages(),
+                pageResult.isFirst(),
+                pageResult.isLast(),
+                pageResult.isEmpty()
+        );
+    }
+
+    @Override
     public Appointment createAppointment(AppointmentCreateCommand command) {
         PetEntity pet = petRepository.findById(command.petId())
                 .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado"));
@@ -59,11 +84,14 @@ public class AppointmentJpaAdapter implements AppointmentGateway {
         AppointmentEntity entity = new AppointmentEntity();
         entity.setPet(pet);
         entity.setEmployee(employee);
-        entity.setProcedures(command.servicesNames());
+        entity.setPetOfferings(command.petOfferingNames());
         entity.setObservations(command.observations());
-        entity.setTaxiService(command.taxiService());
 
-        if (command.taxiService()) {
+        // Tratar taxiService null como false
+        Boolean taxiService = command.taxiService() != null ? command.taxiService() : false;
+        entity.setTaxiService(taxiService);
+
+        if (Boolean.TRUE.equals(taxiService)) {
             entity.setTotalPrice(command.totalPrice() + 20.0);
         } else {
             entity.setTotalPrice(command.totalPrice());
@@ -95,11 +123,14 @@ public class AppointmentJpaAdapter implements AppointmentGateway {
 
         entity.setPet(pet);
         entity.setEmployee(employee);
-        entity.setProcedures(command.services());
+        entity.setPetOfferings(command.petOfferingNames());
         entity.setObservations(command.observations());
-        entity.setTaxiService(command.taxiService());
 
-        if (command.taxiService()) {
+        // Tratar taxiService null como false
+        Boolean taxiService = command.taxiService() != null ? command.taxiService() : false;
+        entity.setTaxiService(taxiService);
+
+        if (Boolean.TRUE.equals(taxiService)) {
             entity.setTotalPrice(command.totalPrice() + 20.0);
         } else {
             entity.setTotalPrice(command.totalPrice());

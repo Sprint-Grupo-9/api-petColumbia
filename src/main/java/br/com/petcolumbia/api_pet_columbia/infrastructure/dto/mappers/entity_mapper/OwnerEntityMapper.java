@@ -21,7 +21,8 @@ public class OwnerEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Owner", entity.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.OWNER_PETS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createOwnerWithoutPets(entity);
         }
 
@@ -36,7 +37,7 @@ public class OwnerEntityMapper {
                     entity.getPassword(),
                     createAddress(entity),
                     entity.getAdm(),
-                    context.shouldMapRelation(entityKey, RelationType.OWNER_PETS)
+                    context.shouldIncludeRelation(RelationType.OWNER_PETS)
                         ? PetEntityMapper.toDomainList(entity.getPets(), context)
                         : null
             );
@@ -52,7 +53,8 @@ public class OwnerEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("Owner", owner.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.OWNER_PETS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createOwnerEntityWithoutPets(owner);
         }
 
@@ -74,7 +76,7 @@ public class OwnerEntityMapper {
                     owner.getAdm(),
                     null,
                     null,
-                    context.shouldMapRelation(entityKey, RelationType.OWNER_PETS)
+                    context.shouldIncludeRelation(RelationType.OWNER_PETS)
                         ? PetEntityMapper.toEntityList(owner.getPets(), context)
                         : null
             );

@@ -19,7 +19,8 @@ public class PetOfferingPriceAndDurationEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("PetOfferingPriceAndDuration", entity.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_PRICES_DURATIONS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createPriceAndDurationWithoutPetOffering(entity);
         }
 
@@ -28,7 +29,7 @@ public class PetOfferingPriceAndDurationEntityMapper {
         try {
             return new PetOfferingPriceAndDuration(
                     entity.getId(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_PRICES_DURATIONS)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_PRICES_DURATIONS)
                         ? PetOfferingEntityMapper.toDomain(entity.getPetOffering(), context)
                         : null,
                     entity.getPetSize(),
@@ -48,7 +49,8 @@ public class PetOfferingPriceAndDurationEntityMapper {
 
         String entityKey = MappingContext.createEntityKey("PetOfferingPriceAndDuration", petOfferingPriceAndDuration.getId());
 
-        if (!context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_PRICES_DURATIONS)) {
+        // Check if already being processed (circular reference prevention)
+        if (context.isBeingProcessed(entityKey)) {
             return createEntityWithoutPetOffering(petOfferingPriceAndDuration);
         }
 
@@ -57,7 +59,7 @@ public class PetOfferingPriceAndDurationEntityMapper {
         try {
             return new PetOfferingPriceAndDurationEntity(
                     petOfferingPriceAndDuration.getId(),
-                    context.shouldMapRelation(entityKey, RelationType.PET_OFFERING_PRICES_DURATIONS)
+                    context.shouldIncludeRelation(RelationType.PET_OFFERING_PRICES_DURATIONS)
                         ? PetOfferingEntityMapper.toEntity(petOfferingPriceAndDuration.getPetOffering(), context)
                         : null,
                     petOfferingPriceAndDuration.getPetSize(),
