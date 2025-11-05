@@ -3,6 +3,8 @@
 ## 📌 Visão Geral
 A **API Pet Columbia** é uma API REST desenvolvida em Java com Spring Boot, projetada para gerenciar agendamentos de serviços como banho e tosa para pets. Permite o cadastro e gerenciamento de usuários, pets e agendamentos, com funcionalidades exclusivas para administradores.
 
+🎯 **Novo:** Arquitetura Limpa (Clean Architecture) implementada para módulos Owner e Pet!
+
 ---
 
 ## 📝 Funcionalidades Principais
@@ -17,6 +19,12 @@ A **API Pet Columbia** é uma API REST desenvolvida em Java com Spring Boot, pro
 
 ---
 
+## 🏗️ Arquitetura
+
+O projeto foi migrado para **Clean Architecture**:
+
+---
+
 ## ⚙️ Tecnologias Utilizadas
 
 - **Java 21+** – Linguagem principal.
@@ -26,6 +34,7 @@ A **API Pet Columbia** é uma API REST desenvolvida em Java com Spring Boot, pro
 - **Maven** – Gerenciador de dependências e build.
 - **Swagger** – Documentação interativa dos endpoints.
 - **JWT** – Autenticação baseada em token.
+- **Clean Architecture** – Padrão arquitetural para separação de camadas.
 
 ---
 
