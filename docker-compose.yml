@@ -1,0 +1,20 @@
+services:
+  api:
+    image: samuelpazz/api-pet-columbia:latest
+    container_name: api-petcolumbia
+    env_file:
+      - .env
+    expose:
+      - "8080"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+    restart: unless-stopped
