@@ -1,0 +1,9 @@
+services:
+  api:
+    image: samuelpazz/api-pet-columbia:latest
+    container_name: api-petcolumbia
+    env_file:
+      - .env
+    expose:
+      - "8080"
+    restart: unless-stopped
