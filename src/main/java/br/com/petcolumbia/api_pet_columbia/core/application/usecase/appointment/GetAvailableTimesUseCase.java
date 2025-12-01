@@ -12,6 +12,7 @@ import br.com.petcolumbia.api_pet_columbia.core.application.exception.EntityNotF
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.employee.Employee;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet.Pet;
 import br.com.petcolumbia.api_pet_columbia.infrastructure.dto.mappers.response_mapper.EmployeeResponseMapper;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -41,6 +42,7 @@ public class GetAvailableTimesUseCase {
         this.petGateway = petGateway;
     }
 
+    @Cacheable(cacheNames = "availableTimes", key = "#date.toString() + ':' + #petId + ':' + #petOfferingIds.hashCode()")
     public List<AvailableTimesResponseDto> execute(LocalDate date, Integer petId, List<Integer> petOfferingIds) {
         Pet pet = petGateway.findPetById(petId, null); // null para owner pois não precisa validar
 
@@ -105,4 +107,3 @@ public class GetAvailableTimesUseCase {
         return new AvailableTimesResponseDto(employeeDto, availableTimes, serviceDurationMinutes, petOfferingNames, price);
     }
 }
-
