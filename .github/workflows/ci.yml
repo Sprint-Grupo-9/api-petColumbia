@@ -13,7 +13,7 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          java-version: "17"
+          java-version: "21"
           distribution: "temurin"
 
       - name: Run tests with Maven
@@ -25,3 +25,4 @@ jobs:
         with:
           name: surefire-reports
           path: target/surefire-reports
+
