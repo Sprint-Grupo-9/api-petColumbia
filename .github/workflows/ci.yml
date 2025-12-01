@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  pipeline:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,15 +19,22 @@ jobs:
           java-version: "21"
           distribution: "temurin"
 
-      # ✅ CI - BUILD
       - name: Build
         run: mvn -B clean package -DskipTests
 
-      # ✅ CI - TESTS
+  Test:
+    runs-on: ubuntu-latest
+    needs: Build
+
+    steps:
       - name: Run Tests
         run: mvn -B test
 
-      # ✅ CD - GERAR ARTEFATO
+  CD:
+    runs-on: ubuntu-latest
+    needs: Test
+
+    steps:
       - name: Publish JAR
         uses: actions/upload-artifact@v4
         with:
