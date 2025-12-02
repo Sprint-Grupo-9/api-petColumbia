@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.core.domain.model.employee;
 
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.appointment.Appointment;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.associations.EmployeePetOfferingAssociation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Employee {
         this.name = name;
     }
 
+    @JsonIgnore
     public List<Appointment> getAppointments() {
         return appointments;
     }
