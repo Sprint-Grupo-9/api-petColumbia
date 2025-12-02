@@ -21,6 +21,8 @@ public class JacksonConfig {
 
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 
+        mapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         return mapper;
     }
 }

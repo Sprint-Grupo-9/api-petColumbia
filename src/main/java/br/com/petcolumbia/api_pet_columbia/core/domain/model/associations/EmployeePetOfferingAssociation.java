@@ -3,7 +3,9 @@ package br.com.petcolumbia.api_pet_columbia.core.domain.model.associations;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.associations.valueobject.EmployeePetOfferingAssociationId;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.employee.Employee;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet_offering.PetOffering;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployeePetOfferingAssociation {
     private EmployeePetOfferingAssociationId id;
     private Employee employee;

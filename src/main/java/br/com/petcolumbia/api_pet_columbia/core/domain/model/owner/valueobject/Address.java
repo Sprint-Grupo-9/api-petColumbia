@@ -1,5 +1,8 @@
 package br.com.petcolumbia.api_pet_columbia.core.domain.model.owner.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Address {
     private String cep;
     private String neighborhood;
