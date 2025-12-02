@@ -1,8 +1,11 @@
 package br.com.petcolumbia.api_pet_columbia.core.domain.model.associations.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployeePetOfferingAssociationId implements Serializable {
     private Integer employeeId;
     private Integer petOfferingId;

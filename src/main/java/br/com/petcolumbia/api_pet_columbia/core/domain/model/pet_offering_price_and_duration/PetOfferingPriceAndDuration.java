@@ -1,7 +1,9 @@
 package br.com.petcolumbia.api_pet_columbia.core.domain.model.pet_offering_price_and_duration;
 
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet_offering.PetOffering;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PetOfferingPriceAndDuration {
     private Integer id;
     private PetOffering petOffering;

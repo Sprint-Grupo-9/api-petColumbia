@@ -2,9 +2,11 @@ package br.com.petcolumbia.api_pet_columbia.core.domain.model.appointment;
 
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.employee.Employee;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet.Pet;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Appointment {
     private Integer id;
     private Pet pet;

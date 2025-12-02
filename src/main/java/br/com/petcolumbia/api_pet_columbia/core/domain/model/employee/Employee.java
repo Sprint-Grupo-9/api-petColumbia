@@ -3,9 +3,11 @@ package br.com.petcolumbia.api_pet_columbia.core.domain.model.employee;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.appointment.Appointment;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.associations.EmployeePetOfferingAssociation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Employee {
     private Integer id;
     private String name;
