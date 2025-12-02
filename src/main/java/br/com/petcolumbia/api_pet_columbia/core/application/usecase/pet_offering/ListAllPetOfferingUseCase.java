@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.core.application.usecase.pet_offerin
 
 import br.com.petcolumbia.api_pet_columbia.core.adapter.pet_offering.PetOfferingGateway;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet_offering.PetOffering;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ public class ListAllPetOfferingUseCase {
         this.petOfferingGateway = petOfferingGateway;
     }
 
+    @Cacheable(cacheNames = "petOfferings", key = "'all'")
     public List<PetOffering> execute() {
         return petOfferingGateway.listAllPetOfferings();
     }
 }
-

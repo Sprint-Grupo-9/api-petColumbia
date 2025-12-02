@@ -2,9 +2,11 @@ package br.com.petcolumbia.api_pet_columbia.core.domain.model.pet_offering;
 
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.associations.EmployeePetOfferingAssociation;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet_offering_price_and_duration.PetOfferingPriceAndDuration;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PetOffering {
     private Integer id;
     private String name;

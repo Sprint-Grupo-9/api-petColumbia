@@ -1,0 +1,30 @@
+services:
+  api:
+    image: samuelpazz/api-pet-columbia:2.1.3
+    container_name: api-petcolumbia
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    env_file:
+      - .env
+    command: [
+      "redis-server",
+      "--save", "60", "1",
+      "--requirepass", "${REDIS_PASSWORD}",
+      "--loglevel", "warning"
+    ]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
