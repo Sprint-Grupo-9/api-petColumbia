@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.core.domain.model.pet;
 
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.appointment.Appointment;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.owner.Owner;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -126,6 +127,7 @@ public class Pet {
         this.lastUpdate = lastUpdate;
     }
 
+    @JsonIgnore
     public List<Appointment> getAppointments() {
         return appointments;
     }

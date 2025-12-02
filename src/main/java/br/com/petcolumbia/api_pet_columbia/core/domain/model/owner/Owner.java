@@ -3,6 +3,7 @@ package br.com.petcolumbia.api_pet_columbia.core.domain.model.owner;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.owner.valueobject.Address;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.owner.valueobject.PersonalInfo;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet.Pet;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class Owner {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -86,6 +88,7 @@ public class Owner {
         isAdm = adm;
     }
 
+    @JsonIgnore
     public List<Pet> getPets() {
         return pets;
     }
