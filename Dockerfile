@@ -8,6 +8,9 @@ WORKDIR /app
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
 
+# Garante permissão de execução para o wrapper Maven em ambientes Linux
+RUN chmod +x mvnw
+
 RUN ./mvnw dependency:go-offline -B
 
 COPY src ./src
