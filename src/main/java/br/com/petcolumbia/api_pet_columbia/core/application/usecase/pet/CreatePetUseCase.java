@@ -5,6 +5,7 @@ import br.com.petcolumbia.api_pet_columbia.core.adapter.pet.PetGateway;
 import br.com.petcolumbia.api_pet_columbia.core.application.command.pet.PetCreateCommand;
 import br.com.petcolumbia.api_pet_columbia.core.application.dto.mapper.PetCoreMapper;
 import br.com.petcolumbia.api_pet_columbia.core.domain.model.pet.Pet;
+import org.springframework.cache.annotation.CacheEvict;
 
 public class CreatePetUseCase {
 
@@ -16,6 +17,7 @@ public class CreatePetUseCase {
         this.ownerGateway = ownerGateway;
     }
 
+    @CacheEvict(cacheNames = "petsByOwner", key = "#ownerId")
     public Pet execute(Integer ownerId, PetCreateCommand command) {
         // Valida se o owner existe
         ownerGateway.getOwnerById(ownerId);

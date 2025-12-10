@@ -2,6 +2,7 @@ package br.com.petcolumbia.api_pet_columbia.core.application.usecase.pet;
 
 import br.com.petcolumbia.api_pet_columbia.core.adapter.pet.PetGateway;
 import br.com.petcolumbia.api_pet_columbia.core.application.exception.EntityNotFoundException;
+import org.springframework.cache.annotation.CacheEvict;
 
 public class DeletePetByIdUseCase {
 
@@ -11,6 +12,7 @@ public class DeletePetByIdUseCase {
         this.petGateway = petGateway;
     }
 
+    @CacheEvict(cacheNames = "petsByOwner", allEntries = true)
     public void execute(Integer id) {
         if (!petGateway.existsById(id)) {
             throw new EntityNotFoundException("Pet não encontrado");

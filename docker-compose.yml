@@ -1,6 +1,6 @@
 services:
   api:
-    image: samuelpazz/api-pet-columbia:latest
+    image: samuelpazz/api-pet-columbia:3.0.0
     container_name: api-petcolumbia
     env_file:
       - .env
@@ -26,5 +26,15 @@ services:
     volumes:
       - redis_data:/data
 
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    volumes:
+      - redisinsight_data:/data
+    restart: unless-stopped
+
 volumes:
   redis_data:
+  redisinsight_data:
