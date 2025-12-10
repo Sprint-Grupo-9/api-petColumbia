@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface EmployeeJpaRepository extends JpaRepository<EmployeeEntity, Integer> {
 
-    @Query("SELECT DISTINCT ep.employee FROM EmployeePetOfferingAssociationEntity ep " +
+    @Query("SELECT ep.employee FROM EmployeePetOfferingAssociationEntity ep " +
            "WHERE ep.petOffering.id IN :petOfferingIds " +
-           "GROUP BY ep.employee.id " +
+           "GROUP BY ep.employee " +
            "HAVING COUNT(DISTINCT ep.petOffering.id) = :petOfferingCount")
     List<EmployeeEntity> findEmployeesByPetOfferingIds(
         @Param("petOfferingIds") List<Integer> petOfferingIds,

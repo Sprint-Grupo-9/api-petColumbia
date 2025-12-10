@@ -1,6 +1,6 @@
 services:
   api:
-    image: samuelpazz/api-pet-columbia:3.0.0
+    image: samuelpazz/api-pet-columbia:latest
     container_name: api-petcolumbia
     env_file:
       - .env
