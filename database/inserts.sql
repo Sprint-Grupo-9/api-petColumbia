@@ -1,4 +1,4 @@
-INSERT INTO pet_offering (id, name, description) VALUES
+INSERT INTO pet_offering (id, description, name) VALUES
     (1, 'Banho completo conforme o porte e pelagem do pet', 'Banho'),
     (2, 'Tosa para manter a higiene em partes específicas como barriga, bumbum, olhos e inferior das patas', 'Tosa higiênica'),
     (3, 'Tosa geral do corpo e cabeça com a lâmina escolhida', 'Tosa na máquina'),
